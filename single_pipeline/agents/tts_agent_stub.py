@@ -20,6 +20,7 @@ class TTSAgentStub:
                 "voice": content,
                 "lang": lang,
                 "tone": tone,
+                "category": it.get("category"),
                 "timestamp": it.get("timestamp"),
                 "raw": it
             })

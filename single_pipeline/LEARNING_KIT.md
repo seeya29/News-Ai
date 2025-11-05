@@ -30,6 +30,30 @@ This kit helps you understand, extend, and teach the single-folder pipeline. It 
 - FilterAgent: multi-language detection (en/hi/ta/bn), Uniguru integration for category/tone/audience, and `dedup_flag` via RAG cache.
 - RAGClient: local JSON cache for dedup and keyword search; simple and offline-friendly.
 
+### Uniguru Endpoint Integration (Quick Guide)
+- Purpose: improve tagging quality (category, tone, audience) beyond heuristics.
+- Environment:
+  - `UNIGURU_PROVIDER`: set to `local` to use `providers/uniguru_local/` adapter, or leave unset to use `UniguruClient` if available.
+  - Optional: `UNIGURU_ENDPOINT`, `UNIGURU_API_KEY` for cloud clients (if your `UniguruClient` implementation uses them).
+- Expected request (conceptual):
+  ```json
+  {
+    "title": "Example Headline",
+    "body": "Story body text...",
+    "language": "en"
+  }
+  ```
+- Expected response fields:
+  ```json
+  {
+    "category": "technology",
+    "tone": "formal",
+    "audience": "general"
+  }
+  ```
+- Wiring in code: `FilterAgent` tries `UniguruLocalAdapter` when `UNIGURU_PROVIDER=local`, else `UniguruClient` if importable.
+- Failure handling: if tagging fails, defaults to `{category: None, tone: None, audience: "general"}` to keep the pipeline moving.
+
 ## 3) Modular Feed Architecture
 - Registry-driven: connectors defined in `feed_registry.json` or `feed_registry.yaml`.
 - Adapter-based: each entry declares a module + class/function and params.
@@ -104,10 +128,12 @@ weather_api:
   1. Fetch → `items.json`
   2. Filter → adds metadata → `filtered.json`
   3. Script → uses tone/audience → `scripts.json`
+- Context-aware enrichment: ScriptGenAgent now queries `RAGClient.search()` with title + body terms and appends a brief "Related Context" block from prior cached stories.
 - CLI chaining (already supported): later stages prefer prior outputs if present.
 - Exercise:
   - Fetch 20+ items, run filter, then script.
   - Verify scripts include correct `[Style: … | Audience: …]` header.
+  - Confirm a "Related Context" block appears when the cache has similar items.
   - Toggle tones (`formal`, `kids`, `youth`, `devotional`) and review differences.
 
 ## 6) Mapping External Pipelines
@@ -154,6 +180,99 @@ stockagent_feed:
   - Ensure each item includes `title`, `body`, `timestamp` (or `None`), `raw` for original fields.
   - Fail gracefully: on errors, return a single item with `raw.error`.
   - Keep params minimal and documented in the registry.
+\n+### Adapter Recipe: Bridging Gurukul/Stock/Wellness/UsedCar
+This recipe shows how to convert your real pipeline code into plug-and-play adapters.
+\n+1) Create a thin class adapter (recommended)
+```python
+# file: single_pipeline/fetchers/gurukul_fetchers.py
+from typing import Any, Dict, List, Optional
+from base_fetcher import BaseFetcher
+from logging_utils import PipelineLogger
+
+# Replace this with your real client import
+from external.gurukul import GurukulClient  # your codebase
+
+class GurukulFetcher(BaseFetcher):
+    def __init__(self, cfg: Dict[str, Any]):
+        super().__init__(cfg)
+        self.source = cfg.get("source", "lectures")
+        self.client = GurukulClient()
+
+    def fetch(self, limit: int = 10, logger: Optional[PipelineLogger] = None) -> List[Dict[str, Any]]:
+        items: List[Dict[str, Any]] = []
+        try:
+            rows = self.client.list(self.source, limit=limit)
+            for r in rows:
+                items.append({
+                    "title": r.get("title") or "Untitled",
+                    "body": r.get("content") or "",
+                    "timestamp": r.get("timestamp"),
+                    "raw": r,
+                })
+        except Exception as e:
+            items = [{
+                "title": "Gurukul fetch error",
+                "body": str(e),
+                "timestamp": None,
+                "raw": {"error": str(e)}
+            }]
+        if logger:
+            logger.log_event("fetch", {"connector": "gurukul_feed", "count": len(items)})
+        return items
+```
+\n+2) Use a function adapter when your code exposes a function
+```python
+# file: external/stockagent_scraper.py (your code)
+def run(limit: int = 10):
+    # return a list of dicts with your source fields
+    return [{"headline": "...", "text": "...", "ts": 1700000000}]
+
+# registry entry
+stockagent_feed:
+  file: function_adapter.py
+  class: FunctionAdapterFetcher
+  params:
+    target_file: external/stockagent_scraper.py
+    target_function: run
+    map_keys:
+      title: headline
+      body: text
+      timestamp: ts
+```
+\n+3) YAML/JSON registry entries
+```yaml
+wellness_feed:
+  file: fetchers/external_adapters.py
+  class: WellnessBotAdapterFetcher
+  params:
+    limit: 10
+
+usedcar_feed:
+  file: fetchers/used_car_fetchers.py
+  class: UsedCarFetcher
+  params:
+    region: IN
+    limit: 20
+```
+\n+4) Normalization & error handling
+- Required fields: `title` (string), `body` (string), `timestamp` (epoch or ISO, optional), `raw` (original dict for audit).
+- On exceptions: return one sentinel item with `raw.error` so the pipeline continues.
+- Logging: call `logger.log_event("fetch", {"connector": key, "count": N})` for observability.
+\n+5) Testing the adapter
+- Add/update the registry entry (`feed_registry.yaml` or `.json`).
+- Run: `python single_pipeline/cli.py fetch --sources gurukul_feed --registry single_pipeline/feed_registry.yaml --pretty`
+- Inspect `single_pipeline/output/demo_items.json` for normalized shape.
+- Chain to filter/script: `python single_pipeline/cli.py full --sources gurukul_feed --pretty`
+\n+6) Concurrency & limits
+- If your external client supports async, implement `fetch_async()` on the adapter; the hub will run it concurrently.
+- Otherwise, provide `fetch()`; the hub will offload sync calls to a thread pool.
+- Use `limit` from registry params or CLI to avoid rate limits.
+\n+7) Configuration
+- Read credentials/keys from environment vars (e.g., `GURUKUL_API_KEY`) inside your adapter.
+- Provide minimal `params` in registry to keep adapters portable across environments.
+\n+8) Migration tips
+- Start by wrapping your current outputs “as-is” under `raw` and move normalization gradually.
+- Keep adapter logic thin; heavy transforms belong in FilterAgent or downstream agents.
 
 ## 8) LangGraph Visualization & Debugging (Optional)
 - Objective: visualize stage transitions and inspect payloads.

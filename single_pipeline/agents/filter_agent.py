@@ -24,6 +24,11 @@ class FilterAgent:
             self.uniguru = UniguruClient()
         else:
             self.uniguru = None
+        # Configurable language dominance threshold (default 0.3)
+        try:
+            self.lang_threshold = float(os.getenv("LANG_DOMINANCE_THRESHOLD", "0.3"))
+        except Exception:
+            self.lang_threshold = 0.3
 
     def _basic_language_detect(self, text: str) -> str:
         # Lightweight heuristic for English/Hindi/Tamil/Bengali detection
@@ -41,7 +46,9 @@ class FilterAgent:
         }
         # Pick dominant script if clearly present; else mixed
         lang, score = max(ratios.items(), key=lambda x: x[1])
-        return lang if score >= 0.2 else "mixed"
+        # Use stricter threshold for very short texts
+        threshold = max(self.lang_threshold, 0.5) if total < 15 else self.lang_threshold
+        return lang if score >= threshold else "mixed"
 
     def filter_items(self, items: List[Dict[str, Any]], logger: Optional[PipelineLogger] = None) -> List[Dict[str, Any]]:
         filtered: List[Dict[str, Any]] = []

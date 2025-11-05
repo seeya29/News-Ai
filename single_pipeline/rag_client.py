@@ -1,7 +1,9 @@
 import json
 import os
 import hashlib
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Optional
+
+from logging_utils import PipelineLogger
 
 try:
     from providers.embeddings.adapter import EmbeddingLocalAdapter
@@ -16,16 +18,19 @@ class RAGClient:
     Provides `is_duplicate(title, body)` and lightweight `search` by title keywords.
     """
 
-    def __init__(self, cache_path: str = None):
+    def __init__(self, cache_path: Optional[str] = None, logger: Optional[PipelineLogger] = None):
         base = os.path.dirname(__file__)
         out_dir = os.path.join(base, "output")
         if not os.path.exists(out_dir):
             try:
                 os.makedirs(out_dir, exist_ok=True)
             except Exception:
-                pass
+                # If output dir can't be created, log and continue with in-memory cache
+                if logger:
+                    logger.log_event("rag", {"warning": "failed_to_create_output_dir", "path": out_dir})
         self.cache_path = cache_path or os.path.join(out_dir, "rag_cache.json")
         self.cache: List[Dict[str, Any]] = []
+        self.logger = logger or PipelineLogger()
         # Optional embedding adapter
         provider_choice = os.getenv("EMBED_PROVIDER", "").lower()
         self.embedder = EmbeddingLocalAdapter() if (provider_choice == "local" and EmbeddingLocalAdapter) else None
@@ -36,15 +41,18 @@ class RAGClient:
             if os.path.exists(self.cache_path):
                 with open(self.cache_path, "r", encoding="utf-8") as f:
                     self.cache = json.load(f)
-        except Exception:
+        except Exception as e:
+            # Fall back to empty cache but make noise for debugging
+            self.logger.log_event("rag", {"error": "cache_load_failed", "detail": str(e), "path": self.cache_path})
             self.cache = []
 
     def _save(self):
         try:
             with open(self.cache_path, "w", encoding="utf-8") as f:
                 json.dump(self.cache, f, ensure_ascii=False, indent=2)
-        except Exception:
-            pass
+        except Exception as e:
+            # Log save failures instead of silently ignoring them
+            self.logger.log_event("rag", {"error": "cache_save_failed", "detail": str(e), "path": self.cache_path})
 
     def _hash(self, title: str, body: str) -> str:
         h = hashlib.sha256((title + "\n" + body).encode("utf-8")).hexdigest()
@@ -62,7 +70,8 @@ class RAGClient:
         if self.embedder:
             try:
                 current_vec = self.embedder.embed(text)
-            except Exception:
+            except Exception as e:
+                self.logger.log_event("rag", {"error": "embed_failed", "detail": str(e)})
                 current_vec = []
 
         for item in self.cache:
@@ -71,7 +80,8 @@ class RAGClient:
             if self.embedder and item.get("embedding"):
                 try:
                     sim = self.embedder.cosine(current_vec, item.get("embedding", []))
-                except Exception:
+                except Exception as e:
+                    self.logger.log_event("rag", {"error": "cosine_failed", "detail": str(e)})
                     sim = 0.0
                 if sim >= threshold:
                     return True

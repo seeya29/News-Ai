@@ -22,6 +22,7 @@ class AvatarAgentStub:
                 "lang": lang,
                 "tone": tone,
                 "audience": audience,
+                "category": it.get("category"),
                 "timestamp": it.get("timestamp"),
                 "raw": it
             })
