@@ -1,0 +1,28 @@
+# Python virtual environments
+.venv/
+env/
+venv/
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE/editor files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Cache and temporary
+.pytest_cache/
+.cache/
+
+# Generated outputs (keep JSON artifacts in single_pipeline/output)
+single_pipeline/output/*.tmp
