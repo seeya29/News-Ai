@@ -1,0 +1,25 @@
+[
+  {
+    "title": "TelegramStub missing file",
+    "script": "[Style: Professional newsroom tone, clear and concise. | Audience: general]\nHeadline: TelegramStub missing file\n\nStory: data\\telegram_sample.json\n\nRelated Context:\n1. TelegramStub missing file — data\\telegram_sample.json\n2. {'sha': 'c98c5b344941c45e50dded708177f7ec2e225b2b', 'node_id': 'C_kwDOBN0Z8doAKG — {\"sha\": \"c98c5b344941c45e50dded708177f7ec2e225b2b\", \"node_id\": \"C_kwDOBN0Z8doAKGM5OGM1YjM0NDk0MWM0NWU1MGRkZWQ3MDgxNzdmN2VjMmUyMjViMmI\", \"commit\": {\"author\": {\"name\": \"Neil Schemenauer\", \"email\": \"nas-github@arctrix.com\",\n",
+    "lang": "en",
+    "tone": "neutral",
+    "audience": "general",
+    "category": "general",
+    "timestamp": null,
+    "raw": {
+      "title": "TelegramStub missing file",
+      "body": "data\\telegram_sample.json",
+      "timestamp": null,
+      "lang": "en",
+      "category": "general",
+      "tone": "neutral",
+      "audience": "general",
+      "dedup_flag": true,
+      "dedup_key": "TelegramStub missing file::None",
+      "raw": {
+        "error": "file_not_found"
+      }
+    }
+  }
+]

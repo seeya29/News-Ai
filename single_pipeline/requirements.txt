@@ -1,7 +1,0 @@
-aiohttp>=3.9.0
-feedparser>=6.0.10
-PyYAML>=6.0.1
-requests>=2.31.0
-# Optional RAG/embeddings integration (used if configured)
-qdrant-client>=1.8.2
-sentence-transformers>=2.7.0

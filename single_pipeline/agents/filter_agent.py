@@ -31,28 +31,57 @@ class FilterAgent:
             self.lang_threshold = 0.3
 
     def _basic_language_detect(self, text: str) -> str:
-        # Lightweight heuristic for English/Hindi/Tamil/Bengali detection
+        # Lightweight heuristic for common Indic scripts + English
         total = len(text) or 1
         ascii_count = sum(1 for c in text if ord(c) < 128)
         devanagari_count = sum(1 for c in text if 0x0900 <= ord(c) <= 0x097F)  # Hindi
         bengali_count = sum(1 for c in text if 0x0980 <= ord(c) <= 0x09FF)     # Bengali
         tamil_count = sum(1 for c in text if 0x0B80 <= ord(c) <= 0x0BFF)       # Tamil
+        gurmukhi_count = sum(1 for c in text if 0x0A00 <= ord(c) <= 0x0A7F)    # Punjabi
+        gujarati_count = sum(1 for c in text if 0x0A80 <= ord(c) <= 0x0AFF)    # Gujarati
+        telugu_count = sum(1 for c in text if 0x0C00 <= ord(c) <= 0x0C7F)      # Telugu
+        kannada_count = sum(1 for c in text if 0x0C80 <= ord(c) <= 0x0CFF)     # Kannada
+        malayalam_count = sum(1 for c in text if 0x0D00 <= ord(c) <= 0x0D7F)   # Malayalam
+        arabic_count = sum(1 for c in text if 0x0600 <= ord(c) <= 0x06FF)      # Urdu (Arabic script)
 
         ratios = {
             "en": ascii_count / total,
             "hi": devanagari_count / total,
             "bn": bengali_count / total,
             "ta": tamil_count / total,
+            "pa": gurmukhi_count / total,
+            "gu": gujarati_count / total,
+            "te": telugu_count / total,
+            "kn": kannada_count / total,
+            "ml": malayalam_count / total,
+            "ur": arabic_count / total,
         }
         # Pick dominant script if clearly present; else mixed
         lang, score = max(ratios.items(), key=lambda x: x[1])
         # Use stricter threshold for very short texts
         threshold = max(self.lang_threshold, 0.5) if total < 15 else self.lang_threshold
+        # If nothing dominates even slightly, mark unknown; else mixed
+        if score < max(0.05, self.lang_threshold):
+            return "unknown"
         return lang if score >= threshold else "mixed"
+
+    def _validate_item(self, it: Dict[str, Any], logger: Optional[PipelineLogger]) -> Dict[str, Any]:
+        # Ensure required fields exist and are strings; coerce when possible
+        title = it.get("title", "Untitled")
+        body = it.get("body", "")
+        if not isinstance(title, str):
+            title = str(title)
+        if not isinstance(body, str):
+            body = str(body) if body is not None else ""
+        timestamp = it.get("timestamp")
+        if logger and (not title or not isinstance(title, str) or body is None):
+            logger.log_event("filter", {"warning": "invalid_item", "title_type": str(type(it.get("title"))), "body_type": str(type(it.get("body")))})
+        return {**it, "title": title, "body": body, "timestamp": timestamp}
 
     def filter_items(self, items: List[Dict[str, Any]], logger: Optional[PipelineLogger] = None) -> List[Dict[str, Any]]:
         filtered: List[Dict[str, Any]] = []
         for it in items:
+            it = self._validate_item(it, logger)
             body = it.get("body", "")
             lang = self._basic_language_detect(body)
             dedup_key = it.get("title", "") + "::" + str(it.get("timestamp"))

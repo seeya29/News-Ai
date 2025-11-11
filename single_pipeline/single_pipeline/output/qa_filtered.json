@@ -1,0 +1,164 @@
+[
+  {
+    "title": "Duplicate Story",
+    "body": "Same content across two entries",
+    "timestamp": 1,
+    "lang": "en",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Duplicate Story::1",
+    "raw": {
+      "title": "Duplicate Story",
+      "body": "Same content across two entries",
+      "timestamp": 1
+    }
+  },
+  {
+    "title": "Duplicate Story",
+    "body": "Same content across two entries",
+    "timestamp": 1,
+    "lang": "en",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Duplicate Story::1",
+    "raw": {
+      "title": "Duplicate Story",
+      "body": "Same content across two entries",
+      "timestamp": 1
+    }
+  },
+  {
+    "title": "Empty Body",
+    "body": "",
+    "timestamp": 2,
+    "lang": "mixed",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Empty Body::2",
+    "raw": {
+      "title": "Empty Body",
+      "body": "",
+      "timestamp": 2
+    }
+  },
+  {
+    "title": "Untitled",
+    "body": "Has body but empty title",
+    "timestamp": 3,
+    "lang": "en",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Untitled::3",
+    "raw": {
+      "title": "",
+      "body": "Has body but empty title",
+      "timestamp": 3
+    }
+  },
+  {
+    "title": "Malformed Body",
+    "body": "{\"unexpected\": true}",
+    "timestamp": 4,
+    "lang": "en",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Malformed Body::4",
+    "raw": {
+      "title": "Malformed Body",
+      "body": {
+        "unexpected": true
+      },
+      "timestamp": 4
+    }
+  },
+  {
+    "title": "Non-string timestamp",
+    "body": "Valid body",
+    "timestamp": "not-a-time",
+    "lang": "en",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Non-string timestamp::not-a-time",
+    "raw": {
+      "title": "Non-string timestamp",
+      "body": "Valid body",
+      "timestamp": "not-a-time"
+    }
+  },
+  {
+    "title": "Hindi text",
+    "body": "यह एक हिंदी वाक्य है।",
+    "timestamp": 5,
+    "lang": "hi",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Hindi text::5",
+    "raw": {
+      "title": "Hindi text",
+      "body": "यह एक हिंदी वाक्य है।",
+      "timestamp": 5
+    }
+  },
+  {
+    "title": "Tamil text",
+    "body": "இது ஒரு தமிழ் வாக்கியம்.",
+    "timestamp": 6,
+    "lang": "ta",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Tamil text::6",
+    "raw": {
+      "title": "Tamil text",
+      "body": "இது ஒரு தமிழ் வாக்கியம்.",
+      "timestamp": 6
+    }
+  },
+  {
+    "title": "Bengali text",
+    "body": "এটি একটি বাংলা বাক্য।",
+    "timestamp": 7,
+    "lang": "bn",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Bengali text::7",
+    "raw": {
+      "title": "Bengali text",
+      "body": "এটি একটি বাংলা বাক্য।",
+      "timestamp": 7
+    }
+  },
+  {
+    "title": "Mixed content",
+    "body": "English mixed हिन्दी বাংলা தமிழ்",
+    "timestamp": 8,
+    "lang": "en",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Mixed content::8",
+    "raw": {
+      "title": "Mixed content",
+      "body": "English mixed हिन्दी বাংলা தமிழ்",
+      "timestamp": 8
+    }
+  }
+]

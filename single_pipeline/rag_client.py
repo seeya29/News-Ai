@@ -1,6 +1,9 @@
 import json
 import os
 import hashlib
+import time
+import tempfile
+import threading
 from typing import Any, Dict, List, Tuple, Optional
 
 from logging_utils import PipelineLogger
@@ -20,39 +23,100 @@ class RAGClient:
 
     def __init__(self, cache_path: Optional[str] = None, logger: Optional[PipelineLogger] = None):
         base = os.path.dirname(__file__)
-        out_dir = os.path.join(base, "output")
-        if not os.path.exists(out_dir):
-            try:
-                os.makedirs(out_dir, exist_ok=True)
-            except Exception:
-                # If output dir can't be created, log and continue with in-memory cache
-                if logger:
-                    logger.log_event("rag", {"warning": "failed_to_create_output_dir", "path": out_dir})
-        self.cache_path = cache_path or os.path.join(out_dir, "rag_cache.json")
-        self.cache: List[Dict[str, Any]] = []
+        preferred_out_dir = os.path.join(base, "output")
         self.logger = logger or PipelineLogger()
+        # Determine a writable output directory with fallback
+        self.output_dir = self._resolve_output_dir(preferred_out_dir)
+        # Cache path and persistence flags
+        self.cache_path = cache_path or (os.path.join(self.output_dir, "rag_cache.json") if self.output_dir else None)
+        self.persistence_enabled = bool(self.cache_path)
+        # Simple inter-process lock via lock file and in-process lock
+        self._lock_file_path = os.path.join(self.output_dir, ".rag_cache.lock") if self.output_dir else None
+        self._process_lock = threading.Lock()
+        self.cache: List[Dict[str, Any]] = []
         # Optional embedding adapter
         provider_choice = os.getenv("EMBED_PROVIDER", "").lower()
         self.embedder = EmbeddingLocalAdapter() if (provider_choice == "local" and EmbeddingLocalAdapter) else None
         self._load()
 
-    def _load(self):
+    def _resolve_output_dir(self, preferred_out_dir: str) -> Optional[str]:
+        # Try preferred directory under repository
         try:
-            if os.path.exists(self.cache_path):
+            os.makedirs(preferred_out_dir, exist_ok=True)
+            return preferred_out_dir
+        except Exception as e:
+            self.logger.log_event("rag", {"warning": "failed_to_create_output_dir", "path": preferred_out_dir, "detail": str(e)})
+        # Fallback to temp directory
+        fallback = os.path.join(tempfile.gettempdir(), "single_pipeline_output")
+        try:
+            os.makedirs(fallback, exist_ok=True)
+            self.logger.log_event("rag", {"info": "using_temp_output_dir", "path": fallback})
+            return fallback
+        except Exception as e:
+            # Disable persistence if no directory is writable
+            self.logger.log_event("rag", {"error": "no_writable_output_dir", "preferred": preferred_out_dir, "fallback": fallback, "detail": str(e)})
+            return None
+
+    def _load(self):
+        if not self.persistence_enabled:
+            self.cache = []
+            self.logger.log_event("rag", {"warning": "persistence_disabled", "reason": "no_output_dir"})
+            return
+        try:
+            if self.cache_path and os.path.exists(self.cache_path):
                 with open(self.cache_path, "r", encoding="utf-8") as f:
                     self.cache = json.load(f)
         except Exception as e:
             # Fall back to empty cache but make noise for debugging
-            self.logger.log_event("rag", {"error": "cache_load_failed", "detail": str(e), "path": self.cache_path})
+            self.logger.log_event("rag", {"error": "cache_load_failed", "detail": str(e), "path": str(self.cache_path)})
             self.cache = []
 
     def _save(self):
+        if not self.persistence_enabled or not self.cache_path:
+            return
+        # Use an in-process mutex + a best-effort inter-process lock file
+        with self._process_lock:
+            lock_acquired = self._acquire_file_lock(timeout=5.0)
+            try:
+                tmp_path = self.cache_path + ".tmp"
+                with open(tmp_path, "w", encoding="utf-8") as f:
+                    json.dump(self.cache, f, ensure_ascii=False, indent=2)
+                # Atomic replace
+                os.replace(tmp_path, self.cache_path)
+            except Exception as e:
+                self.logger.log_event("rag", {"error": "cache_save_failed", "detail": str(e), "path": str(self.cache_path)})
+            finally:
+                if lock_acquired:
+                    self._release_file_lock()
+
+    def _acquire_file_lock(self, timeout: float = 5.0, poll_interval: float = 0.1) -> bool:
+        if not self._lock_file_path:
+            return False
+        start = time.time()
+        while True:
+            try:
+                # Exclusive creation fails if the file already exists
+                fd = os.open(self._lock_file_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                os.close(fd)
+                return True
+            except FileExistsError:
+                if time.time() - start > timeout:
+                    self.logger.log_event("rag", {"warning": "lock_timeout", "lock_path": self._lock_file_path})
+                    return False
+                time.sleep(poll_interval)
+            except Exception as e:
+                # Any unexpected error -> don't block persistence, but log
+                self.logger.log_event("rag", {"warning": "lock_failed", "detail": str(e)})
+                return False
+
+    def _release_file_lock(self):
+        if not self._lock_file_path:
+            return
         try:
-            with open(self.cache_path, "w", encoding="utf-8") as f:
-                json.dump(self.cache, f, ensure_ascii=False, indent=2)
-        except Exception as e:
-            # Log save failures instead of silently ignoring them
-            self.logger.log_event("rag", {"error": "cache_save_failed", "detail": str(e), "path": self.cache_path})
+            os.unlink(self._lock_file_path)
+        except Exception:
+            # Ignore errors on unlock
+            pass
 
     def _hash(self, title: str, body: str) -> str:
         h = hashlib.sha256((title + "\n" + body).encode("utf-8")).hexdigest()
