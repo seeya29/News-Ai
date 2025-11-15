@@ -181,3 +181,96 @@ class RAGClient:
                 scored.append((score, item))
         scored.sort(key=lambda x: x[0], reverse=True)
         return [it for _, it in scored[:top_k]]
+
+    # --------------------
+    # Group key assignment for dedup
+    # --------------------
+    def _round_vec(self, vec: List[float], decimals: int = 3) -> List[float]:
+        try:
+            return [round(float(x), decimals) for x in vec]
+        except Exception:
+            return vec
+
+    def assign_group_key(
+        self,
+        title: str,
+        body: str,
+        published_at_iso: Optional[str],
+        category: Optional[str] = None,
+        threshold: Optional[float] = None,
+        window_secs: Optional[int] = None,
+    ) -> str:
+        """Return a stable group_key for a new item.
+
+        Policy:
+        - If an item in cache within time window is similar (cosine >= threshold), reuse its group_key.
+        - Else, generate new group_key = sha256(rounded_vector + time_bucket).
+        - If no embeddings provider, fall back to sha256(text_norm + time_bucket).
+
+        Defaults:
+        - threshold from env DEDUP_THRESHOLD (default 0.92)
+        - window_secs from env GROUP_TIME_WINDOW (default 24h)
+        """
+        try:
+            import datetime
+            dt = datetime.datetime.fromisoformat((published_at_iso or "").replace("Z", "+00:00"))
+        except Exception:
+            dt = None
+        threshold = float(os.getenv("DEDUP_THRESHOLD", "0.92")) if threshold is None else float(threshold)
+        window_secs = int(os.getenv("GROUP_TIME_WINDOW", str(24 * 3600))) if window_secs is None else int(window_secs)
+
+        # Prepare embedding or text
+        text = (title or "") + "\n" + (body or "")
+        vec: List[float] = []
+        if self.embedder:
+            try:
+                vec = self.embedder.embed(text)
+            except Exception as e:
+                self.logger.log_event("rag", {"error": "embed_failed", "detail": str(e)})
+                vec = []
+
+        # Time bucket
+        now_ts = time.time() if dt is None else dt.timestamp()
+        bucket = int(now_ts // window_secs)
+
+        # Try to reuse a group within the window
+        for item in reversed(self.cache):  # check recent first
+            its = float(item.get("ts") or 0.0)
+            if window_secs > 0 and abs(now_ts - its) > window_secs:
+                continue
+            candidate_gk = item.get("group_key")
+            if not candidate_gk:
+                continue
+            if self.embedder and vec and item.get("embedding"):
+                try:
+                    sim = self.embedder.cosine(vec, item.get("embedding") or [])
+                except Exception as e:
+                    self.logger.log_event("rag", {"error": "cosine_failed", "detail": str(e)})
+                    sim = 0.0
+                if sim >= threshold:
+                    # Reuse this group
+                    self._append_cache_entry(title, body, vec, now_ts, candidate_gk)
+                    return candidate_gk
+            else:
+                # Fallback token overlap
+                score = self._token_overlap(text, (item.get("title", "") + " " + item.get("body", "")))
+                if score >= threshold:
+                    self._append_cache_entry(title, body, vec, now_ts, candidate_gk)
+                    return candidate_gk
+
+        # Create new group key
+        if vec:
+            rounded = self._round_vec(vec, decimals=3)
+            payload = json.dumps({"v": rounded, "b": bucket})
+        else:
+            payload = json.dumps({"t": (title or "")[:256], "b": bucket})
+        gk = hashlib.sha256(payload.encode("utf-8", errors="ignore")).hexdigest()
+        self._append_cache_entry(title, body, vec, now_ts, gk)
+        return gk
+
+    def _append_cache_entry(self, title: str, body: str, vec: List[float], ts: float, group_key: str) -> None:
+        entry = {"hash": self._hash(title, body), "title": title, "body": body, "ts": ts, "group_key": group_key}
+        if self.embedder and vec:
+            entry["embedding"] = vec
+        self.cache.append(entry)
+        self._save()

@@ -186,3 +186,28 @@ Configured in `feed_registry.yaml`:
 
 ## Notes
 - This setup avoids external APIs and heavy dependencies by default. If you want real TTS or RAG, swap stubs with actual clients and update `requirements.txt` accordingly.
+
+## Live Ingestion + API Feed (Database-backed)
+- Prepare environment variables (project root):
+  - Create an `.env` file. On Windows PowerShell: `copy .env.example .env`
+  - Fill values:
+    - `TELEGRAM_API_ID`
+    - `TELEGRAM_API_HASH`
+    - `TWITTER_BEARER_TOKEN`
+    - `YOUTUBE_API_KEY` (optional; RSS fallback is used if missing)
+- Confirm sources configuration:
+  - `single_pipeline/data/sources.json` already includes Telegram channels, X handles, YouTube channel IDs, and per-source cadences.
+- Install live ingestion libraries (in your activated venv):
+  - `pip install telethon tweepy feedparser python-dotenv`
+  - Optional: `pip install google-api-python-client` (YouTube Data API)
+  - Optional: `pip install snscrape` (X fallback if API is limited)
+- Start the ingestion worker (writes to SQLite DB):
+  - `python single_pipeline/ingest.py`
+  - Reads `.env` and `single_pipeline/data/sources.json`; stores articles in `single_pipeline/data/app.db`.
+- Start the API server (serves DB-backed feed with file fallback if DB empty):
+  - `uvicorn server.app:APP --reload`
+  - Verify at: `http://127.0.0.1:8000/api/articles/feed?limit=20`
+- Notes & tips:
+  - If Telegram prompts for a login code on first run, enter it in terminal; otherwise ensure keys are correct.
+  - X API may be rate-limited; `snscrape` provides a non-API fallback when installed.
+  - YouTube uses RSS if no API key; when a key is present, the Data API is used.
