@@ -23,7 +23,7 @@ python cli.py fetch --sources telegram_stub,youtube_rss,x_nitter,domain_api --re
 
 - Generate scripts from fetched items:
 ```bash
-python cli.py script --out-prefix demo --pretty
+python cli.py scripts --out-prefix demo --pretty
 ```
 
 - Synthesize voice (stubbed, no audio dependencies required):
@@ -47,7 +47,7 @@ pip install -r requirements.txt   # installs all project Python deps
 ```powershell
 python -m single_pipeline.cli fetch --sources telegram_stub,youtube_rss,x_nitter,domain_api --registry single_pipeline/feed_registry.yaml --out-prefix demo --pretty
 python -m single_pipeline.cli filter --out-prefix demo --pretty
-python -m single_pipeline.cli script --out-prefix demo --pretty
+python -m single_pipeline.cli scripts --out-prefix demo --pretty
 python -m single_pipeline.cli voice --out-prefix demo --pretty
 python -m single_pipeline.cli avatar --out-prefix demo --pretty
 ```
@@ -100,6 +100,72 @@ pip install -r single_pipeline/requirements.txt
    - `python single_pipeline/qa_harness.py --out-prefix qa --pretty`
 
 Outputs are written to `single_pipeline/output/` (e.g., `demo_items.json`, `demo_filtered.json`, `demo_scripts.json`, `demo_voice.json`, `demo_avatar.json`).
+
+## Server Endpoints (FastAPI)
+- Start the API server:
+```powershell
+uvicorn server.app:APP --reload
+```
+- All endpoints require `Authorization: Bearer <jwt>`; per-user rate limiting is applied and reported via `X-RateLimit-*` headers.
+
+### Feed (Grouped by Dedup Key)
+- `GET /api/articles/feed/{user_id}`
+  - Query: `limit` (1–100), `page` (>=1), optional `category` (`general|finance|tech|science`).
+  - Returns grouped articles: representative per dedup group with `group_key`, `title`, `summary`, `metadata.published_at`.
+  - Example:
+```bash
+curl -H "Authorization: Bearer $TOKEN" \
+  "http://127.0.0.1:8000/api/articles/feed/demo_user?limit=20&page=1&category=general"
+```
+
+### Trending (Aggregated by Group)
+- `GET /api/articles/trending`
+  - Query: `timeframe` (`1h|24h|7d`), optional `category`, `limit` (1–100).
+  - Returns `trending_score`, `engagement_rate`, `views`, `shares` for each group representative.
+  - Example:
+```bash
+curl -H "Authorization: Bearer $TOKEN" \
+  "http://127.0.0.1:8000/api/articles/trending?timeframe=24h&category=general&limit=20"
+```
+
+### Voice Generation
+- `POST /api/agents/voice/generate`
+  - Body: `{ "registry": "single", "category": "general", "voice": "en-US-Neural-1" }`
+  - Triggers the voice stage and writes `single_pipeline/output/<registry>_voice.json`.
+  - Example:
+```bash
+curl -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  -d '{"registry":"single","category":"general","voice":"en-US-Neural-1"}' \
+  http://127.0.0.1:8000/api/agents/voice/generate
+```
+
+### Avatar Rendering
+- `POST /api/agents/avatar/render`
+  - Body: `{ "registry": "single", "category": "general", "style": "news-anchor" }`
+  - Triggers the avatar stage and writes `single_pipeline/output/<registry>_avatar.json`.
+  - Example:
+```bash
+curl -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  -d '{"registry":"single","category":"general","style":"news-anchor"}' \
+  http://127.0.0.1:8000/api/agents/avatar/render
+```
+
+### Full Pipeline Run
+- `POST /api/pipeline/run`
+  - Body: `{ "registry": "single", "category": "general", "voice": "en-US-Neural-1", "style": "news-anchor" }`
+  - Chains stages: fetch → filter → scripts → voice → avatar.
+  - Returns output file paths for each stage under `single_pipeline/output/`.
+  - Example:
+```bash
+curl -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  -d '{"registry":"single","category":"general","voice":"en-US-Neural-1","style":"news-anchor"}' \
+  http://127.0.0.1:8000/api/pipeline/run
+```
+
+### Notes on Grouping & Dedup
+- Grouping is performed via a RAG-lite dedup key (`group_key`) combining hash and token-overlap.
+- The feed endpoint returns one representative per group; trending aggregates views/engagement/shares per group.
+- File-backed outputs: `output/rag_cache.json` maintains recent item signatures for dedup across runs.
 
 ### Test: 3 Stories per Category (End-to-End)
 - Purpose: produce per-category outputs for scripts, voice, and avatar using up to 3 items per category.

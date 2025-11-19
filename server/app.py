@@ -13,6 +13,7 @@ from fastapi.exceptions import RequestValidationError
 from starlette.requests import Request
 from pydantic import BaseModel, Field
 import base64
+from single_pipeline.cli import run_fetch, run_filter, run_scripts, run_voice, run_avatar
 from db import (
     init_db,
     get_user_preferences as db_get_user_prefs,
@@ -631,6 +632,91 @@ def track_article_engagement(payload: dict, response: Response, auth: AuthContex
             return {"success": True, "engagement_id": eid, "quality_score": q, "message": "Engagement metrics recorded"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+# --------------------
+# Voice/Avatar endpoints and pipeline orchestration
+# --------------------
+
+class VoiceGenRequest(BaseModel):
+    registry: Optional[str] = Field(default="single")
+    category: Optional[str] = Field(default="general")
+    voice: Optional[str] = Field(default="en-US-Neural-1")
+
+
+@APP.post("/api/agents/voice/generate")
+def generate_voice(payload: VoiceGenRequest, response: Response, auth: AuthContext = Depends(require_auth)):
+    err, info = _apply_rate_limit(_rate_buckets, RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+
+    try:
+        out = run_voice(registry=payload.registry or "single", category=payload.category or "general", voice=payload.voice or "en-US-Neural-1")
+        return {"status": "ok", "meta": out}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail={"error": "voice_generation_failed", "message": str(e)})
+
+
+class AvatarRenderRequest(BaseModel):
+    registry: Optional[str] = Field(default="single")
+    category: Optional[str] = Field(default="general")
+    style: Optional[str] = Field(default="news-anchor")
+
+
+@APP.post("/api/agents/avatar/render")
+def render_avatar(payload: AvatarRenderRequest, response: Response, auth: AuthContext = Depends(require_auth)):
+    err, info = _apply_rate_limit(_rate_buckets, RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+
+    try:
+        out = run_avatar(registry=payload.registry or "single", category=payload.category or "general", style=payload.style or "news-anchor")
+        return {"status": "ok", "meta": out}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail={"error": "avatar_render_failed", "message": str(e)})
+
+
+class PipelineRunRequest(BaseModel):
+    registry: Optional[str] = Field(default="single")
+    category: Optional[str] = Field(default="general")
+    voice: Optional[str] = Field(default="en-US-Neural-1")
+    style: Optional[str] = Field(default="news-anchor")
+
+
+@APP.post("/api/pipeline/run")
+def run_pipeline(payload: PipelineRunRequest, response: Response, auth: AuthContext = Depends(require_auth)):
+    # Lightweight chaining: fetch -> filter -> scripts -> voice -> avatar
+    err, info = _apply_rate_limit(_rate_buckets, RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+
+    try:
+        sf = run_fetch(registry=payload.registry or "single", category=payload.category or "general")
+        fl = run_filter(registry=payload.registry or "single", category=payload.category or "general")
+        sc = run_scripts(registry=payload.registry or "single", category=payload.category or "general")
+        vc = run_voice(registry=payload.registry or "single", category=payload.category or "general", voice=payload.voice or "en-US-Neural-1")
+        av = run_avatar(registry=payload.registry or "single", category=payload.category or "general", style=payload.style or "news-anchor")
+        return {
+            "status": "ok",
+            "stages": {
+                "fetch": sf,
+                "filter": fl,
+                "scripts": sc,
+                "voice": vc,
+                "avatar": av,
+            },
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail={"error": "pipeline_run_failed", "message": str(e)})
 
 
 # --------------------
