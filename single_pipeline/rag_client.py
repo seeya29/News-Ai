@@ -6,10 +6,10 @@ import tempfile
 import threading
 from typing import Any, Dict, List, Tuple, Optional
 
-from logging_utils import PipelineLogger
+from .logging_utils import PipelineLogger
 
 try:
-    from providers.embeddings.adapter import EmbeddingLocalAdapter
+    from .providers.embeddings.adapter import EmbeddingLocalAdapter
 except Exception:
     EmbeddingLocalAdapter = None
 
@@ -24,7 +24,7 @@ class RAGClient:
     def __init__(self, cache_path: Optional[str] = None, logger: Optional[PipelineLogger] = None):
         base = os.path.dirname(__file__)
         preferred_out_dir = os.path.join(base, "output")
-        self.logger = logger or PipelineLogger()
+        self.logger = logger or PipelineLogger(component="rag_client")
         # Determine a writable output directory with fallback
         self.output_dir = self._resolve_output_dir(preferred_out_dir)
         # Cache path and persistence flags
@@ -45,22 +45,22 @@ class RAGClient:
             os.makedirs(preferred_out_dir, exist_ok=True)
             return preferred_out_dir
         except Exception as e:
-            self.logger.log_event("rag", {"warning": "failed_to_create_output_dir", "path": preferred_out_dir, "detail": str(e)})
+            self.logger.warning("failed_to_create_output_dir", path=preferred_out_dir, detail=str(e))
         # Fallback to temp directory
         fallback = os.path.join(tempfile.gettempdir(), "single_pipeline_output")
         try:
             os.makedirs(fallback, exist_ok=True)
-            self.logger.log_event("rag", {"info": "using_temp_output_dir", "path": fallback})
+            self.logger.info("using_temp_output_dir", path=fallback)
             return fallback
         except Exception as e:
             # Disable persistence if no directory is writable
-            self.logger.log_event("rag", {"error": "no_writable_output_dir", "preferred": preferred_out_dir, "fallback": fallback, "detail": str(e)})
+            self.logger.error("no_writable_output_dir", preferred=preferred_out_dir, fallback=fallback, detail=str(e))
             return None
 
     def _load(self):
         if not self.persistence_enabled:
             self.cache = []
-            self.logger.log_event("rag", {"warning": "persistence_disabled", "reason": "no_output_dir"})
+            self.logger.warning("persistence_disabled", reason="no_output_dir")
             return
         try:
             if self.cache_path and os.path.exists(self.cache_path):
@@ -68,7 +68,7 @@ class RAGClient:
                     self.cache = json.load(f)
         except Exception as e:
             # Fall back to empty cache but make noise for debugging
-            self.logger.log_event("rag", {"error": "cache_load_failed", "detail": str(e), "path": str(self.cache_path)})
+            self.logger.error("cache_load_failed", detail=str(e), path=str(self.cache_path))
             self.cache = []
 
     def _save(self):
@@ -84,7 +84,7 @@ class RAGClient:
                 # Atomic replace
                 os.replace(tmp_path, self.cache_path)
             except Exception as e:
-                self.logger.log_event("rag", {"error": "cache_save_failed", "detail": str(e), "path": str(self.cache_path)})
+                self.logger.error("cache_save_failed", detail=str(e), path=str(self.cache_path))
             finally:
                 if lock_acquired:
                     self._release_file_lock()
@@ -101,12 +101,12 @@ class RAGClient:
                 return True
             except FileExistsError:
                 if time.time() - start > timeout:
-                    self.logger.log_event("rag", {"warning": "lock_timeout", "lock_path": self._lock_file_path})
+                    self.logger.warning("lock_timeout", lock_path=self._lock_file_path)
                     return False
                 time.sleep(poll_interval)
             except Exception as e:
                 # Any unexpected error -> don't block persistence, but log
-                self.logger.log_event("rag", {"warning": "lock_failed", "detail": str(e)})
+                self.logger.warning("lock_failed", detail=str(e))
                 return False
 
     def _release_file_lock(self):
@@ -226,7 +226,7 @@ class RAGClient:
             try:
                 vec = self.embedder.embed(text)
             except Exception as e:
-                self.logger.log_event("rag", {"error": "embed_failed", "detail": str(e)})
+                self.logger.error("embed_failed", detail=str(e))
                 vec = []
 
         # Time bucket
@@ -245,7 +245,7 @@ class RAGClient:
                 try:
                     sim = self.embedder.cosine(vec, item.get("embedding") or [])
                 except Exception as e:
-                    self.logger.log_event("rag", {"error": "cosine_failed", "detail": str(e)})
+                    self.logger.error("cosine_failed", detail=str(e))
                     sim = 0.0
                 if sim >= threshold:
                     # Reuse this group

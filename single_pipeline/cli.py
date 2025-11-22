@@ -8,6 +8,7 @@ from .agents.script_gen_agent import ScriptGenAgent
 from .agents.tts_agent_stub import TTSAgentStub
 from .agents.avatar_agent_stub import AvatarAgentStub
 from .logging_utils import StageLogger, PipelineLogger
+from .bucket_orchestrator import BucketOrchestrator
 
 
 def _output_root() -> str:
@@ -69,12 +70,19 @@ def run_scripts(registry: str = "single", category: str = "general") -> Dict[str
     return {"count": len(scripts), "output_file": out_path}
 
 
-def run_voice(registry: str = "single", category: str = "general", voice: str = "en-US-Neural-1") -> Dict[str, Any]:
+def run_voice(
+    registry: str = "single",
+    category: str = "general",
+    voice: str = "en-US-Neural-1",
+    limit: Optional[int] = None,
+) -> Dict[str, Any]:
     log = PipelineLogger(component="cli_voice")
     run = StageLogger(source="pipeline", category=category, meta={"registry": registry})
     run.start("voice")
     scripts_path = os.path.join(_output_root(), f"{registry}_scripts.json")
     scripts = _read_items(scripts_path)
+    if isinstance(limit, int) and limit > 0:
+        scripts = scripts[:limit]
     agent = TTSAgentStub(voice=voice, logger=log)
     voice_items = agent.synthesize(scripts, category=category)
     out_path = _write_json(registry, "voice", voice_items)
@@ -125,6 +133,10 @@ if __name__ == "__main__":
     av.add_argument("--category", default="general")
     av.add_argument("--style", default="news-anchor")
 
+    bkt = sub.add_parser("buckets", help="Run bucketed orchestration across stages")
+    bkt.add_argument("--registry", default="single")
+    bkt.add_argument("--category", default="general")
+
     args = parser.parse_args()
     if args.cmd == "fetch":
         out = run_fetch(registry=args.registry, category=args.category)
@@ -140,6 +152,10 @@ if __name__ == "__main__":
         print(json.dumps(out, ensure_ascii=False))
     elif args.cmd == "avatar":
         out = run_avatar(registry=args.registry, category=args.category, style=args.style)
+        print(json.dumps(out, ensure_ascii=False))
+    elif args.cmd == "buckets":
+        orch = BucketOrchestrator(registry=args.registry, category=args.category)
+        out = orch.run()
         print(json.dumps(out, ensure_ascii=False))
     else:
         parser.print_help()

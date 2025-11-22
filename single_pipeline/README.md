@@ -36,6 +36,11 @@ python cli.py voice --out-prefix demo --pretty
 python cli.py avatar --out-prefix demo --pretty
 ```
 
+- Bucketed orchestration (routes by language+tone, runs scripts→voice→avatar):
+```bash
+python -m single_pipeline.cli buckets --registry single --category general
+```
+
 ## Quick Start (Project Root)
 - Create venv and install requirements:
 ```powershell
@@ -50,6 +55,7 @@ python -m single_pipeline.cli filter --out-prefix demo --pretty
 python -m single_pipeline.cli scripts --out-prefix demo --pretty
 python -m single_pipeline.cli voice --out-prefix demo --pretty
 python -m single_pipeline.cli avatar --out-prefix demo --pretty
+python -m single_pipeline.cli buckets --registry demo --category general
 ```
 - Category test runner (3 stories per category):
 ```powershell
@@ -244,6 +250,40 @@ Configured in `feed_registry.yaml`:
 - `feed_registry.yaml`: Dynamic registry with 10+ connectors across RSS/APIs/stubs
 - `fetchers/`: Modular fetchers (RSS, APIs, Telegram stub, Nitter)
 - `LEARNING_KIT.md`: Intro to async pipelines and modular feeds
+
+## Bucketed Orchestration (Routing, Priority, Concurrency)
+
+Run a bucketed multi-agent flow that routes items by `(language, tone)` into fixed buckets and processes them across `scripts → voice → avatar`:
+
+- Command:
+  - `python -m single_pipeline.cli buckets --registry <prefix> --category <category>`
+  - `<prefix>` must correspond to your filtered output file name: `single_pipeline/output/<prefix>_filtered.json`.
+
+- Routing table:
+  - `(hi, youth) → HI-YOUTH`, `(hi, news) → HI-NEWS`, `(en, news) → EN-NEWS`, `(en, kids) → EN-KIDS`, `(ta, news) → TA-NEWS`, `(bn, news) → BN-NEWS`.
+  - Default bucket: `EN-NEWS` for any unmapped pair.
+
+- Priority order:
+  - `HI-NEWS`, `EN-NEWS`, `HI-YOUTH`, `EN-KIDS`, `TA-NEWS`, `BN-NEWS`.
+
+- Concurrency limits:
+  - Global workers: `min(4, os.cpu_count())`.
+  - Per-bucket caps: `EN-NEWS: 2`, others: `1` (scheduler respects global cap).
+
+- Error handling:
+  - Retries with exponential backoff: `1s → 2s → 4s`, `max_retries=3`.
+  - Dead-letter queue appends JSON lines to `single_pipeline/data/dead_letter/{stage}.jsonl`.
+
+- Outputs:
+  - Per-bucket stage files at `single_pipeline/output/{prefix}_{bucket}_{stage}.json` for `scripts`, `voice`, `avatar`.
+
+- Tracing (LangGraph-friendly):
+  - Redacted JSONL traces stored under `single_pipeline/data/traces/` per stage.
+  - Each entry:
+    ```json
+    { "trace_id": "uuid", "stage": "FilterAgent|ScriptGenAgent|TTSAgent|AvatarAgent", "input": { ... }, "output": { ... }, "ts": "ISO", "status": "running|success|failed" }
+    ```
+  - Sensitive fields like `user_id`, `handle`, `email`, `ip` are masked as "***".
 
 ## Customize
 - Add a new connector by defining a fetcher class and wiring it in the registry.

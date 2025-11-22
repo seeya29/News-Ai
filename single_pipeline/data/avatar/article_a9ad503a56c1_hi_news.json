@@ -1,0 +1,15 @@
+{
+  "title": "भारत में मौसम",
+  "lang": "hi",
+  "tone": "news",
+  "style_preset": "anchor_hindi_1",
+  "audio_url": "file://C:\\Users\\SEEYA\\OneDrive\\Desktop\\News ai\\single_pipeline\\data\\tts\\article_79fea5ae54b9_hi_neutral.wav",
+  "output": {
+    "format": "mp4",
+    "resolution": "1280x720",
+    "max_duration_seconds": 180,
+    "status": "stub"
+  },
+  "generated_at": "2025-11-21T09:11:39.872095+00:00",
+  "category": "general"
+}

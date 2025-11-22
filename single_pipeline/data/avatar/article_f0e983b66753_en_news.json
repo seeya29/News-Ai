@@ -1,0 +1,15 @@
+{
+  "title": "AI breakthrough in chips",
+  "lang": "en",
+  "tone": "news",
+  "style_preset": "anchor_english_1",
+  "audio_url": "file://C:\\Users\\SEEYA\\OneDrive\\Desktop\\News ai\\single_pipeline\\data\\tts\\article_8bb99128c80e_en_formal.wav",
+  "output": {
+    "format": "mp4",
+    "resolution": "1280x720",
+    "max_duration_seconds": 180,
+    "status": "stub"
+  },
+  "generated_at": "2025-11-21T09:11:39.867729+00:00",
+  "category": "general"
+}

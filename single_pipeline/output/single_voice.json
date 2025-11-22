@@ -1,43 +1,16 @@
 [
   {
-    "title": "Consumer complaint advisory",
-    "voice": {
-      "engine": "stub",
-      "voice": "en_neutral",
-      "content": "",
-      "error": null
-    },
+    "title": "Scheduler seed: tech update",
     "lang": "en",
-    "timestamp": "2025-10-18T08:28:24.422527",
-    "raw": {
-      "title": "Consumer complaint advisory",
-      "body": "If you have an unresolved issue with a merchant, first gather receipts, communications, and timelines. Contact the merchant's support to attempt a resolution. If unsuccessful, file a complaint with your local consumer protection agency and provide all evidence. Track responses and escalate to small claims court if needed.",
-      "timestamp": "2025-10-18T08:28:24.422527",
-      "raw": {
-        "title": "Consumer complaint advisory",
-        "body": "If you have an unresolved issue with a merchant, first gather receipts, communications, and timelines. Contact the merchant's support to attempt a resolution. If unsuccessful, file a complaint with your local consumer protection agency and provide all evidence. Track responses and escalate to small claims court if needed.",
-        "timestamp": "2025-10-18T08:28:24.422527",
-        "domain": "consumer_rights",
-        "timeline": [
-          {
-            "step": "Collect evidence",
-            "details": "receipts, messages, dates"
-          },
-          {
-            "step": "Contact merchant",
-            "details": "file a ticket, request resolution"
-          },
-          {
-            "step": "File complaint",
-            "details": "submit to consumer protection authority"
-          },
-          {
-            "step": "Escalate",
-            "details": "consider small claims court if not resolved"
-          }
-        ],
-        "outcome": "Guidance provided; next actions outlined"
-      }
+    "voice": "en-US-Neural-1",
+    "audio_url": "/data/tts/article_06dfe9f325d1_en_neutral.wav",
+    "audio_path": "C:\\Users\\SEEYA\\OneDrive\\Desktop\\News ai\\single_pipeline\\data\\tts\\article_06dfe9f325d1_en_neutral.wav",
+    "metadata": {
+      "generated_at": "2025-11-22T11:34:59.517405+00:00",
+      "category": "general",
+      "format": "wav",
+      "sample_rate": 16000,
+      "channels": 1
     }
   }
 ]

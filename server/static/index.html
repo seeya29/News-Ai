@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>News AI Dashboard</title>
+    <link rel="stylesheet" href="/ui/styles.css" />
+  </head>
+  <body data-theme="light">
+    <header class="topbar">
+      <div class="brand">News AI</div>
+      <nav class="controls">
+        <label class="theme-toggle">
+          <input type="checkbox" id="themeToggle" />
+          <span>Dark</span>
+        </label>
+        <select id="langSelect" class="select">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="es">Spanish</option>
+        </select>
+        <input id="jwtInput" class="input" placeholder="Paste JWT token" />
+        <button id="saveJwtBtn" class="btn">Save Token</button>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="pipeline">
+        <h2>AI Pipeline</h2>
+        <div class="stages" id="pipelineStages">
+          <div class="stage" data-stage="filter">Filter</div>
+          <div class="stage" data-stage="verify">Verify</div>
+          <div class="stage" data-stage="script">Script</div>
+          <div class="stage" data-stage="voice">Voice</div>
+          <div class="stage" data-stage="avatar">Avatar</div>
+        </div>
+        <div class="actions">
+          <button id="runFetchBtn" class="btn">Run Fetch</button>
+          <button id="runProcessBtn" class="btn">Run Process</button>
+          <button id="runVoiceBtn" class="btn">Run Voice</button>
+          <button id="runAvatarBtn" class="btn">Render Avatar</button>
+        </div>
+        <div id="pipelineStatus" class="status"></div>
+      </section>
+
+      <section class="feed">
+        <h2>Feed Preview</h2>
+        <div id="feedList" class="cards"></div>
+      </section>
+
+      <section class="feedback">
+        <h2>Live Feedback</h2>
+        <ul id="feedbackEvents" class="events"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>Dashboard • Language • Theme • Feedback</div>
+    </footer>
+
+    <script src="/ui/app.js"></script>
+  </body>
+  </html>

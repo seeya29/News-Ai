@@ -1,6 +1,8 @@
 import logging
 import sys
 import json
+import os
+from logging.handlers import TimedRotatingFileHandler
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 
@@ -22,6 +24,19 @@ class PipelineLogger:
             formatter = logging.Formatter("%(message)s")
             handler.setFormatter(formatter)
             self._logger.addHandler(handler)
+        # File logging: structured JSON, 7-day retention, rotate daily
+        if not any(isinstance(h, TimedRotatingFileHandler) for h in self._logger.handlers):
+            try:
+                logs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "logs"))
+                os.makedirs(logs_dir, exist_ok=True)
+                file_path = os.path.join(logs_dir, "app.log")
+                fh = TimedRotatingFileHandler(file_path, when="D", interval=1, backupCount=7, encoding="utf-8")
+                fh.setLevel(level)
+                fh.setFormatter(logging.Formatter("%(message)s"))
+                self._logger.addHandler(fh)
+            except Exception:
+                # Best-effort; if file handler fails, continue with stdout
+                pass
 
     def _emit(self, level: int, event: str, **fields):
         payload = {

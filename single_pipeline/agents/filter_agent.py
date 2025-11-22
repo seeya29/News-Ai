@@ -1,15 +1,15 @@
 from typing import Any, Dict, List, Optional
 import os
 
-from logging_utils import PipelineLogger
-from rag_client import RAGClient
+from ..logging_utils import PipelineLogger
+from ..rag_client import RAGClient
 try:
     from uniguru_client import UniguruClient
 except Exception:
     UniguruClient = None
 
 try:
-    from providers.uniguru_local.adapter import UniguruLocalAdapter
+    from ..providers.uniguru_local.adapter import UniguruLocalAdapter
 except Exception:
     UniguruLocalAdapter = None
 
@@ -75,7 +75,7 @@ class FilterAgent:
             body = str(body) if body is not None else ""
         timestamp = it.get("timestamp")
         if logger and (not title or not isinstance(title, str) or body is None):
-            logger.log_event("filter", {"warning": "invalid_item", "title_type": str(type(it.get("title"))), "body_type": str(type(it.get("body")))})
+            logger.warning("invalid_item", title_type=str(type(it.get("title"))), body_type=str(type(it.get("body"))))
         return {**it, "title": title, "body": body, "timestamp": timestamp}
 
     def filter_items(self, items: List[Dict[str, Any]], logger: Optional[PipelineLogger] = None) -> List[Dict[str, Any]]:
@@ -114,5 +114,5 @@ class FilterAgent:
                 "raw": it.get("raw", {})
             })
         if logger:
-            logger.log_event("filter", {"count": len(filtered)})
+            logger.info("filter_items_count", count=len(filtered))
         return filtered

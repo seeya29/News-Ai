@@ -91,7 +91,13 @@ def fetch_x_handles(handles: List[str], bearer_token: Optional[str], limit_per_h
     except Exception:
         tweepy = None
 
-    if tweepy and bearer_token:
+    prefer_scrape = False
+    try:
+        import os as _os
+        prefer_scrape = (_os.getenv("X_USE_SNSCRAPE", "").lower() in ("1", "true", "yes"))
+    except Exception:
+        prefer_scrape = False
+    if tweepy and bearer_token and not prefer_scrape:
         try:
             client = tweepy.Client(bearer_token=bearer_token, wait_on_rate_limit=True)
         except Exception as e:

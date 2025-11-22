@@ -7,14 +7,24 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException, Depends, Response
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.exceptions import RequestValidationError
 from starlette.requests import Request
+from starlette.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 import base64
 from single_pipeline.cli import run_fetch, run_filter, run_scripts, run_voice, run_avatar
-from db import (
+from single_pipeline.rag_client import RAGClient
+from single_pipeline.debug.langgraph_stub import build_graph_from_traces
+from single_pipeline.registry import (
+    DEFAULT_REGISTRY_PATH,
+    load_registry,
+    validate_feeds,
+    save_registry_yaml,
+    hot_reload,
+)
+from server.db import (
     init_db,
     get_user_preferences as db_get_user_prefs,
     upsert_user_preferences as db_upsert_user_prefs,
@@ -26,6 +36,7 @@ from db import (
     get_article_by_id as db_get_article_by_id,
     get_group_representative as db_get_group_representative,
     get_articles_in_timeframe as db_get_articles_in_timeframe,
+    upsert_article as db_upsert_article,
 )
 
 
@@ -215,6 +226,7 @@ def _load_items_from_output(category: Optional[str]) -> List[Dict[str, Any]]:
     root = os.path.join(os.path.dirname(__file__), "..", "single_pipeline", "output")
     root = os.path.abspath(root)
     items: List[Dict[str, Any]] = []
+    rag = RAGClient()
     for path in glob.glob(os.path.join(root, "*_items.json")):
         try:
             with open(path, "r", encoding="utf-8") as f:
@@ -225,6 +237,16 @@ def _load_items_from_output(category: Optional[str]) -> List[Dict[str, Any]]:
                     body = _safe_str(it.get("body"))
                     ts = it.get("timestamp")
                     item_cat = (it.get("category") or (category or "general")).lower()
+                    published_iso = _iso(ts)
+                    # RAG dedup flags + group key assignment
+                    try:
+                        dedup_flag = rag.is_duplicate(title or "Untitled", body or "")
+                    except Exception:
+                        dedup_flag = False
+                    try:
+                        group_key = rag.assign_group_key(title or "Untitled", body or "", published_iso, item_cat)
+                    except Exception:
+                        group_key = None
                     # build response shape
                     items.append({
                         "id": _hash_id(title, body),
@@ -234,13 +256,14 @@ def _load_items_from_output(category: Optional[str]) -> List[Dict[str, Any]]:
                             "logo_url": "https://cdn.newsai.com/sources/news-ai.png",
                         },
                         "metadata": {
-                            "published_at": _iso(ts),
+                            "published_at": published_iso,
                             "category": item_cat,
                             "reading_time_minutes": _reading_time_minutes(body),
+                            "group_key": group_key,
                         },
                         "relevance_score": 0.75,
                         "thumbnail_url": "https://cdn.newsai.com/thumbs/default.jpg",
-                        "processing_status": "verifying",
+                        "processing_status": ("deduped" if dedup_flag else "ingested"),
                         "processing_progress": 50,
                         "processing_stage": "Verify",
                     })
@@ -410,6 +433,14 @@ def _build_article_index() -> None:
 
 
 def _find_article_by_id(article_id: str) -> Optional[Dict[str, Any]]:
+    # Prefer DB-backed lookup for performance; fallback to file-backed index
+    try:
+        row = db_get_article_by_id(article_id)
+        if row:
+            return row
+    except Exception:
+        # Fall through to file-backed index
+        pass
     global _article_index, _article_index_expires
     if time.time() > _article_index_expires or not _article_index:
         _build_article_index()
@@ -462,10 +493,28 @@ def submit_article_feedback(payload: ArticleFeedbackRequest, response: Response,
     if reward is None:
         return _error("invalid_action", 400, "Feedback action invalid", details={"action": payload.action})
 
-    # Find article
+    # Find article; if missing (e.g., preview items without IDs), create a stub in DB
     article = _find_article_by_id(payload.article_id)
     if not article:
-        return _error("article_not_found", 404, f"Article with ID '{payload.article_id}' does not exist")
+        try:
+            stub = {
+                "id": payload.article_id,
+                "title": None,
+                "source_name": "UI Preview",
+                "source_url": None,
+                "thumbnail_url": None,
+                "category": "general",
+                "published_at": datetime.now(timezone.utc).isoformat(),
+                "relevance_score": 0.75,
+                "processing_status": "ingested",
+                "processing_progress": 0,
+                "group_key": None,
+            }
+            db_upsert_article(stub)
+            article = stub
+        except Exception:
+            # Even if upsert fails, proceed with default base score
+            article = {"id": payload.article_id, "relevance_score": 0.75}
 
     base_score = float(article.get("relevance_score", 0.75))
     updated_score = _update_relevance(base_score, reward)
@@ -642,6 +691,7 @@ class VoiceGenRequest(BaseModel):
     registry: Optional[str] = Field(default="single")
     category: Optional[str] = Field(default="general")
     voice: Optional[str] = Field(default="en-US-Neural-1")
+    limit: Optional[int] = Field(default=12, ge=1, le=200)
 
 
 @APP.post("/api/agents/voice/generate")
@@ -654,7 +704,12 @@ def generate_voice(payload: VoiceGenRequest, response: Response, auth: AuthConte
     response.headers["X-RateLimit-Reset"] = str(info["reset"])
 
     try:
-        out = run_voice(registry=payload.registry or "single", category=payload.category or "general", voice=payload.voice or "en-US-Neural-1")
+        out = run_voice(
+            registry=payload.registry or "single",
+            category=payload.category or "general",
+            voice=payload.voice or "en-US-Neural-1",
+            limit=payload.limit or 12,
+        )
         return {"status": "ok", "meta": out}
     except Exception as e:
         raise HTTPException(status_code=500, detail={"error": "voice_generation_failed", "message": str(e)})
@@ -1213,6 +1268,178 @@ def get_trending_articles(timeframe: Optional[str] = "24h", category: Optional[s
 
     _set_trend_cache(key, response)
     return response
+
+
+# --------------------
+# Debug graph endpoint
+# --------------------
+
+@APP.post("/api/debug/graph/build")
+def build_debug_graph(response: Response, auth: AuthContext = Depends(require_auth)):
+    err, info = _apply_rate_limit(_rate_buckets, RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+
+    try:
+        out = build_graph_from_traces()
+        return {"status": "ok", "graph": out}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail={"error": "graph_build_failed", "message": str(e)})
+
+
+# --------------------
+# UI-friendly wrapper endpoints for Day 1
+# --------------------
+
+class BasicPipelineRequest(BaseModel):
+    registry: Optional[str] = Field(default="single")
+    category: Optional[str] = Field(default="general")
+    limit_preview: Optional[int] = Field(default=10, ge=1, le=50)
+
+
+def _read_json_list(path: str) -> List[Dict[str, Any]]:
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, list) else (data.get("items") or [])
+    except Exception:
+        return []
+
+
+@APP.post("/fetch")
+def ui_fetch(payload: BasicPipelineRequest, response: Response, auth: AuthContext = Depends(require_auth)):
+    err, info = _apply_rate_limit(_rate_buckets, RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+    try:
+        registry = payload.registry or "single"
+        category = payload.category or "general"
+        out = run_fetch(registry=registry, category=category)
+        base = os.path.join(os.path.dirname(__file__), "..", "single_pipeline", "output")
+        items_path = os.path.abspath(os.path.join(base, f"{registry}_items.json"))
+        items = _read_json_list(items_path)
+        if not isinstance(items, list):
+            items = []
+        if len(items) == 0:
+            seed = [{
+                "title": "Live pipeline seed",
+                "body": "Seeded item to keep stages active until feeds populate.",
+                "timestamp": int(time.time()),
+                "category": category,
+            }]
+            try:
+                with open(items_path, "w", encoding="utf-8") as f:
+                    json.dump(seed, f, ensure_ascii=False, indent=2)
+                items = seed
+            except Exception:
+                items = []
+        preview = items[: int(payload.limit_preview or 10)]
+        return {"status": "ok", "count": len(items), "preview": preview, "files": {"items": items_path}}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail={"error": "fetch_failed", "message": str(e)})
+
+
+@APP.post("/process")
+def ui_process(payload: BasicPipelineRequest, response: Response, auth: AuthContext = Depends(require_auth)):
+    err, info = _apply_rate_limit(_rate_buckets, RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+    try:
+        registry = payload.registry or "single"
+        category = payload.category or "general"
+        fl = run_filter(registry=registry, category=category)
+        sc = run_scripts(registry=registry, category=category)
+        base = os.path.join(os.path.dirname(__file__), "..", "single_pipeline", "output")
+        filtered_path = os.path.abspath(os.path.join(base, f"{registry}_filtered.json"))
+        scripts_path = os.path.abspath(os.path.join(base, f"{registry}_scripts.json"))
+        filtered = _read_json_list(filtered_path)
+        scripts = _read_json_list(scripts_path)
+        # UI preview aligns with Noopur’s schema-like payload
+        preview = [
+            {
+                "title": s.get("title"),
+                "lang": s.get("lang"),
+                "audience": s.get("audience"),
+                "tone": s.get("tone"),
+                "variants": s.get("variants"),
+                "metadata": s.get("metadata"),
+            }
+            for s in scripts[: int(payload.limit_preview or 10)]
+        ]
+        return {
+            "status": "ok",
+            "counts": {"filtered": len(filtered), "scripts": len(scripts)},
+            "preview": preview,
+            "files": {"filtered": filtered_path, "scripts": scripts_path},
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail={"error": "process_failed", "message": str(e)})
+
+
+@APP.post("/voice")
+def ui_voice(payload: VoiceGenRequest, response: Response, auth: AuthContext = Depends(require_auth)):
+    err, info = _apply_rate_limit(_rate_buckets, RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+    try:
+        registry = payload.registry or "single"
+        category = payload.category or "general"
+        voice_opt = payload.voice or "en-US-Neural-1"
+        out = run_voice(registry=registry, category=category, voice=voice_opt, limit=payload.limit or 12)
+        base = os.path.join(os.path.dirname(__file__), "..", "single_pipeline", "output")
+        voice_path = os.path.abspath(os.path.join(base, f"{registry}_voice.json"))
+        voice_items = _read_json_list(voice_path)
+        preview = voice_items[:10]
+        return {"status": "ok", "count": len(voice_items), "preview": preview, "files": {"voice": voice_path}}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail={"error": "voice_failed", "message": str(e)})
+
+
+@APP.post("/feedback")
+def ui_feedback(payload: 'ArticleFeedbackRequest', response: Response, auth: AuthContext = Depends(require_auth)):
+    # Delegate to the existing feedback endpoint logic for consistency
+    return submit_article_feedback(payload, response, auth)
+
+# --------------------
+# Static UI mounting
+# --------------------
+STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
+if not os.path.isdir(STATIC_DIR):
+    try:
+        os.makedirs(STATIC_DIR, exist_ok=True)
+    except Exception:
+        pass
+
+APP.mount("/ui", StaticFiles(directory=STATIC_DIR, html=True), name="ui")
+
+# Serve generated media (TTS WAVs, Avatar JSON) for UI preview/playback
+_DATA_TTS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "single_pipeline", "data", "tts"))
+_DATA_AVATAR_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "single_pipeline", "data", "avatar"))
+try:
+    os.makedirs(_DATA_TTS_DIR, exist_ok=True)
+    os.makedirs(_DATA_AVATAR_DIR, exist_ok=True)
+except Exception:
+    pass
+
+APP.mount("/data/tts", StaticFiles(directory=_DATA_TTS_DIR), name="data_tts")
+APP.mount("/data/avatar", StaticFiles(directory=_DATA_AVATAR_DIR), name="data_avatar")
+
+
+@APP.get("/")
+def root_redirect():
+    return RedirectResponse(url="/ui/")
 @APP.on_event("startup")
 def _startup():
     try:
@@ -1220,3 +1447,103 @@ def _startup():
     except Exception:
         # DB init is best-effort; file-backed paths continue to work
         pass
+
+# --------------------
+# Admin: Feeds Registry (JWT admin only)
+# --------------------
+
+class Feed(BaseModel):
+    id: str
+    type: str
+    cadence_seconds: int
+    channel: Optional[str] = None  # telegram
+    handle: Optional[str] = None   # x
+    channel_id: Optional[str] = None  # youtube_rss
+
+
+class RegistryUpload(BaseModel):
+    # Accept raw dicts to preserve unknown fields for validation warnings
+    feeds: Optional[List[Dict[str, Any]]] = None
+    yaml: Optional[str] = None
+
+
+ADMIN_FEEDS_RATE_LIMIT_PER_MINUTE = 10
+_admin_feeds_get_rate_buckets: Dict[str, Dict[str, Any]] = {}
+_admin_feeds_post_rate_buckets: Dict[str, Dict[str, Any]] = {}
+_admin_feeds_reload_rate_buckets: Dict[str, Dict[str, Any]] = {}
+
+
+@APP.get("/api/admin/feeds/registry")
+def get_feeds_registry(response: Response, auth: AuthContext = Depends(require_auth)):
+    if (auth.role or "user") != "admin":
+        raise HTTPException(status_code=403, detail="forbidden")
+    err, info = _apply_rate_limit(_admin_feeds_get_rate_buckets, ADMIN_FEEDS_RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+    try:
+        reg = load_registry(DEFAULT_REGISTRY_PATH)
+        return {"path": DEFAULT_REGISTRY_PATH, "registry": reg}
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@APP.post("/api/admin/feeds/registry")
+def post_feeds_registry(payload: RegistryUpload, response: Response, auth: AuthContext = Depends(require_auth)):
+    if (auth.role or "user") != "admin":
+        raise HTTPException(status_code=403, detail="forbidden")
+    err, info = _apply_rate_limit(_admin_feeds_post_rate_buckets, ADMIN_FEEDS_RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+
+    feeds_data: List[Dict[str, Any]] = []
+    if payload.yaml:
+        # Parse YAML directly
+        try:
+            reg = load_registry(path=None)  # ensure yaml dependency check
+            import yaml  # type: ignore
+            parsed = yaml.safe_load(payload.yaml) or {}
+            feeds_data = (parsed.get("feeds") or [])
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"invalid_yaml: {e}")
+    elif payload.feeds:
+        # Preserve as-is to allow unknown fields to be surfaced in warnings
+        feeds_data = payload.feeds or []
+    else:
+        raise HTTPException(status_code=400, detail="either 'yaml' string or 'feeds' list is required")
+
+    # Validate with warnings, save YAML canonicalized
+    try:
+        validated, warnings = validate_feeds(feeds_data)
+        path = save_registry_yaml(validated, DEFAULT_REGISTRY_PATH)
+        return {"result": "ok", "path": path, "feeds": len(validated), "warnings": warnings}
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@APP.post("/api/admin/feeds/reload")
+def post_feeds_reload(registry_name: Optional[str] = "single", response: Response = None, auth: AuthContext = Depends(require_auth)):
+    if (auth.role or "user") != "admin":
+        raise HTTPException(status_code=403, detail="forbidden")
+    err, info = _apply_rate_limit(_admin_feeds_reload_rate_buckets, ADMIN_FEEDS_RATE_LIMIT_PER_MINUTE, auth.user_id)
+    if err is not None:
+        return err
+    response.headers["X-RateLimit-Limit"] = str(info["limit"])
+    response.headers["X-RateLimit-Remaining"] = str(info["remaining"])
+    response.headers["X-RateLimit-Reset"] = str(info["reset"])
+    try:
+        summary = hot_reload(registry_name=registry_name, path=DEFAULT_REGISTRY_PATH)
+        return summary
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

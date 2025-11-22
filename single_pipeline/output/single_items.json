@@ -1,32 +1,8 @@
 [
   {
-    "title": "Consumer complaint advisory",
-    "body": "If you have an unresolved issue with a merchant, first gather receipts, communications, and timelines. Contact the merchant's support to attempt a resolution. If unsuccessful, file a complaint with your local consumer protection agency and provide all evidence. Track responses and escalate to small claims court if needed.",
-    "timestamp": "2025-10-18T08:28:24.422527",
-    "raw": {
-      "title": "Consumer complaint advisory",
-      "body": "If you have an unresolved issue with a merchant, first gather receipts, communications, and timelines. Contact the merchant's support to attempt a resolution. If unsuccessful, file a complaint with your local consumer protection agency and provide all evidence. Track responses and escalate to small claims court if needed.",
-      "timestamp": "2025-10-18T08:28:24.422527",
-      "domain": "consumer_rights",
-      "timeline": [
-        {
-          "step": "Collect evidence",
-          "details": "receipts, messages, dates"
-        },
-        {
-          "step": "Contact merchant",
-          "details": "file a ticket, request resolution"
-        },
-        {
-          "step": "File complaint",
-          "details": "submit to consumer protection authority"
-        },
-        {
-          "step": "Escalate",
-          "details": "consider small claims court if not resolved"
-        }
-      ],
-      "outcome": "Guidance provided; next actions outlined"
-    }
+    "title": "Scheduler seed: tech update",
+    "body": "Generated seed item to keep pipeline active until live feeds populate.",
+    "timestamp": 1763811298,
+    "category": "tech"
   }
 ]
