@@ -26,3 +26,6 @@ Thumbs.db
 
 # Generated outputs (keep JSON artifacts in single_pipeline/output)
 single_pipeline/output/*.tmp
+
+# Local environment (do not commit real secrets)
+.env
