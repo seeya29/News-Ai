@@ -26,10 +26,15 @@ def _load_env() -> Dict[str, str]:
     }
 
 
-def _load_sources() -> Dict:
+async def _load_sources_async() -> Dict:
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), "data", "sources.json"))
-    with open(root, "r", encoding="utf-8") as f:
-        return json.load(f)
+    def _read(path: str) -> Dict:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    try:
+        return await asyncio.to_thread(_read, root)
+    except Exception:
+        return {}
 
 
 async def _loop_telegram(sources: Dict, env: Dict):
@@ -103,9 +108,12 @@ async def _loop_youtube(sources: Dict, env: Dict):
 
 
 async def main():
-    init_db()
+    try:
+        init_db()
+    except Exception:
+        pass
     env = _load_env()
-    sources = _load_sources()
+    sources = await _load_sources_async()
 
     tasks = [
         asyncio.create_task(_loop_telegram(sources, env)),

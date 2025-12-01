@@ -1,4 +1,5 @@
 import os
+import logging
 import glob
 import json
 import time
@@ -14,6 +15,7 @@ from starlette.requests import Request
 from starlette.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 import base64
+import jwt
 from single_pipeline.cli import run_fetch, run_filter, run_scripts, run_voice, run_avatar
 from single_pipeline.rag_client import RAGClient
 from single_pipeline.debug.langgraph_stub import build_graph_from_traces
@@ -41,11 +43,33 @@ from server.db import (
 
 
 APP = FastAPI(title="News-Ai API", version="0.1.0")
+log = logging.getLogger("server.app")
+if not log.handlers:
+    logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
 
 # --------------------
-# Authentication (JWT, lightweight decode)
+# Authentication (JWT, verified decode)
 # --------------------
 security = HTTPBearer(auto_error=True)
+JWT_ALG = os.getenv("JWT_ALG", "HS256").upper()
+JWT_SECRET = os.getenv("JWT_SECRET")
+ALLOWED_JWT_ALGS = {"HS256"}
+if JWT_ALG not in ALLOWED_JWT_ALGS:
+    JWT_ALG = "HS256"
+CDN_BASE_URL = os.getenv("CDN_BASE_URL", "https://cdn.newsai.com")
+SOURCE_LOGO_URL = os.getenv("SOURCE_LOGO_URL", f"{CDN_BASE_URL}/sources/news-ai.png")
+DEFAULT_THUMBNAIL_URL = os.getenv("DEFAULT_THUMBNAIL_URL", f"{CDN_BASE_URL}/thumbs/default.jpg")
+def _sanitize_identifier(s: Optional[str]) -> str:
+    s = (s or "").strip()
+    import re as _re
+    cleaned = _re.sub(r"[^a-zA-Z0-9_-]", "", s)
+    return cleaned or "default"
+def _safe_join(root: str, relative: str) -> str:
+    root_abs = os.path.abspath(root)
+    cand = os.path.abspath(os.path.join(root_abs, relative))
+    if cand == root_abs or cand.startswith(root_abs + os.sep):
+        return cand
+    raise HTTPException(status_code=400, detail="invalid_path")
 
 
 class AuthContext(BaseModel):
@@ -55,16 +79,23 @@ class AuthContext(BaseModel):
 
 
 def _decode_jwt_payload(token: str) -> Dict[str, Any]:
+    # Enforce signature verification and disallow alg=none
+    if not JWT_SECRET:
+        raise HTTPException(status_code=401, detail="unauthorized")
     try:
-        parts = token.split(".")
-        if len(parts) < 2:
-            return {}
-        payload_b64 = parts[1]
-        padding = "=" * (-len(payload_b64) % 4)
-        raw = base64.urlsafe_b64decode(payload_b64 + padding)
-        return json.loads(raw)
-    except Exception:
-        return {}
+        header = jwt.get_unverified_header(token) or {}
+        if str(header.get("alg", "")).lower() == "none":
+            raise jwt.InvalidAlgorithmError("alg none not allowed")
+        return jwt.decode(
+            token,
+            JWT_SECRET,
+            algorithms=[JWT_ALG],
+            options={"require": ["exp", "user_id"], "verify_signature": True},
+        )
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="token_expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="invalid_token")
 
 
 def require_auth(credentials: HTTPAuthorizationCredentials = Depends(security)) -> AuthContext:
@@ -74,8 +105,6 @@ def require_auth(credentials: HTTPAuthorizationCredentials = Depends(security)) 
     exp = claims.get("exp")
     if not user_id or not exp:
         raise HTTPException(status_code=401, detail="invalid_token")
-    if time.time() > float(exp):
-        raise HTTPException(status_code=401, detail="token_expired")
     return AuthContext(user_id=user_id, role=role, exp=int(exp))
 
 
@@ -96,6 +125,20 @@ def _error(code: str, status: int, message: str, details: Optional[Dict[str, Any
 def _apply_rate_limit(buckets: Dict[str, Dict[str, Any]], limit: int, key: str):
     now = int(time.time())
     window = now // 60
+    # Cleanup old buckets and enforce global size cap for this bucket set
+    try:
+        stale = [k for k, b in buckets.items() if b.get("window", window) < window - 1]
+        for k in stale:
+            buckets.pop(k, None)
+        if 'RATE_BUCKET_MAX_ENTRIES' in globals():
+            max_entries = RATE_BUCKET_MAX_ENTRIES
+            if len(buckets) >= max_entries:
+                oldest = sorted(buckets.items(), key=lambda kv: kv[1].get("window", window))[: max(1, max_entries // 10)]
+                for k, _ in oldest:
+                    buckets.pop(k, None)
+    except Exception:
+        # Be defensive: rate limiting should never crash a request
+        pass
     bucket = buckets.get(key)
     if not bucket or bucket.get("window") != window:
         buckets[key] = {"window": window, "count": 0}
@@ -146,29 +189,36 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 # Simple per-user rate limiter: 60 requests/minute
 RATE_LIMIT_PER_MINUTE = 60
 _rate_buckets: Dict[str, Dict[str, Any]] = {}
+RATE_BUCKET_MAX_ENTRIES = int(os.getenv("RATE_BUCKET_MAX_ENTRIES", "5000"))
 
 
 def _check_rate_limit(user_id: str) -> Optional[JSONResponse]:
     now = int(time.time())
+    window = now // 60
+    # Cleanup old buckets and enforce size cap
+    stale = [uid for uid, b in _rate_buckets.items() if b.get("window", window) < window - 1]
+    for uid in stale:
+        _rate_buckets.pop(uid, None)
+    if len(_rate_buckets) >= RATE_BUCKET_MAX_ENTRIES:
+        oldest = sorted(_rate_buckets.items(), key=lambda kv: kv[1].get("window", window))[: max(1, RATE_BUCKET_MAX_ENTRIES // 10)]
+        for uid, _ in oldest:
+            _rate_buckets.pop(uid, None)
     bucket = _rate_buckets.get(user_id)
     if not bucket:
-        _rate_buckets[user_id] = {"window": now // 60, "count": 1}
+        _rate_buckets[user_id] = {"window": window, "count": 1}
         return None
-    window = now // 60
     if bucket["window"] != window:
         _rate_buckets[user_id] = {"window": window, "count": 1}
         return None
     if bucket["count"] >= RATE_LIMIT_PER_MINUTE:
-        return JSONResponse(status_code=429, content={
-            "error": "rate_limit_exceeded",
-            "detail": f"Max {RATE_LIMIT_PER_MINUTE} requests per minute",
-        })
+        return _error("rate_limit_exceeded", 429, f"Max {RATE_LIMIT_PER_MINUTE} requests per minute")
     bucket["count"] += 1
     return None
 
 
 # 5-minute TTL cache per user+params
 CACHE_TTL_SECONDS = 300
+FEED_CACHE_MAX_ENTRIES = int(os.getenv("FEED_CACHE_MAX_ENTRIES", "1000"))
 _feed_cache: Dict[str, Dict[str, Any]] = {}
 
 
@@ -187,7 +237,17 @@ def _get_cached_response(key: str) -> Optional[Dict[str, Any]]:
 
 
 def _set_cache(key: str, data: Dict[str, Any]) -> None:
-    _feed_cache[key] = {"expires": time.time() + CACHE_TTL_SECONDS, "data": data}
+    # Cleanup expired entries and enforce max size
+    now = time.time()
+    expired_keys = [k for k, v in _feed_cache.items() if now > v.get("expires", 0)]
+    for k in expired_keys:
+        _feed_cache.pop(k, None)
+    if len(_feed_cache) >= FEED_CACHE_MAX_ENTRIES:
+        # Evict oldest by expires timestamp
+        oldest = sorted(_feed_cache.items(), key=lambda kv: kv[1].get("expires", now))[: max(1, FEED_CACHE_MAX_ENTRIES // 10)]
+        for k, _ in oldest:
+            _feed_cache.pop(k, None)
+    _feed_cache[key] = {"expires": now + CACHE_TTL_SECONDS, "data": data}
 
 
 def _iso(dt: Optional[float]) -> str:
@@ -198,6 +258,15 @@ def _iso(dt: Optional[float]) -> str:
         return datetime.fromtimestamp(float(dt), tz=timezone.utc).isoformat()
     except Exception:
         return datetime.now(timezone.utc).isoformat()
+
+
+def _parse_epoch(ts: Optional[str]) -> float:
+    try:
+        if not ts:
+            return time.time()
+        return datetime.fromisoformat(ts).timestamp()
+    except Exception:
+        return time.time()
 
 
 def _safe_str(x: Any) -> str:
@@ -253,7 +322,7 @@ def _load_items_from_output(category: Optional[str]) -> List[Dict[str, Any]]:
                         "title": title or "Untitled",
                         "source": {
                             "name": "News-Ai",
-                            "logo_url": "https://cdn.newsai.com/sources/news-ai.png",
+                            "logo_url": SOURCE_LOGO_URL,
                         },
                         "metadata": {
                             "published_at": published_iso,
@@ -262,13 +331,17 @@ def _load_items_from_output(category: Optional[str]) -> List[Dict[str, Any]]:
                             "group_key": group_key,
                         },
                         "relevance_score": 0.75,
-                        "thumbnail_url": "https://cdn.newsai.com/thumbs/default.jpg",
+                        "thumbnail_url": DEFAULT_THUMBNAIL_URL,
                         "processing_status": ("deduped" if dedup_flag else "ingested"),
                         "processing_progress": 50,
                         "processing_stage": "Verify",
                     })
-        except Exception:
-            # Skip bad files silently for now
+        except Exception as e:
+            log.warning("items_load_failed", extra=None)
+            try:
+                log.warning(f"Failed to load items from {path}: {e}")
+            except Exception:
+                pass
             continue
     # Sort newest first by published_at
     def _parse_ts(x: Dict[str, Any]) -> float:
@@ -289,7 +362,7 @@ def _map_row_to_feed_item(row: Dict[str, Any]) -> Dict[str, Any]:
         "title": row.get("title") or "Untitled",
         "source": {
             "name": row.get("source_name") or "News-Ai",
-            "logo_url": "https://cdn.newsai.com/sources/news-ai.png",
+            "logo_url": SOURCE_LOGO_URL,
         },
         "metadata": {
             "published_at": row.get("published_at") or datetime.now(timezone.utc).isoformat(),
@@ -297,7 +370,7 @@ def _map_row_to_feed_item(row: Dict[str, Any]) -> Dict[str, Any]:
             "reading_time_minutes": 3,
         },
         "relevance_score": float(row.get("relevance_score") or 0.75),
-        "thumbnail_url": row.get("thumbnail_url") or "https://cdn.newsai.com/thumbs/default.jpg",
+        "thumbnail_url": row.get("thumbnail_url") or DEFAULT_THUMBNAIL_URL,
         "processing_status": row.get("processing_status") or "ingested",
         "processing_progress": int(row.get("processing_progress") or 10),
         "processing_stage": "Verify",
@@ -398,10 +471,7 @@ def _check_feedback_rate_limit(user_id: str) -> Optional[JSONResponse]:
         _feedback_rate_buckets[user_id] = {"window": window, "count": 1}
         return None
     if bucket["count"] >= FEEDBACK_RATE_LIMIT_PER_MINUTE:
-        return JSONResponse(status_code=429, content={
-            "error": "rate_limit_exceeded",
-            "detail": f"Max {FEEDBACK_RATE_LIMIT_PER_MINUTE} requests per minute",
-        })
+        return _error("rate_limit_exceeded", 429, f"Max {FEEDBACK_RATE_LIMIT_PER_MINUTE} requests per minute")
     bucket["count"] += 1
     return None
 
@@ -438,9 +508,8 @@ def _find_article_by_id(article_id: str) -> Optional[Dict[str, Any]]:
         row = db_get_article_by_id(article_id)
         if row:
             return row
-    except Exception:
-        # Fall through to file-backed index
-        pass
+    except Exception as e:
+        log.warning("db_article_lookup_failed")
     global _article_index, _article_index_expires
     if time.time() > _article_index_expires or not _article_index:
         _build_article_index()
@@ -472,6 +541,25 @@ def _make_feedback_id(user_id: str, article_id: str, ts: Optional[str]) -> str:
 
 
 _feedback_events: List[Dict[str, Any]] = []
+FEEDBACK_EVENTS_MAX_ENTRIES = int(os.getenv("FEEDBACK_EVENTS_MAX_ENTRIES", "10000"))
+FEEDBACK_EVENTS_TTL_SECONDS = int(os.getenv("FEEDBACK_EVENTS_TTL_SECONDS", str(7 * 24 * 3600)))
+
+def _prune_event_list(events: List[Dict[str, Any]], max_entries: int, ttl_seconds: int) -> None:
+    try:
+        now = time.time()
+        if ttl_seconds > 0:
+            cutoff = now - ttl_seconds
+            events[:] = [e for e in events if _parse_epoch(e.get("timestamp")) >= cutoff]
+        if max_entries > 0 and len(events) > max_entries:
+            evict = max(1, max_entries // 10)
+            # Sort oldest first by timestamp
+            events.sort(key=lambda e: _parse_epoch(e.get("timestamp")))
+            # Keep most recent (max_entries - evict)
+            keep = max_entries - evict
+            events[:] = events[-keep:]
+    except Exception:
+        # Never fail request due to pruning
+        pass
 
 
 @APP.post("/api/feedback/article")
@@ -512,8 +600,8 @@ def submit_article_feedback(payload: ArticleFeedbackRequest, response: Response,
             }
             db_upsert_article(stub)
             article = stub
-        except Exception:
-            # Even if upsert fails, proceed with default base score
+        except Exception as e:
+            log.warning("article_stub_upsert_failed")
             article = {"id": payload.article_id, "relevance_score": 0.75}
 
     base_score = float(article.get("relevance_score", 0.75))
@@ -531,11 +619,12 @@ def submit_article_feedback(payload: ArticleFeedbackRequest, response: Response,
         "updated_relevance_score": updated_score,
     }
     _feedback_events.append(event)
+    _prune_event_list(_feedback_events, FEEDBACK_EVENTS_MAX_ENTRIES, FEEDBACK_EVENTS_TTL_SECONDS)
     # Persist to DB (best-effort)
     try:
         db_insert_feedback(event)
-    except Exception:
-        pass
+    except Exception as e:
+        log.warning("feedback_persist_failed")
 
     return {
         "success": True,
@@ -564,10 +653,7 @@ def _check_eng_rate_limit(user_id: str) -> Optional[JSONResponse]:
         _eng_rate_buckets[user_id] = {"window": window, "count": 1}
         return None
     if bucket["count"] >= ENG_RATE_LIMIT_PER_MINUTE:
-        return JSONResponse(status_code=429, content={
-            "error": "rate_limit_exceeded",
-            "detail": f"Max {ENG_RATE_LIMIT_PER_MINUTE} requests per minute",
-        })
+        return _error("rate_limit_exceeded", 429, f"Max {ENG_RATE_LIMIT_PER_MINUTE} requests per minute")
     bucket["count"] += 1
     return None
 
@@ -603,6 +689,8 @@ class EngagementBatchRequest(BaseModel):
 
 
 _engagement_events: List[Dict[str, Any]] = []
+ENGAGEMENT_EVENTS_MAX_ENTRIES = int(os.getenv("ENGAGEMENT_EVENTS_MAX_ENTRIES", "10000"))
+ENGAGEMENT_EVENTS_TTL_SECONDS = int(os.getenv("ENGAGEMENT_EVENTS_TTL_SECONDS", str(7 * 24 * 3600)))
 
 
 def _make_engagement_id(user_id: str, article_id: str, session_id: str, ts: Optional[str]) -> str:
@@ -654,6 +742,7 @@ def track_article_engagement(payload: dict, response: Response, auth: AuthContex
                     "device": ev.device_info.dict() if ev.device_info else {},
                     "quality_score": q,
                 })
+                _prune_event_list(_engagement_events, ENGAGEMENT_EVENTS_MAX_ENTRIES, ENGAGEMENT_EVENTS_TTL_SECONDS)
                 results.append({"engagement_id": eid, "quality_score": q})
             return {"success": True, "count": len(results), "engagement": results, "message": "Engagement metrics recorded"}
         else:
@@ -678,6 +767,7 @@ def track_article_engagement(payload: dict, response: Response, auth: AuthContex
                 "device": ev.device_info.dict() if ev.device_info else {},
                 "quality_score": q,
             })
+            _prune_event_list(_engagement_events, ENGAGEMENT_EVENTS_MAX_ENTRIES, ENGAGEMENT_EVENTS_TTL_SECONDS)
             return {"success": True, "engagement_id": eid, "quality_score": q, "message": "Engagement metrics recorded"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -783,6 +873,7 @@ _dash_rate_buckets: Dict[str, Dict[str, Any]] = {}
 
 
 _dash_cache: Dict[str, Dict[str, Any]] = {}
+DASH_CACHE_MAX_ENTRIES = int(os.getenv("DASH_CACHE_MAX_ENTRIES", "500"))
 
 
 def _get_dash_cache(key: str) -> Optional[Dict[str, Any]]:
@@ -797,7 +888,17 @@ def _get_dash_cache(key: str) -> Optional[Dict[str, Any]]:
 
 def _set_dash_cache(key: str, data: Dict[str, Any]) -> None:
     # 30 seconds TTL
-    _dash_cache[key] = {"expires": time.time() + 30, "data": data}
+    now = time.time()
+    # Cleanup expired entries
+    expired = [k for k, v in _dash_cache.items() if now > v.get("expires", 0)]
+    for k in expired:
+        _dash_cache.pop(k, None)
+    # Enforce size limit
+    if len(_dash_cache) >= DASH_CACHE_MAX_ENTRIES:
+        oldest = sorted(_dash_cache.items(), key=lambda kv: kv[1].get("expires", now))[: max(1, DASH_CACHE_MAX_ENTRIES // 10)]
+        for k, _ in oldest:
+            _dash_cache.pop(k, None)
+    _dash_cache[key] = {"expires": now + 30, "data": data}
 
 
 def _secs_for_range(r: str) -> int:
@@ -901,8 +1002,8 @@ def get_dashboard_stats(time_range: Optional[str] = "24h", response: Response = 
                 "timestamp": ts_rel,
                 "category": i.get("metadata", {}).get("category", "general"),
             })
-    except Exception:
-        pass
+    except Exception as e:
+        log.warning("recent_content_build_failed")
 
     response = {
         "system_status": {
@@ -948,12 +1049,11 @@ def _read_user_preferences(user_id: str) -> Dict[str, Any]:
                 },
                 "last_updated": row.get("updated_at"),
             }
-    except Exception:
-        # Fall through to file-backed
-        pass
+    except Exception as e:
+        log.warning("db_get_user_prefs_failed")
 
     # Try file-backed preferences: single_pipeline/data/preferences_{user_id}.json
-    path = os.path.join(_data_root(), f"preferences_{user_id}.json")
+    path = _safe_join(_data_root(), f"preferences_{_sanitize_identifier(user_id)}.json")
     try:
         if os.path.exists(path):
             with open(path, "r", encoding="utf-8") as f:
@@ -964,9 +1064,8 @@ def _read_user_preferences(user_id: str) -> Dict[str, Any]:
                 "preferences": prefs,
                 "last_updated": last_updated,
             }
-    except Exception:
-        # Fall through to defaults
-        pass
+    except Exception as e:
+        log.warning("file_prefs_read_failed")
 
     # Defaults
     prefs = {
@@ -1044,13 +1143,12 @@ def _write_user_preferences(user_id: str, updates: PreferencesUpdate) -> Dict[st
     # Persist to DB first (best-effort)
     try:
         db_upsert_user_prefs(user_id, prefs)
-    except Exception:
-        # continue with file persistence as fallback
-        pass
+    except Exception as e:
+        log.warning("db_upsert_user_prefs_failed")
 
     # Persist to file with atomic replace
     os.makedirs(_data_root(), exist_ok=True)
-    path = os.path.join(_data_root(), f"preferences_{user_id}.json")
+    path = _safe_join(_data_root(), f"preferences_{_sanitize_identifier(user_id)}.json")
     tmp = path + ".tmp"
     try:
         with open(tmp, "w", encoding="utf-8") as f:
@@ -1099,6 +1197,7 @@ _trend_rate_buckets: Dict[str, Dict[str, Any]] = {}
 
 
 _trend_cache: Dict[str, Dict[str, Any]] = {}
+TREND_CACHE_MAX_ENTRIES = int(os.getenv("TREND_CACHE_MAX_ENTRIES", "500"))
 
 
 def _get_trend_cache(key: str) -> Optional[Dict[str, Any]]:
@@ -1113,7 +1212,17 @@ def _get_trend_cache(key: str) -> Optional[Dict[str, Any]]:
 
 def _set_trend_cache(key: str, data: Dict[str, Any]) -> None:
     # 2 minutes TTL
-    _trend_cache[key] = {"expires": time.time() + 120, "data": data}
+    now = time.time()
+    # Cleanup expired entries
+    expired = [k for k, v in _trend_cache.items() if now > v.get("expires", 0)]
+    for k in expired:
+        _trend_cache.pop(k, None)
+    # Enforce size limit
+    if len(_trend_cache) >= TREND_CACHE_MAX_ENTRIES:
+        oldest = sorted(_trend_cache.items(), key=lambda kv: kv[1].get("expires", now))[: max(1, TREND_CACHE_MAX_ENTRIES // 10)]
+        for k, _ in oldest:
+            _trend_cache.pop(k, None)
+    _trend_cache[key] = {"expires": now + 120, "data": data}
 
 
 def _secs_for_timeframe(tf: str) -> int:
@@ -1322,7 +1431,7 @@ def ui_fetch(payload: BasicPipelineRequest, response: Response, auth: AuthContex
         category = payload.category or "general"
         out = run_fetch(registry=registry, category=category)
         base = os.path.join(os.path.dirname(__file__), "..", "single_pipeline", "output")
-        items_path = os.path.abspath(os.path.join(base, f"{registry}_items.json"))
+        items_path = _safe_join(os.path.abspath(base), f"{_sanitize_identifier(registry)}_items.json")
         items = _read_json_list(items_path)
         if not isinstance(items, list):
             items = []
@@ -1359,8 +1468,8 @@ def ui_process(payload: BasicPipelineRequest, response: Response, auth: AuthCont
         fl = run_filter(registry=registry, category=category)
         sc = run_scripts(registry=registry, category=category)
         base = os.path.join(os.path.dirname(__file__), "..", "single_pipeline", "output")
-        filtered_path = os.path.abspath(os.path.join(base, f"{registry}_filtered.json"))
-        scripts_path = os.path.abspath(os.path.join(base, f"{registry}_scripts.json"))
+        filtered_path = _safe_join(os.path.abspath(base), f"{_sanitize_identifier(registry)}_filtered.json")
+        scripts_path = _safe_join(os.path.abspath(base), f"{_sanitize_identifier(registry)}_scripts.json")
         filtered = _read_json_list(filtered_path)
         scripts = _read_json_list(scripts_path)
         # UI preview aligns with Noopur’s schema-like payload
@@ -1399,7 +1508,7 @@ def ui_voice(payload: VoiceGenRequest, response: Response, auth: AuthContext = D
         voice_opt = payload.voice or "en-US-Neural-1"
         out = run_voice(registry=registry, category=category, voice=voice_opt, limit=payload.limit or 12)
         base = os.path.join(os.path.dirname(__file__), "..", "single_pipeline", "output")
-        voice_path = os.path.abspath(os.path.join(base, f"{registry}_voice.json"))
+        voice_path = _safe_join(os.path.abspath(base), f"{_sanitize_identifier(registry)}_voice.json")
         voice_items = _read_json_list(voice_path)
         preview = voice_items[:10]
         return {"status": "ok", "count": len(voice_items), "preview": preview, "files": {"voice": voice_path}}
@@ -1408,7 +1517,7 @@ def ui_voice(payload: VoiceGenRequest, response: Response, auth: AuthContext = D
 
 
 @APP.post("/feedback")
-def ui_feedback(payload: 'ArticleFeedbackRequest', response: Response, auth: AuthContext = Depends(require_auth)):
+def ui_feedback(payload: ArticleFeedbackRequest, response: Response, auth: AuthContext = Depends(require_auth)):
     # Delegate to the existing feedback endpoint logic for consistency
     return submit_article_feedback(payload, response, auth)
 
@@ -1444,9 +1553,8 @@ def root_redirect():
 def _startup():
     try:
         init_db()
-    except Exception:
-        # DB init is best-effort; file-backed paths continue to work
-        pass
+    except Exception as e:
+        log.warning("db_init_failed")
 
 # --------------------
 # Admin: Feeds Registry (JWT admin only)

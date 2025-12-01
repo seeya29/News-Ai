@@ -30,13 +30,19 @@ class RAGClient:
         # Cache path and persistence flags
         self.cache_path = cache_path or (os.path.join(self.output_dir, "rag_cache.json") if self.output_dir else None)
         self.persistence_enabled = bool(self.cache_path)
+        # Cache limits
+        self.max_entries = int(os.getenv("RAG_CACHE_MAX_ENTRIES", "5000"))
+        self.ttl_seconds = int(os.getenv("RAG_CACHE_TTL_SECONDS", str(24 * 3600)))
         # Simple inter-process lock via lock file and in-process lock
         self._lock_file_path = os.path.join(self.output_dir, ".rag_cache.lock") if self.output_dir else None
         self._process_lock = threading.Lock()
         self.cache: List[Dict[str, Any]] = []
+        self.cache_by_hash: Dict[str, Dict[str, Any]] = {}
         # Optional embedding adapter
         provider_choice = os.getenv("EMBED_PROVIDER", "").lower()
         self.embedder = EmbeddingLocalAdapter() if (provider_choice == "local" and EmbeddingLocalAdapter) else None
+        if provider_choice == "local" and not self.embedder:
+            self.logger.warning("embedding_adapter_missing", provider="local")
         self._load()
 
     def _resolve_output_dir(self, preferred_out_dir: str) -> Optional[str]:
@@ -66,16 +72,23 @@ class RAGClient:
             if self.cache_path and os.path.exists(self.cache_path):
                 with open(self.cache_path, "r", encoding="utf-8") as f:
                     self.cache = json.load(f)
+                # Prune on load
+                self._prune_cache(time.time())
+                self._rebuild_indices()
         except Exception as e:
             # Fall back to empty cache but make noise for debugging
             self.logger.error("cache_load_failed", detail=str(e), path=str(self.cache_path))
             self.cache = []
+            self.cache_by_hash = {}
 
     def _save(self):
         if not self.persistence_enabled or not self.cache_path:
             return
         # Use an in-process mutex + a best-effort inter-process lock file
         with self._process_lock:
+            # Prune before save to keep file small
+            self._prune_cache(time.time())
+            self._rebuild_indices()
             lock_acquired = self._acquire_file_lock(timeout=5.0)
             try:
                 tmp_path = self.cache_path + ".tmp"
@@ -88,6 +101,23 @@ class RAGClient:
             finally:
                 if lock_acquired:
                     self._release_file_lock()
+
+    def _prune_cache(self, now: float) -> None:
+        """Remove expired entries and enforce max size by evicting oldest by ts."""
+        try:
+            if self.ttl_seconds > 0:
+                cutoff = now - self.ttl_seconds
+                self.cache = [it for it in self.cache if float(it.get("ts") or 0.0) >= cutoff]
+            if self.max_entries > 0 and len(self.cache) > self.max_entries:
+                # Evict oldest 10% by timestamp
+                self.cache.sort(key=lambda it: float(it.get("ts") or 0.0))
+                evict = max(1, self.max_entries // 10)
+                self.cache = self.cache[-(self.max_entries - evict):]
+            # indices rebuilt by caller or here for safety
+            self._rebuild_indices()
+        except Exception as e:
+            # Be defensive; pruning should never break the pipeline
+            self.logger.warning("cache_prune_failed", detail=str(e))
 
     def _acquire_file_lock(self, timeout: float = 5.0, poll_interval: float = 0.1) -> bool:
         if not self._lock_file_path:
@@ -122,13 +152,26 @@ class RAGClient:
         h = hashlib.sha256((title + "\n" + body).encode("utf-8")).hexdigest()
         return h
 
+    def _rebuild_indices(self) -> None:
+        try:
+            self.cache_by_hash = {}
+            for it in self.cache:
+                h = str(it.get("hash") or "")
+                if h:
+                    self.cache_by_hash[h] = it
+        except Exception as e:
+            self.logger.warning("cache_index_rebuild_failed", detail=str(e))
+
     def is_duplicate(self, title: str, body: str, threshold: float = 0.92) -> bool:
         """Dedup using hash/token overlap; optionally embedding cosine if enabled.
 
         Hash equality -> duplicate.
         If embedder enabled, use cosine similarity; else fallback to token-overlap.
         """
+        self._prune_cache(time.time())
         h = self._hash(title, body)
+        if h in self.cache_by_hash:
+            return True
         text = (title + "\n" + body)
         current_vec: List[float] = []
         if self.embedder:
@@ -158,7 +201,12 @@ class RAGClient:
         entry = {"hash": h, "title": title, "body": body}
         if self.embedder and current_vec:
             entry["embedding"] = current_vec
+        # Append with timestamp and prune
+        entry_ts = time.time()
+        entry["ts"] = entry_ts
         self.cache.append(entry)
+        self.cache_by_hash[h] = entry
+        self._prune_cache(entry_ts)
         self._save()
         return False
 
@@ -269,8 +317,11 @@ class RAGClient:
         return gk
 
     def _append_cache_entry(self, title: str, body: str, vec: List[float], ts: float, group_key: str) -> None:
-        entry = {"hash": self._hash(title, body), "title": title, "body": body, "ts": ts, "group_key": group_key}
+        hh = self._hash(title, body)
+        entry = {"hash": hh, "title": title, "body": body, "ts": ts, "group_key": group_key}
         if self.embedder and vec:
             entry["embedding"] = vec
         self.cache.append(entry)
+        self.cache_by_hash[hh] = entry
+        self._prune_cache(ts)
         self._save()

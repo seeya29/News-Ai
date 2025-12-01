@@ -14,6 +14,19 @@ from .bucket_orchestrator import BucketOrchestrator
 def _output_root() -> str:
     return os.path.abspath(os.path.join(os.path.dirname(__file__), "output"))
 
+def _sanitize_identifier(s: str) -> str:
+    s = (s or "").strip()
+    import re as _re
+    cleaned = _re.sub(r"[^a-zA-Z0-9_-]", "", s)
+    return cleaned or "default"
+
+def _safe_join(root: str, relative: str) -> str:
+    root_abs = os.path.abspath(root)
+    cand = os.path.abspath(os.path.join(root_abs, relative))
+    if cand == root_abs or cand.startswith(root_abs + os.sep):
+        return cand
+    return root_abs
+
 
 def _read_items(path: str) -> List[Dict[str, Any]]:
     try:
@@ -29,7 +42,7 @@ def _read_items(path: str) -> List[Dict[str, Any]]:
 def _write_json(name: str, suffix: str, payload: Any) -> str:
     root = _output_root()
     os.makedirs(root, exist_ok=True)
-    path = os.path.join(root, f"{name}_{suffix}.json")
+    path = _safe_join(root, f"{_sanitize_identifier(name)}_{suffix}.json")
     with open(path, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
     return path
@@ -40,13 +53,18 @@ def run_fetch(registry: str = "single", category: str = "general") -> Dict[str, 
     res = hub.run(registry_name=registry, category=category)
     return res
 
+async def run_fetch_async(registry: str = "single", category: str = "general") -> Dict[str, Any]:
+    hub = FetcherHub()
+    res = await hub.async_run(registry_name=registry, category=category)
+    return res
+
 
 def run_filter(registry: str = "single", category: str = "general") -> Dict[str, Any]:
     log = PipelineLogger(component="cli_filter")
     run = StageLogger(source="pipeline", category=category, meta={"registry": registry})
     run.start("filter")
 
-    items_path = os.path.join(_output_root(), f"{registry}_items.json")
+    items_path = _safe_join(_output_root(), f"{_sanitize_identifier(registry)}_items.json")
     items = _read_items(items_path)
     agent = FilterAgent()
     filtered = agent.filter_items(items, logger=log)
@@ -60,7 +78,7 @@ def run_scripts(registry: str = "single", category: str = "general") -> Dict[str
     log = PipelineLogger(component="cli_scripts")
     run = StageLogger(source="pipeline", category=category, meta={"registry": registry})
     run.start("summarize")
-    filtered_path = os.path.join(_output_root(), f"{registry}_filtered.json")
+    filtered_path = _safe_join(_output_root(), f"{_sanitize_identifier(registry)}_filtered.json")
     items = _read_items(filtered_path)
     agent = ScriptGenAgent(logger=log)
     scripts = agent.generate(items, category=category)
@@ -79,13 +97,13 @@ def run_voice(
     log = PipelineLogger(component="cli_voice")
     run = StageLogger(source="pipeline", category=category, meta={"registry": registry})
     run.start("voice")
-    scripts_path = os.path.join(_output_root(), f"{registry}_scripts.json")
+    scripts_path = _safe_join(_output_root(), f"{_sanitize_identifier(registry)}_scripts.json")
     scripts = _read_items(scripts_path)
     if isinstance(limit, int) and limit > 0:
         scripts = scripts[:limit]
     agent = TTSAgentStub(voice=voice, logger=log)
     voice_items = agent.synthesize(scripts, category=category)
-    out_path = _write_json(registry, "voice", voice_items)
+    out_path = _write_json(_sanitize_identifier(registry), "voice", voice_items)
     run.complete("voice", meta={"count": len(voice_items), "file": out_path})
     run.end_run("completed")
     return {"count": len(voice_items), "output_file": out_path}
@@ -95,7 +113,7 @@ def run_avatar(registry: str = "single", category: str = "general", style: str =
     log = PipelineLogger(component="cli_avatar")
     run = StageLogger(source="pipeline", category=category, meta={"registry": registry})
     run.start("avatar")
-    voice_path = os.path.join(_output_root(), f"{registry}_voice.json")
+    voice_path = _safe_join(_output_root(), f"{_sanitize_identifier(registry)}_voice.json")
     voice_items = _read_items(voice_path)
     agent = AvatarAgentStub(style=style, logger=log)
     videos = agent.render(voice_items, category=category)
