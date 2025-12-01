@@ -198,7 +198,7 @@ class FetcherHub:
         elif yt_channels and not yt_key:
             self.log.warning("youtube_api_key_missing")
 
-        out_path = await self._write_items_async(registry_name, items)
+        out_path = self._write_items(registry_name, items)
         run.update("fetch", progress=100, meta={"items": len(items), "ingested": ingested_total, "file": out_path})
         run.complete("fetch", meta={"items": len(items)})
         run.end_run("completed")
