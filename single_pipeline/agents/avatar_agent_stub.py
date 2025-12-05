@@ -1,6 +1,8 @@
 import os
 import json
 import hashlib
+import shutil
+import subprocess
 from typing import Any, Dict, List, Optional
 from datetime import datetime, timezone
 import time
@@ -33,6 +35,8 @@ class AvatarAgentStub:
             "en|youth": "creator_youth_1",
             "hi|devotional": "devotional_guru_1",
         }
+        self.bg_color = os.getenv("AVATAR_BG_COLOR", "#0B1F3A")
+        self.resolution = os.getenv("AVATAR_RESOLUTION", "1280x720")
 
     def _hash_id(self, title: str, key: str) -> str:
         h = hashlib.sha256((title + "|" + key).encode("utf-8", errors="ignore")).hexdigest()
@@ -52,6 +56,43 @@ class AvatarAgentStub:
         except Exception:
             pass
 
+    def _audio_duration_seconds(self, audio_path: Optional[str]) -> float:
+        try:
+            if not audio_path or not os.path.isfile(audio_path):
+                return 0.0
+            import wave
+            with wave.open(audio_path, "rb") as wf:
+                frames = wf.getnframes()
+                rate = wf.getframerate() or 16000
+                return max(0.0, float(frames) / float(rate))
+        except Exception:
+            return 0.0
+
+    def _ffmpeg_available(self) -> bool:
+        exe = shutil.which("ffmpeg") or shutil.which("ffmpeg.exe")
+        return bool(exe)
+
+    def _render_static_video(self, audio_path: Optional[str], out_path: str, duration: float) -> bool:
+        try:
+            if not self._ffmpeg_available():
+                return False
+            if duration <= 0.0:
+                duration = 5.0
+            cmd = [
+                "ffmpeg",
+                "-y",
+                "-f", "lavfi",
+                "-i", f"color=c={self.bg_color}:s={self.resolution}:d={duration:.2f}",
+            ]
+            if audio_path and os.path.isfile(audio_path):
+                cmd += ["-i", audio_path, "-shortest"]
+            cmd += ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", out_path]
+            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            return os.path.isfile(out_path)
+        except Exception as e:
+            self.log.warning("avatar_ffmpeg_failed", error=str(e))
+            return False
+
     def render(self, voice_items: List[Dict[str, Any]], category: str = "general") -> List[Dict[str, Any]]:
         run = StageLogger(source="pipeline", category=category, meta={"stage": "avatar", "style": self.style})
         run.start("avatar")
@@ -63,22 +104,26 @@ class AvatarAgentStub:
             tone = "news"
             preset = self.preset_map.get(f"{lang}|{tone}", self.style)
             audio_url = v.get("audio_url")
-            # Metadata file instead of real video for now
             article_id = self._hash_id(title, audio_url or title)
-            fname = f"{article_id}_{lang}_{tone}.json"
+            base = f"{article_id}_{lang}_{tone}"
             os.makedirs(self.output_base, exist_ok=True)
-            meta_path = os.path.join(self.output_base, fname)
+            meta_path = os.path.join(self.output_base, f"{base}.json")
+            audio_path = v.get("audio_path")
+            duration = self._audio_duration_seconds(audio_path)
+            mp4_path = os.path.join(self.output_base, f"{base}.mp4")
+            rendered = self._render_static_video(audio_path, mp4_path, duration)
             meta = {
                 "title": title,
                 "lang": lang,
                 "tone": tone,
                 "style_preset": preset,
                 "audio_url": audio_url,
+                "audio_path": audio_path,
                 "output": {
-                    "format": "mp4",
-                    "resolution": "1280x720",
-                    "max_duration_seconds": 180,
-                    "status": "stub",
+                    "format": ("mp4" if rendered else "json"),
+                    "resolution": self.resolution,
+                    "duration_seconds": duration,
+                    "status": ("rendered" if rendered else "stub"),
                 },
                 "generated_at": datetime.now(timezone.utc).isoformat(),
                 "category": category,
@@ -88,8 +133,7 @@ class AvatarAgentStub:
                     json.dump(meta, f, ensure_ascii=False, indent=2)
             except Exception as e:
                 self.log.warning("avatar_write_meta_failed", file=meta_path, error=str(e))
-            # Serve via FastAPI static mount at /data/avatar
-            video_url = f"/data/avatar/{fname}"
+            video_url = f"/data/avatar/{os.path.basename(mp4_path) if rendered else os.path.basename(meta_path)}"
             outputs.append({
                 "title": title,
                 "lang": lang,
