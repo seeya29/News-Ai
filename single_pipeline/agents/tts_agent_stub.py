@@ -42,7 +42,9 @@ class TTSAgentStub:
             "bn|news": "bn-IN-TanishaaNeural",
         }
         self.provider = (os.getenv("TTS_PROVIDER") or ("pyttsx3" if pyttsx3 else "stub")).lower()
-        self.rate = int(os.getenv("TTS_RATE", "170"))
+        self.rate = int(os.getenv("TTS_RATE", "150"))
+        self.sample_rate = int(os.getenv("TTS_SAMPLE_RATE", "44100"))
+        self.voice_name = os.getenv("TTS_VOICE_NAME")
 
     def _hash_id(self, title: str, body: str) -> str:
         h = hashlib.sha256((title + "|" + body).encode("utf-8", errors="ignore")).hexdigest()
@@ -57,6 +59,16 @@ class TTSAgentStub:
                 try:
                     if os.path.isfile(fpath) and os.path.getmtime(fpath) < cutoff:
                         os.remove(fpath)
+                    elif os.path.isfile(fpath) and fname.lower().endswith(".wav"):
+                        try:
+                            with wave.open(fpath, "rb") as wf:
+                                frames = wf.getnframes()
+                                rate = wf.getframerate() or 16000
+                                dur = float(frames) / float(rate)
+                                if dur <= 1.5:
+                                    os.remove(fpath)
+                        except Exception:
+                            pass
                 except Exception:
                     pass
         except Exception:
@@ -146,17 +158,38 @@ class TTSAgentStub:
                 if self.provider == "pyttsx3" and pyttsx3:
                     try:
                         eng = pyttsx3.init()
+                        try:
+                            voices = eng.getProperty("voices") or []
+                            target = None
+                            if self.voice_name:
+                                for v in voices:
+                                    if self.voice_name.lower() in (v.name or "").lower():
+                                        target = v.id
+                                        break
+                            if not target:
+                                preferred = ["Zira", "Jenny", "David", "Mark", "Neural"]
+                                for name in preferred:
+                                    for v in voices:
+                                        if name.lower() in (v.name or "").lower():
+                                            target = v.id
+                                            break
+                                    if target:
+                                        break
+                            if target:
+                                eng.setProperty("voice", target)
+                        except Exception:
+                            pass
                         eng.setProperty("rate", self.rate)
                         eng.save_to_file(narration, audio_path)
                         eng.runAndWait()
                         self.log.info("tts_provider_used", provider="pyttsx3", file=audio_path)
                     except Exception as e:
                         self.log.warning("tts_pyttsx3_failed", error=str(e))
-                        self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=16000, text=narration)
+                        self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=self.sample_rate, text=narration)
                 else:
                     if self.provider == "pyttsx3" and not pyttsx3:
                         self.log.warning("tts_provider_unavailable", provider="pyttsx3")
-                    self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=16000, text=narration)
+                    self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=self.sample_rate, text=narration)
             except Exception as e:
                 self.log.warning("tts_write_wav_failed", file=audio_path, error=str(e))
             # Serve via FastAPI static mount at /data/tts
@@ -171,7 +204,7 @@ class TTSAgentStub:
                     "generated_at": datetime.now(timezone.utc).isoformat(),
                     "category": category,
                     "format": "wav",
-                    "sample_rate": 16000,
+                    "sample_rate": self.sample_rate,
                     "channels": 1,
                     "provider": ("pyttsx3" if (self.provider == "pyttsx3" and pyttsx3) else "stub"),
                 },
