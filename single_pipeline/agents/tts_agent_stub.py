@@ -41,7 +41,7 @@ class TTSAgentStub:
             "ta|news": "ta-IN-PallaviNeural",
             "bn|news": "bn-IN-TanishaaNeural",
         }
-        self.provider = (os.getenv("TTS_PROVIDER") or "stub").lower()
+        self.provider = (os.getenv("TTS_PROVIDER") or ("pyttsx3" if pyttsx3 else "stub")).lower()
         self.rate = int(os.getenv("TTS_RATE", "170"))
 
     def _hash_id(self, title: str, body: str) -> str:
@@ -62,9 +62,13 @@ class TTSAgentStub:
         except Exception:
             pass
 
-    def _write_wav(self, path: str, duration_seconds: float = 2.0, sample_rate: int = 16000) -> None:
+    def _write_wav(self, path: str, duration_seconds: float = 2.0, sample_rate: int = 16000, text: Optional[str] = None) -> None:
         # 16kHz mono PCM, generate a multi-tone envelope to sound more like voice
         import math
+        if text:
+            words = [w for w in (text or "").split() if w]
+        else:
+            words = []
         n_samples = int(duration_seconds * sample_rate)
         base_freq = 220.0
         amplitude = 0.25  # fraction of max to avoid clipping
@@ -72,26 +76,53 @@ class TTSAgentStub:
             wf.setnchannels(1)
             wf.setsampwidth(2)  # 16-bit
             wf.setframerate(sample_rate)
-            for i in range(n_samples):
-                t = float(i) / sample_rate
-                # simple ADSR-like envelope
-                attack = min(1.0, i / (sample_rate * 0.02))
-                sustain = 0.8
-                release = max(0.2, 1.0 - (i / n_samples))
-                a = amplitude * attack * sustain * release
-                # sum a few harmonics
-                sample_f = (
-                    math.sin(2 * math.pi * base_freq * t)
-                    + 0.5 * math.sin(2 * math.pi * (base_freq * 2.0) * t)
-                    + 0.25 * math.sin(2 * math.pi * (base_freq * 3.0) * t)
-                )
-                sample = int(max(-32767, min(32767, a * 32767 * sample_f)))
-                wf.writeframes(struct.pack("<h", sample))
+            if words:
+                # Generate a short tone per word with a brief pause to avoid "single beep"
+                tone_len = max(0.25, min(0.6, 0.35))
+                pause_len = 0.08
+                for w in words:
+                    w_hash = (sum(ord(c) for c in w) % 80) - 40
+                    freq = max(140.0, min(360.0, base_freq + float(w_hash)))
+                    frames_tone = int(tone_len * sample_rate)
+                    for i in range(frames_tone):
+                        t = float(i) / sample_rate
+                        attack = min(1.0, i / (sample_rate * 0.02))
+                        sustain = 0.8
+                        release = max(0.2, 1.0 - (i / frames_tone))
+                        a = amplitude * attack * sustain * release
+                        sample_f = (
+                            math.sin(2 * math.pi * freq * t)
+                            + 0.3 * math.sin(2 * math.pi * (freq * 2.0) * t)
+                        )
+                        sample = int(max(-32767, min(32767, a * 32767 * sample_f)))
+                        wf.writeframes(struct.pack("<h", sample))
+                    # brief pause
+                    frames_pause = int(pause_len * sample_rate)
+                    silence = struct.pack("<h", 0)
+                    for _ in range(frames_pause):
+                        wf.writeframes(silence)
+            else:
+                for i in range(n_samples):
+                    t = float(i) / sample_rate
+                    # simple ADSR-like envelope
+                    attack = min(1.0, i / (sample_rate * 0.02))
+                    sustain = 0.8
+                    release = max(0.2, 1.0 - (i / n_samples))
+                    a = amplitude * attack * sustain * release
+                    # sum a few harmonics
+                    sample_f = (
+                        math.sin(2 * math.pi * base_freq * t)
+                        + 0.5 * math.sin(2 * math.pi * (base_freq * 2.0) * t)
+                        + 0.25 * math.sin(2 * math.pi * (base_freq * 3.0) * t)
+                    )
+                    sample = int(max(-32767, min(32767, a * 32767 * sample_f)))
+                    wf.writeframes(struct.pack("<h", sample))
 
     def _duration_for_text(self, text: str) -> float:
         try:
-            n = max(2, min(30, int(len(text) / 20)))
-            return float(n)
+            words = max(1, len((text or "").split()))
+            seconds = max(2.0, min(60.0, (words / 2.5) + 0.5))  # ~150 wpm
+            return float(seconds)
         except Exception:
             return 6.0
 
@@ -121,11 +152,11 @@ class TTSAgentStub:
                         self.log.info("tts_provider_used", provider="pyttsx3", file=audio_path)
                     except Exception as e:
                         self.log.warning("tts_pyttsx3_failed", error=str(e))
-                        self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=16000)
+                        self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=16000, text=narration)
                 else:
                     if self.provider == "pyttsx3" and not pyttsx3:
                         self.log.warning("tts_provider_unavailable", provider="pyttsx3")
-                    self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=16000)
+                    self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=16000, text=narration)
             except Exception as e:
                 self.log.warning("tts_write_wav_failed", file=audio_path, error=str(e))
             # Serve via FastAPI static mount at /data/tts
