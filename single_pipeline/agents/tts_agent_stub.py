@@ -41,6 +41,8 @@ class TTSAgentStub:
             "ta|news": "ta-IN-PallaviNeural",
             "bn|news": "bn-IN-TanishaaNeural",
         }
+        self.provider = (os.getenv("TTS_PROVIDER") or "stub").lower()
+        self.rate = int(os.getenv("TTS_RATE", "170"))
 
     def _hash_id(self, title: str, body: str) -> str:
         h = hashlib.sha256((title + "|" + body).encode("utf-8", errors="ignore")).hexdigest()
@@ -61,10 +63,10 @@ class TTSAgentStub:
             pass
 
     def _write_wav(self, path: str, duration_seconds: float = 2.0, sample_rate: int = 16000) -> None:
-        # 16kHz mono PCM, write a simple 440 Hz sine tone so it's audible
+        # 16kHz mono PCM, generate a multi-tone envelope to sound more like voice
         import math
         n_samples = int(duration_seconds * sample_rate)
-        freq = 440.0
+        base_freq = 220.0
         amplitude = 0.25  # fraction of max to avoid clipping
         with wave.open(path, "w") as wf:
             wf.setnchannels(1)
@@ -72,8 +74,18 @@ class TTSAgentStub:
             wf.setframerate(sample_rate)
             for i in range(n_samples):
                 t = float(i) / sample_rate
-                a = amplitude if (i // (sample_rate // 2)) % 2 == 0 else amplitude * 0.6
-                sample = int(max(-32767, min(32767, a * 32767 * math.sin(2 * math.pi * freq * t))))
+                # simple ADSR-like envelope
+                attack = min(1.0, i / (sample_rate * 0.02))
+                sustain = 0.8
+                release = max(0.2, 1.0 - (i / n_samples))
+                a = amplitude * attack * sustain * release
+                # sum a few harmonics
+                sample_f = (
+                    math.sin(2 * math.pi * base_freq * t)
+                    + 0.5 * math.sin(2 * math.pi * (base_freq * 2.0) * t)
+                    + 0.25 * math.sin(2 * math.pi * (base_freq * 3.0) * t)
+                )
+                sample = int(max(-32767, min(32767, a * 32767 * sample_f)))
                 wf.writeframes(struct.pack("<h", sample))
 
     def _duration_for_text(self, text: str) -> float:
@@ -100,15 +112,19 @@ class TTSAgentStub:
             os.makedirs(self.output_base, exist_ok=True)
             audio_path = os.path.join(self.output_base, fname)
             try:
-                if pyttsx3:
+                if self.provider == "pyttsx3" and pyttsx3:
                     try:
                         eng = pyttsx3.init()
-                        eng.setProperty("rate", 170)
+                        eng.setProperty("rate", self.rate)
                         eng.save_to_file(narration, audio_path)
                         eng.runAndWait()
-                    except Exception:
+                        self.log.info("tts_provider_used", provider="pyttsx3", file=audio_path)
+                    except Exception as e:
+                        self.log.warning("tts_pyttsx3_failed", error=str(e))
                         self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=16000)
                 else:
+                    if self.provider == "pyttsx3" and not pyttsx3:
+                        self.log.warning("tts_provider_unavailable", provider="pyttsx3")
                     self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=16000)
             except Exception as e:
                 self.log.warning("tts_write_wav_failed", file=audio_path, error=str(e))
@@ -126,6 +142,7 @@ class TTSAgentStub:
                     "format": "wav",
                     "sample_rate": 16000,
                     "channels": 1,
+                    "provider": ("pyttsx3" if (self.provider == "pyttsx3" and pyttsx3) else "stub"),
                 },
             })
         run.complete("voice", meta={"count": len(outputs)})
