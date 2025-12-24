@@ -1,0 +1,16 @@
+{
+  "title": "SadTalker Test",
+  "lang": "en",
+  "tone": "news",
+  "style_preset": "anchor_english_1",
+  "audio_url": "/data/tts/article_8800371d4b42_en_news.wav",
+  "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_8800371d4b42_en_news.wav",
+  "output": {
+    "format": "mp4",
+    "resolution": "1280x720",
+    "duration_seconds": 3.968707482993197,
+    "status": "rendered"
+  },
+  "generated_at": "2025-12-19T10:41:00.038787+00:00",
+  "category": "general"
+}

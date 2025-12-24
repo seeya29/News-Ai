@@ -1,0 +1,74 @@
+[
+  {
+    "title": "AI breakthrough in chips",
+    "body": "New AI hardware announced by startups.",
+    "timestamp": 1700000000,
+    "lang": "en",
+    "category": "tech",
+    "tone": "formal",
+    "audience": "news",
+    "dedup_flag": true,
+    "dedup_key": "AI breakthrough in chips::1700000000",
+    "raw": {}
+  },
+  {
+    "title": "भारत में मौसम",
+    "body": "आज दिल्ली में बारिश हो सकती है।",
+    "timestamp": 1700000010,
+    "lang": "hi",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "news",
+    "dedup_flag": true,
+    "dedup_key": "भारत में मौसम::1700000010",
+    "raw": {}
+  },
+  {
+    "title": "தமிழ் செய்திகள்",
+    "body": "சென்னையில் புதிய தொழில்நுட்ப மாநாடு.",
+    "timestamp": 1700000020,
+    "lang": "ta",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "news",
+    "dedup_flag": true,
+    "dedup_key": "தமிழ் செய்திகள்::1700000020",
+    "raw": {}
+  },
+  {
+    "title": "বাংলা খবর",
+    "body": "কলকাতায় নতুন স্টার্টআপ ফান্ডিং",
+    "timestamp": 1700000030,
+    "lang": "bn",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "news",
+    "dedup_flag": true,
+    "dedup_key": "বাংলা খবর::1700000030",
+    "raw": {}
+  },
+  {
+    "title": "اردو خبریں",
+    "body": "کراچی میں کھیلوں کا بڑا ایونٹ",
+    "timestamp": 1700000040,
+    "lang": "ur",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "news",
+    "dedup_flag": true,
+    "dedup_key": "اردو خبریں::1700000040",
+    "raw": {}
+  },
+  {
+    "title": "Kids science fair",
+    "body": "Students present projects on robotics.",
+    "timestamp": 1700000050,
+    "lang": "en",
+    "category": "tech",
+    "tone": "neutral",
+    "audience": "kids",
+    "dedup_flag": true,
+    "dedup_key": "Kids science fair::1700000050",
+    "raw": {}
+  }
+]

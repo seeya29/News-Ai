@@ -1,0 +1,1422 @@
+[
+  {
+    "title": "StageConnect: Behringer protocol is open source",
+    "body": "<p>Article URL: <a href=\"https://github.com/OpenMixerProject/StageConnect\">https://github.com/OpenMixerProject/StageConnect</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45625251\">https://news.ycombinator.com/item?id=45625251</a></p>\n<p>Points: 88</p>\n<p># Comments: 23</p>",
+    "timestamp": "Sat, 18 Oct 2025 05:52:47 +0000",
+    "raw": {
+      "entry": {
+        "title": "StageConnect: Behringer protocol is open source",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "StageConnect: Behringer protocol is open source"
+        },
+        "summary": "<p>Article URL: <a href=\"https://github.com/OpenMixerProject/StageConnect\">https://github.com/OpenMixerProject/StageConnect</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45625251\">https://news.ycombinator.com/item?id=45625251</a></p>\n<p>Points: 88</p>\n<p># Comments: 23</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>Article URL: <a href=\"https://github.com/OpenMixerProject/StageConnect\">https://github.com/OpenMixerProject/StageConnect</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45625251\">https://news.ycombinator.com/item?id=45625251</a></p>\n<p>Points: 88</p>\n<p># Comments: 23</p>"
+        },
+        "published": "Sat, 18 Oct 2025 05:52:47 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          18,
+          5,
+          52,
+          47,
+          5,
+          291,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://github.com/OpenMixerProject/StageConnect"
+          }
+        ],
+        "link": "https://github.com/OpenMixerProject/StageConnect",
+        "authors": [
+          {
+            "name": "jdboyd"
+          }
+        ],
+        "author": "jdboyd",
+        "author_detail": {
+          "name": "jdboyd"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45625251",
+        "id": "https://news.ycombinator.com/item?id=45625251",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "AMD's Chiplet APU: An Overview of Strix Halo",
+    "body": "<p>Article URL: <a href=\"https://chipsandcheese.com/p/amds-chiplet-apu-an-overview-of-strix\">https://chipsandcheese.com/p/amds-chiplet-apu-an-overview-of-strix</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45624888\">https://news.ycombinator.com/item?id=45624888</a></p>\n<p>Points: 50</p>\n<p># Comments: 9</p>",
+    "timestamp": "Sat, 18 Oct 2025 04:26:19 +0000",
+    "raw": {
+      "entry": {
+        "title": "AMD's Chiplet APU: An Overview of Strix Halo",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "AMD's Chiplet APU: An Overview of Strix Halo"
+        },
+        "summary": "<p>Article URL: <a href=\"https://chipsandcheese.com/p/amds-chiplet-apu-an-overview-of-strix\">https://chipsandcheese.com/p/amds-chiplet-apu-an-overview-of-strix</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45624888\">https://news.ycombinator.com/item?id=45624888</a></p>\n<p>Points: 50</p>\n<p># Comments: 9</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>Article URL: <a href=\"https://chipsandcheese.com/p/amds-chiplet-apu-an-overview-of-strix\">https://chipsandcheese.com/p/amds-chiplet-apu-an-overview-of-strix</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45624888\">https://news.ycombinator.com/item?id=45624888</a></p>\n<p>Points: 50</p>\n<p># Comments: 9</p>"
+        },
+        "published": "Sat, 18 Oct 2025 04:26:19 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          18,
+          4,
+          26,
+          19,
+          5,
+          291,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://chipsandcheese.com/p/amds-chiplet-apu-an-overview-of-strix"
+          }
+        ],
+        "link": "https://chipsandcheese.com/p/amds-chiplet-apu-an-overview-of-strix",
+        "authors": [
+          {
+            "name": "zdw"
+          }
+        ],
+        "author": "zdw",
+        "author_detail": {
+          "name": "zdw"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45624888",
+        "id": "https://news.ycombinator.com/item?id=45624888",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "Show HN: ServiceRadar – open-source Network Observability Platform",
+    "body": "<p>ServiceRadar is an open-source platform for distributed, secure network management and observability, scaling to 100k+ devices. Born from frustration with complex traditional NMS tools like Zabbix, it bridges legacy (SNMP/syslog) and modern (gNMI, OTLP) protocols for cloud-native environments.<p>We built ServiceRadar to simplify monitoring hybrid telecom networks, evolving it into a Kubernetes-native solution with Helm and Docker support. It uses mTLS with SPIFFE/SPIRE, NATS JetStream for event streaming (90M+ EPS), and SRQL for intuitive queries. Integrated with OpenTelemetry, Prometheus, and CloudEvents, it fills the network visibility gap in CNCF’s application-focused observability stack.<p>We’re seeking early adopters to try our demo or deploy locally—no sign-up needed. Feedback on usability or contributions for new protocols would be awesome.<p>Quick Start: helm install serviceradar carverauto/serviceradar or docker compose up -d<p>GitHub: <a href=\"https://github.com/carverauto/serviceradar\" rel=\"nofollow\">https://github.com/carverauto/serviceradar</a> (please star!)<p>Docs: <a href=\"https://docs.serviceradar.cloud\" rel=\"nofollow\">https://docs.serviceradar.cloud</a><p>Join our Discord or use GitHub Issues to share thoughts.</p>\n<hr />\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45624186\">https://news.ycombinator.com/item?id=45624186</a></p>\n<p>Points: 33</p>\n<p># Comments: 1</p>",
+    "timestamp": "Sat, 18 Oct 2025 01:49:06 +0000",
+    "raw": {
+      "entry": {
+        "title": "Show HN: ServiceRadar – open-source Network Observability Platform",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "Show HN: ServiceRadar – open-source Network Observability Platform"
+        },
+        "summary": "<p>ServiceRadar is an open-source platform for distributed, secure network management and observability, scaling to 100k+ devices. Born from frustration with complex traditional NMS tools like Zabbix, it bridges legacy (SNMP/syslog) and modern (gNMI, OTLP) protocols for cloud-native environments.<p>We built ServiceRadar to simplify monitoring hybrid telecom networks, evolving it into a Kubernetes-native solution with Helm and Docker support. It uses mTLS with SPIFFE/SPIRE, NATS JetStream for event streaming (90M+ EPS), and SRQL for intuitive queries. Integrated with OpenTelemetry, Prometheus, and CloudEvents, it fills the network visibility gap in CNCF’s application-focused observability stack.<p>We’re seeking early adopters to try our demo or deploy locally—no sign-up needed. Feedback on usability or contributions for new protocols would be awesome.<p>Quick Start: helm install serviceradar carverauto/serviceradar or docker compose up -d<p>GitHub: <a href=\"https://github.com/carverauto/serviceradar\" rel=\"nofollow\">https://github.com/carverauto/serviceradar</a> (please star!)<p>Docs: <a href=\"https://docs.serviceradar.cloud\" rel=\"nofollow\">https://docs.serviceradar.cloud</a><p>Join our Discord or use GitHub Issues to share thoughts.</p>\n<hr />\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45624186\">https://news.ycombinator.com/item?id=45624186</a></p>\n<p>Points: 33</p>\n<p># Comments: 1</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>ServiceRadar is an open-source platform for distributed, secure network management and observability, scaling to 100k+ devices. Born from frustration with complex traditional NMS tools like Zabbix, it bridges legacy (SNMP/syslog) and modern (gNMI, OTLP) protocols for cloud-native environments.<p>We built ServiceRadar to simplify monitoring hybrid telecom networks, evolving it into a Kubernetes-native solution with Helm and Docker support. It uses mTLS with SPIFFE/SPIRE, NATS JetStream for event streaming (90M+ EPS), and SRQL for intuitive queries. Integrated with OpenTelemetry, Prometheus, and CloudEvents, it fills the network visibility gap in CNCF’s application-focused observability stack.<p>We’re seeking early adopters to try our demo or deploy locally—no sign-up needed. Feedback on usability or contributions for new protocols would be awesome.<p>Quick Start: helm install serviceradar carverauto/serviceradar or docker compose up -d<p>GitHub: <a href=\"https://github.com/carverauto/serviceradar\" rel=\"nofollow\">https://github.com/carverauto/serviceradar</a> (please star!)<p>Docs: <a href=\"https://docs.serviceradar.cloud\" rel=\"nofollow\">https://docs.serviceradar.cloud</a><p>Join our Discord or use GitHub Issues to share thoughts.</p>\n<hr />\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45624186\">https://news.ycombinator.com/item?id=45624186</a></p>\n<p>Points: 33</p>\n<p># Comments: 1</p>"
+        },
+        "published": "Sat, 18 Oct 2025 01:49:06 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          18,
+          1,
+          49,
+          6,
+          5,
+          291,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://github.com/carverauto/serviceradar"
+          }
+        ],
+        "link": "https://github.com/carverauto/serviceradar",
+        "authors": [
+          {
+            "name": "carverauto"
+          }
+        ],
+        "author": "carverauto",
+        "author_detail": {
+          "name": "carverauto"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45624186",
+        "id": "https://news.ycombinator.com/item?id=45624186",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "The Unix Executable as a Smalltalk Method [pdf]",
+    "body": "<p>Article URL: <a href=\"https://programmingmadecomplicated.wordpress.com/wp-content/uploads/2025/10/onward25-jakubovic.pdf\">https://programmingmadecomplicated.wordpress.com/wp-content/uploads/2025/10/onward25-jakubovic.pdf</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45623917\">https://news.ycombinator.com/item?id=45623917</a></p>\n<p>Points: 77</p>\n<p># Comments: 7</p>",
+    "timestamp": "Sat, 18 Oct 2025 01:03:22 +0000",
+    "raw": {
+      "entry": {
+        "title": "The Unix Executable as a Smalltalk Method [pdf]",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "The Unix Executable as a Smalltalk Method [pdf]"
+        },
+        "summary": "<p>Article URL: <a href=\"https://programmingmadecomplicated.wordpress.com/wp-content/uploads/2025/10/onward25-jakubovic.pdf\">https://programmingmadecomplicated.wordpress.com/wp-content/uploads/2025/10/onward25-jakubovic.pdf</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45623917\">https://news.ycombinator.com/item?id=45623917</a></p>\n<p>Points: 77</p>\n<p># Comments: 7</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>Article URL: <a href=\"https://programmingmadecomplicated.wordpress.com/wp-content/uploads/2025/10/onward25-jakubovic.pdf\">https://programmingmadecomplicated.wordpress.com/wp-content/uploads/2025/10/onward25-jakubovic.pdf</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45623917\">https://news.ycombinator.com/item?id=45623917</a></p>\n<p>Points: 77</p>\n<p># Comments: 7</p>"
+        },
+        "published": "Sat, 18 Oct 2025 01:03:22 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          18,
+          1,
+          3,
+          22,
+          5,
+          291,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://programmingmadecomplicated.wordpress.com/wp-content/uploads/2025/10/onward25-jakubovic.pdf"
+          }
+        ],
+        "link": "https://programmingmadecomplicated.wordpress.com/wp-content/uploads/2025/10/onward25-jakubovic.pdf",
+        "authors": [
+          {
+            "name": "pcfwik"
+          }
+        ],
+        "author": "pcfwik",
+        "author_detail": {
+          "name": "pcfwik"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45623917",
+        "id": "https://news.ycombinator.com/item?id=45623917",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "WebMCP",
+    "body": "<p>Article URL: <a href=\"https://github.com/jasonjmcghee/WebMCP\">https://github.com/jasonjmcghee/WebMCP</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45622604\">https://news.ycombinator.com/item?id=45622604</a></p>\n<p>Points: 82</p>\n<p># Comments: 19</p>",
+    "timestamp": "Fri, 17 Oct 2025 21:57:44 +0000",
+    "raw": {
+      "entry": {
+        "title": "WebMCP",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "WebMCP"
+        },
+        "summary": "<p>Article URL: <a href=\"https://github.com/jasonjmcghee/WebMCP\">https://github.com/jasonjmcghee/WebMCP</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45622604\">https://news.ycombinator.com/item?id=45622604</a></p>\n<p>Points: 82</p>\n<p># Comments: 19</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>Article URL: <a href=\"https://github.com/jasonjmcghee/WebMCP\">https://github.com/jasonjmcghee/WebMCP</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45622604\">https://news.ycombinator.com/item?id=45622604</a></p>\n<p>Points: 82</p>\n<p># Comments: 19</p>"
+        },
+        "published": "Fri, 17 Oct 2025 21:57:44 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          17,
+          21,
+          57,
+          44,
+          4,
+          290,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://github.com/jasonjmcghee/WebMCP"
+          }
+        ],
+        "link": "https://github.com/jasonjmcghee/WebMCP",
+        "authors": [
+          {
+            "name": "sanj"
+          }
+        ],
+        "author": "sanj",
+        "author_detail": {
+          "name": "sanj"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45622604",
+        "id": "https://news.ycombinator.com/item?id=45622604",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "New Work by Gary Larson",
+    "body": "<p>Article URL: <a href=\"https://www.thefarside.com/new-stuff\">https://www.thefarside.com/new-stuff</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45622365\">https://news.ycombinator.com/item?id=45622365</a></p>\n<p>Points: 244</p>\n<p># Comments: 54</p>",
+    "timestamp": "Fri, 17 Oct 2025 21:34:37 +0000",
+    "raw": {
+      "entry": {
+        "title": "New Work by Gary Larson",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "New Work by Gary Larson"
+        },
+        "summary": "<p>Article URL: <a href=\"https://www.thefarside.com/new-stuff\">https://www.thefarside.com/new-stuff</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45622365\">https://news.ycombinator.com/item?id=45622365</a></p>\n<p>Points: 244</p>\n<p># Comments: 54</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>Article URL: <a href=\"https://www.thefarside.com/new-stuff\">https://www.thefarside.com/new-stuff</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45622365\">https://news.ycombinator.com/item?id=45622365</a></p>\n<p>Points: 244</p>\n<p># Comments: 54</p>"
+        },
+        "published": "Fri, 17 Oct 2025 21:34:37 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          17,
+          21,
+          34,
+          37,
+          4,
+          290,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://www.thefarside.com/new-stuff"
+          }
+        ],
+        "link": "https://www.thefarside.com/new-stuff",
+        "authors": [
+          {
+            "name": "jkestner"
+          }
+        ],
+        "author": "jkestner",
+        "author_detail": {
+          "name": "jkestner"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45622365",
+        "id": "https://news.ycombinator.com/item?id=45622365",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "The pivot",
+    "body": "<p>Article URL: <a href=\"https://www.antipope.org/charlie/blog-static/2025/10/the-pivot-1.html\">https://www.antipope.org/charlie/blog-static/2025/10/the-pivot-1.html</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45621074\">https://news.ycombinator.com/item?id=45621074</a></p>\n<p>Points: 309</p>\n<p># Comments: 137</p>",
+    "timestamp": "Fri, 17 Oct 2025 19:37:16 +0000",
+    "raw": {
+      "entry": {
+        "title": "The pivot",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "The pivot"
+        },
+        "summary": "<p>Article URL: <a href=\"https://www.antipope.org/charlie/blog-static/2025/10/the-pivot-1.html\">https://www.antipope.org/charlie/blog-static/2025/10/the-pivot-1.html</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45621074\">https://news.ycombinator.com/item?id=45621074</a></p>\n<p>Points: 309</p>\n<p># Comments: 137</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>Article URL: <a href=\"https://www.antipope.org/charlie/blog-static/2025/10/the-pivot-1.html\">https://www.antipope.org/charlie/blog-static/2025/10/the-pivot-1.html</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45621074\">https://news.ycombinator.com/item?id=45621074</a></p>\n<p>Points: 309</p>\n<p># Comments: 137</p>"
+        },
+        "published": "Fri, 17 Oct 2025 19:37:16 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          17,
+          19,
+          37,
+          16,
+          4,
+          290,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://www.antipope.org/charlie/blog-static/2025/10/the-pivot-1.html"
+          }
+        ],
+        "link": "https://www.antipope.org/charlie/blog-static/2025/10/the-pivot-1.html",
+        "authors": [
+          {
+            "name": "AndrewDucker"
+          }
+        ],
+        "author": "AndrewDucker",
+        "author_detail": {
+          "name": "AndrewDucker"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45621074",
+        "id": "https://news.ycombinator.com/item?id=45621074",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "Asking AI to build scrapers should be easy right?",
+    "body": "<p>Article URL: <a href=\"https://www.skyvern.com/blog/asking-ai-to-build-scrapers-should-be-easy-right/\">https://www.skyvern.com/blog/asking-ai-to-build-scrapers-should-be-easy-right/</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45620653\">https://news.ycombinator.com/item?id=45620653</a></p>\n<p>Points: 106</p>\n<p># Comments: 46</p>",
+    "timestamp": "Fri, 17 Oct 2025 19:03:21 +0000",
+    "raw": {
+      "entry": {
+        "title": "Asking AI to build scrapers should be easy right?",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "Asking AI to build scrapers should be easy right?"
+        },
+        "summary": "<p>Article URL: <a href=\"https://www.skyvern.com/blog/asking-ai-to-build-scrapers-should-be-easy-right/\">https://www.skyvern.com/blog/asking-ai-to-build-scrapers-should-be-easy-right/</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45620653\">https://news.ycombinator.com/item?id=45620653</a></p>\n<p>Points: 106</p>\n<p># Comments: 46</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>Article URL: <a href=\"https://www.skyvern.com/blog/asking-ai-to-build-scrapers-should-be-easy-right/\">https://www.skyvern.com/blog/asking-ai-to-build-scrapers-should-be-easy-right/</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45620653\">https://news.ycombinator.com/item?id=45620653</a></p>\n<p>Points: 106</p>\n<p># Comments: 46</p>"
+        },
+        "published": "Fri, 17 Oct 2025 19:03:21 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          17,
+          19,
+          3,
+          21,
+          4,
+          290,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://www.skyvern.com/blog/asking-ai-to-build-scrapers-should-be-easy-right/"
+          }
+        ],
+        "link": "https://www.skyvern.com/blog/asking-ai-to-build-scrapers-should-be-easy-right/",
+        "authors": [
+          {
+            "name": "suchintan"
+          }
+        ],
+        "author": "suchintan",
+        "author_detail": {
+          "name": "suchintan"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45620653",
+        "id": "https://news.ycombinator.com/item?id=45620653",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "Claude Skills are awesome, maybe a bigger deal than MCP",
+    "body": "<p>Article URL: <a href=\"https://simonwillison.net/2025/Oct/16/claude-skills/\">https://simonwillison.net/2025/Oct/16/claude-skills/</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45619537\">https://news.ycombinator.com/item?id=45619537</a></p>\n<p>Points: 547</p>\n<p># Comments: 279</p>",
+    "timestamp": "Fri, 17 Oct 2025 17:40:21 +0000",
+    "raw": {
+      "entry": {
+        "title": "Claude Skills are awesome, maybe a bigger deal than MCP",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "Claude Skills are awesome, maybe a bigger deal than MCP"
+        },
+        "summary": "<p>Article URL: <a href=\"https://simonwillison.net/2025/Oct/16/claude-skills/\">https://simonwillison.net/2025/Oct/16/claude-skills/</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45619537\">https://news.ycombinator.com/item?id=45619537</a></p>\n<p>Points: 547</p>\n<p># Comments: 279</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>Article URL: <a href=\"https://simonwillison.net/2025/Oct/16/claude-skills/\">https://simonwillison.net/2025/Oct/16/claude-skills/</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45619537\">https://news.ycombinator.com/item?id=45619537</a></p>\n<p>Points: 547</p>\n<p># Comments: 279</p>"
+        },
+        "published": "Fri, 17 Oct 2025 17:40:21 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          17,
+          17,
+          40,
+          21,
+          4,
+          290,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://simonwillison.net/2025/Oct/16/claude-skills/"
+          }
+        ],
+        "link": "https://simonwillison.net/2025/Oct/16/claude-skills/",
+        "authors": [
+          {
+            "name": "weinzierl"
+          }
+        ],
+        "author": "weinzierl",
+        "author_detail": {
+          "name": "weinzierl"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45619537",
+        "id": "https://news.ycombinator.com/item?id=45619537",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "Andrej Karpathy – It will take a decade to work through the issues with agents",
+    "body": "<p>Article URL: <a href=\"https://www.dwarkesh.com/p/andrej-karpathy\">https://www.dwarkesh.com/p/andrej-karpathy</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45619329\">https://news.ycombinator.com/item?id=45619329</a></p>\n<p>Points: 763</p>\n<p># Comments: 713</p>",
+    "timestamp": "Fri, 17 Oct 2025 17:24:18 +0000",
+    "raw": {
+      "entry": {
+        "title": "Andrej Karpathy – It will take a decade to work through the issues with agents",
+        "title_detail": {
+          "type": "text/plain",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "Andrej Karpathy – It will take a decade to work through the issues with agents"
+        },
+        "summary": "<p>Article URL: <a href=\"https://www.dwarkesh.com/p/andrej-karpathy\">https://www.dwarkesh.com/p/andrej-karpathy</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45619329\">https://news.ycombinator.com/item?id=45619329</a></p>\n<p>Points: 763</p>\n<p># Comments: 713</p>",
+        "summary_detail": {
+          "type": "text/html",
+          "language": null,
+          "base": "https://hnrss.org/frontpage",
+          "value": "<p>Article URL: <a href=\"https://www.dwarkesh.com/p/andrej-karpathy\">https://www.dwarkesh.com/p/andrej-karpathy</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=45619329\">https://news.ycombinator.com/item?id=45619329</a></p>\n<p>Points: 763</p>\n<p># Comments: 713</p>"
+        },
+        "published": "Fri, 17 Oct 2025 17:24:18 +0000",
+        "published_parsed": [
+          2025,
+          10,
+          17,
+          17,
+          24,
+          18,
+          4,
+          290,
+          0
+        ],
+        "links": [
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://www.dwarkesh.com/p/andrej-karpathy"
+          }
+        ],
+        "link": "https://www.dwarkesh.com/p/andrej-karpathy",
+        "authors": [
+          {
+            "name": "ctoth"
+          }
+        ],
+        "author": "ctoth",
+        "author_detail": {
+          "name": "ctoth"
+        },
+        "comments": "https://news.ycombinator.com/item?id=45619329",
+        "id": "https://news.ycombinator.com/item?id=45619329",
+        "guidislink": false
+      }
+    }
+  },
+  {
+    "title": "{'sha': 'f937468e7c88c768a28ff4e653da051ffa30d86c', 'node_id': 'C_kwDOBN0Z8doAKG",
+    "body": "{\"sha\": \"f937468e7c88c768a28ff4e653da051ffa30d86c\", \"node_id\": \"C_kwDOBN0Z8doAKGY5Mzc0NjhlN2M4OGM3NjhhMjhmZjRlNjUzZGEwNTFmZmEzMGQ4NmM\", \"commit\": {\"author\": {\"name\": \"Shamil\", \"email\": \"ashm.tech@proton.me\", \"date\": \"2025-10-18T09:27:58Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-18T09:27:58Z\"}, \"message\": \"gh-140272: Fix memory leak in _gdbm.gdbm.clear() (GH-140274)\", \"tree\": {\"sha\": \"2375a14dfc398f166b0f52cdb29c4f655c6c7c87\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/2375a14dfc398f166b0f52cdb29c4f655c6c7c87\"}, \"url\": \"https://api.github.com/repos/python/cpython/git/commits/f937468e7c88c768a28ff4e653da051ffa30d86c\", \"comment_count\": 0, \"verification\": {\"verified\": true, \"reason\": \"valid\", \"signature\": \"-----BEGIN PGP SIGNATURE-----\\n\\nwsFcBAABCAAQBQJo812eCRC1aQ7uu5UhlAAAQVcQAFy8/bxr9pEChur8G0ZTiN8B\\na+AOxTLhRUKqTORLHC2KuvXg0owR4onXyNL6MenAR4wmhXwbbS79idO9ePPYiKWH\\n8+A9ncKVgw5XxLU16X7SK1bivN0hKxoyOdR0P5jtmVqINiW6iwbPLbmZj0nH6u",
+    "timestamp": null,
+    "raw": {
+      "sha": "f937468e7c88c768a28ff4e653da051ffa30d86c",
+      "node_id": "C_kwDOBN0Z8doAKGY5Mzc0NjhlN2M4OGM3NjhhMjhmZjRlNjUzZGEwNTFmZmEzMGQ4NmM",
+      "commit": {
+        "author": {
+          "name": "Shamil",
+          "email": "ashm.tech@proton.me",
+          "date": "2025-10-18T09:27:58Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-18T09:27:58Z"
+        },
+        "message": "gh-140272: Fix memory leak in _gdbm.gdbm.clear() (GH-140274)",
+        "tree": {
+          "sha": "2375a14dfc398f166b0f52cdb29c4f655c6c7c87",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/2375a14dfc398f166b0f52cdb29c4f655c6c7c87"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/f937468e7c88c768a28ff4e653da051ffa30d86c",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo812eCRC1aQ7uu5UhlAAAQVcQAFy8/bxr9pEChur8G0ZTiN8B\na+AOxTLhRUKqTORLHC2KuvXg0owR4onXyNL6MenAR4wmhXwbbS79idO9ePPYiKWH\n8+A9ncKVgw5XxLU16X7SK1bivN0hKxoyOdR0P5jtmVqINiW6iwbPLbmZj0nH6umw\nTGXuUDoFHzJexyRQG1Vaz7fz/DezL5rF6n5qmeRDRdhbgCJNdRRH25ZWFLMdbT0u\nFuf2H6R9fD20Xj2/7R2izOlwCD3/Y9OL1RIRLKsDhxdWEYpl1t7VI5sQjODUQqoX\nFel68D3W5XmCHHbA5I96qePS7SGyeIZS85dmh9iz+lQTMuOzWsniW3Vgb/OExdkT\nA3AEM08Q8/Rrw1ShVKRJSFasDO2CqUBQ3tUlpSTasHPT48q45eMvapZvChe/pMeV\nLcnNSwHT/XgDnRK+BJjKmFKTTSJulwOARPWikxInFtVujIMP5+we4mrLV+UWbC9I\nmvOWB0KT+OBNW86zQgfOpx/VJwJ59L2x419ZxmC4Bqmuw5lj7CgD9PzD1uDfGvIP\nUntSoB62p6u7Vx1M6XqScQR6ju8Ned93s7Eu3JxEBVagIjdu/sGNA6HbPD+xNsA3\nZgnKh/Eo4bQ/V2A0z7erUDdVl+Pi39Q2rgrvPF0hI4w5eVun1/lFQ086mU4LjyjW\nchP3F06gTRVSXwPxH0rs\n=p1bC\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree 2375a14dfc398f166b0f52cdb29c4f655c6c7c87\nparent 1bfe86caaaaca3ec16351d69fa778f1212f1dd84\nauthor Shamil <ashm.tech@proton.me> 1760779678 +0300\ncommitter GitHub <noreply@github.com> 1760779678 +0000\n\ngh-140272: Fix memory leak in _gdbm.gdbm.clear() (GH-140274)\n\n",
+          "verified_at": "2025-10-18T09:27:59Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/f937468e7c88c768a28ff4e653da051ffa30d86c",
+      "html_url": "https://github.com/python/cpython/commit/f937468e7c88c768a28ff4e653da051ffa30d86c",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/f937468e7c88c768a28ff4e653da051ffa30d86c/comments",
+      "author": {
+        "login": "ashm-dev",
+        "id": 173620149,
+        "node_id": "U_kgDOClk7tQ",
+        "avatar_url": "https://avatars.githubusercontent.com/u/173620149?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/ashm-dev",
+        "html_url": "https://github.com/ashm-dev",
+        "followers_url": "https://api.github.com/users/ashm-dev/followers",
+        "following_url": "https://api.github.com/users/ashm-dev/following{/other_user}",
+        "gists_url": "https://api.github.com/users/ashm-dev/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/ashm-dev/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/ashm-dev/subscriptions",
+        "organizations_url": "https://api.github.com/users/ashm-dev/orgs",
+        "repos_url": "https://api.github.com/users/ashm-dev/repos",
+        "events_url": "https://api.github.com/users/ashm-dev/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/ashm-dev/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "1bfe86caaaaca3ec16351d69fa778f1212f1dd84",
+          "url": "https://api.github.com/repos/python/cpython/commits/1bfe86caaaaca3ec16351d69fa778f1212f1dd84",
+          "html_url": "https://github.com/python/cpython/commit/1bfe86caaaaca3ec16351d69fa778f1212f1dd84"
+        }
+      ]
+    }
+  },
+  {
+    "title": "{'sha': '1bfe86caaaaca3ec16351d69fa778f1212f1dd84', 'node_id': 'C_kwDOBN0Z8doAKD",
+    "body": "{\"sha\": \"1bfe86caaaaca3ec16351d69fa778f1212f1dd84\", \"node_id\": \"C_kwDOBN0Z8doAKDFiZmU4NmNhYWFhY2EzZWMxNjM1MWQ2OWZhNzc4ZjEyMTJmMWRkODQ\", \"commit\": {\"author\": {\"name\": \"Barney Gale\", \"email\": \"barney.gale@gmail.com\", \"date\": \"2025-10-18T01:13:25Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-18T01:13:25Z\"}, \"message\": \"GH-139174: Prepare `pathlib.Path.info` for new methods (part 2) (#140155)\\n\\nMerge `_Info`, `_StatResultInfo` and `_DirEntryInfo` into a single `_Info`\\nclass. No other changes.\\n\\nThis will allow us to use a cached `os.stat()` result from our upcoming\\n`_Info.stat()` method even when we have a backing `os.DirEntry`.\", \"tree\": {\"sha\": \"64f7a1e8413b8fae20e2ab297136366ef511ea8c\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/64f7a1e8413b8fae20e2ab297136366ef511ea8c\"}, \"url\": \"https://api.github.com/repos/python/cpython/git/commits/1bfe86caaaaca3ec16351d69fa778f1212f1dd84\", \"comment_count\": 0, \"verification\": {\"verified\": t",
+    "timestamp": null,
+    "raw": {
+      "sha": "1bfe86caaaaca3ec16351d69fa778f1212f1dd84",
+      "node_id": "C_kwDOBN0Z8doAKDFiZmU4NmNhYWFhY2EzZWMxNjM1MWQ2OWZhNzc4ZjEyMTJmMWRkODQ",
+      "commit": {
+        "author": {
+          "name": "Barney Gale",
+          "email": "barney.gale@gmail.com",
+          "date": "2025-10-18T01:13:25Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-18T01:13:25Z"
+        },
+        "message": "GH-139174: Prepare `pathlib.Path.info` for new methods (part 2) (#140155)\n\nMerge `_Info`, `_StatResultInfo` and `_DirEntryInfo` into a single `_Info`\nclass. No other changes.\n\nThis will allow us to use a cached `os.stat()` result from our upcoming\n`_Info.stat()` method even when we have a backing `os.DirEntry`.",
+        "tree": {
+          "sha": "64f7a1e8413b8fae20e2ab297136366ef511ea8c",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/64f7a1e8413b8fae20e2ab297136366ef511ea8c"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/1bfe86caaaaca3ec16351d69fa778f1212f1dd84",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo8um1CRC1aQ7uu5UhlAAAVtUQAGE/qV4HZa4sEmuX5v4fegkH\nj/wQnoLxzH6LTMeAhgWZPxcg8X5aPQhul1aa7STV2ab9LTHmkRYgfyb4wKqgKbvy\nH6GXPhvOBg00heE75StsMp0lVqbWQDIlTjPAzdlAMtRpPeejrFsfTePch4oZzwTf\nndAXV/eraG2Wq1EmZPnfk9xzXVWqzlDxOduRLi0LOTCb8IPrxA/mA4R+XPRJSOAy\n6TfSatlhaseIW9TRmq9MiJBCGj6OqkLSqzpoof4B91UHx4USVdVC8Sv/CFYkaPDq\n69EJRy9AGC+oTbk72wlBlXkXILfJDsOebxacadUxB6fTfgbThEIEBm2GfVxrl9zm\ngllJ77pB74lStJW89Z9DEz2/BRqb4DXF/y9MACYaJElBjc6+ELbTTpfUsmP/G9R0\nHVnT5aOYGXgqo5+QYQ4AffPYrmneFxJZOj7yujw0zO32Ti6DLVHpZg4TSIQObV/k\nwUrXYZKVsQs5FAD7rXMfVEPJ6ZujqrD7SzIA41LZnoivn/OQj+6tXpT9vf9FRxZp\nBagF44WvQqYly2ChnyaI5/GYkIUYOTUxj0XaFhMNjJO4wZ2v7EVkVKaBluq+tAOW\n2WpnXld3xftHWSt1GIBzYJTnpumPaC+3U7KMSHJCIMT9ur2I49NzAX0u0L0MKefs\nOhj1TCb9hCoHwvO3i5IR\n=i0zA\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree 64f7a1e8413b8fae20e2ab297136366ef511ea8c\nparent f4e51f253ad6c27583438f6182c33cf368bfa45f\nauthor Barney Gale <barney.gale@gmail.com> 1760750005 +0100\ncommitter GitHub <noreply@github.com> 1760750005 +0100\n\nGH-139174: Prepare `pathlib.Path.info` for new methods (part 2) (#140155)\n\nMerge `_Info`, `_StatResultInfo` and `_DirEntryInfo` into a single `_Info`\nclass. No other changes.\n\nThis will allow us to use a cached `os.stat()` result from our upcoming\n`_Info.stat()` method even when we have a backing `os.DirEntry`.",
+          "verified_at": "2025-10-18T01:13:26Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/1bfe86caaaaca3ec16351d69fa778f1212f1dd84",
+      "html_url": "https://github.com/python/cpython/commit/1bfe86caaaaca3ec16351d69fa778f1212f1dd84",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/1bfe86caaaaca3ec16351d69fa778f1212f1dd84/comments",
+      "author": {
+        "login": "barneygale",
+        "id": 960340,
+        "node_id": "MDQ6VXNlcjk2MDM0MA==",
+        "avatar_url": "https://avatars.githubusercontent.com/u/960340?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/barneygale",
+        "html_url": "https://github.com/barneygale",
+        "followers_url": "https://api.github.com/users/barneygale/followers",
+        "following_url": "https://api.github.com/users/barneygale/following{/other_user}",
+        "gists_url": "https://api.github.com/users/barneygale/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/barneygale/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/barneygale/subscriptions",
+        "organizations_url": "https://api.github.com/users/barneygale/orgs",
+        "repos_url": "https://api.github.com/users/barneygale/repos",
+        "events_url": "https://api.github.com/users/barneygale/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/barneygale/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "f4e51f253ad6c27583438f6182c33cf368bfa45f",
+          "url": "https://api.github.com/repos/python/cpython/commits/f4e51f253ad6c27583438f6182c33cf368bfa45f",
+          "html_url": "https://github.com/python/cpython/commit/f4e51f253ad6c27583438f6182c33cf368bfa45f"
+        }
+      ]
+    }
+  },
+  {
+    "title": "{'sha': 'f4e51f253ad6c27583438f6182c33cf368bfa45f', 'node_id': 'C_kwDOBN0Z8doAKG",
+    "body": "{\"sha\": \"f4e51f253ad6c27583438f6182c33cf368bfa45f\", \"node_id\": \"C_kwDOBN0Z8doAKGY0ZTUxZjI1M2FkNmMyNzU4MzQzOGY2MTgyYzMzY2YzNjhiZmE0NWY\", \"commit\": {\"author\": {\"name\": \"Barney Gale\", \"email\": \"barney.gale@gmail.com\", \"date\": \"2025-10-17T21:57:51Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-17T21:57:51Z\"}, \"message\": \"GH-133789: Fix unpickling of pathlib objects pickled in Python 3.13 (#133831)\\n\\nIn Python 3.13 (but not 3.12 or 3.14), pathlib classes are defined in\\n`pathlib._local` rather than `pathlib`. In hindsight this was a mistake,\\nbut it was difficult to predict how the abstract/local split would pan out.\\n\\nIn this patch we re-introduce `pathlib._local` as a stub module that\\nre-exports the classes from `pathlib`. This allows path objects pickled in\\n3.13 to be unpicked in 3.14+\", \"tree\": {\"sha\": \"4728c099f4248b669f5aa6d94e3482ffe2a0968e\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/4728c099f4248b669f5aa6d94e3482ffe2a0968e",
+    "timestamp": null,
+    "raw": {
+      "sha": "f4e51f253ad6c27583438f6182c33cf368bfa45f",
+      "node_id": "C_kwDOBN0Z8doAKGY0ZTUxZjI1M2FkNmMyNzU4MzQzOGY2MTgyYzMzY2YzNjhiZmE0NWY",
+      "commit": {
+        "author": {
+          "name": "Barney Gale",
+          "email": "barney.gale@gmail.com",
+          "date": "2025-10-17T21:57:51Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-17T21:57:51Z"
+        },
+        "message": "GH-133789: Fix unpickling of pathlib objects pickled in Python 3.13 (#133831)\n\nIn Python 3.13 (but not 3.12 or 3.14), pathlib classes are defined in\n`pathlib._local` rather than `pathlib`. In hindsight this was a mistake,\nbut it was difficult to predict how the abstract/local split would pan out.\n\nIn this patch we re-introduce `pathlib._local` as a stub module that\nre-exports the classes from `pathlib`. This allows path objects pickled in\n3.13 to be unpicked in 3.14+",
+        "tree": {
+          "sha": "4728c099f4248b669f5aa6d94e3482ffe2a0968e",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/4728c099f4248b669f5aa6d94e3482ffe2a0968e"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/f4e51f253ad6c27583438f6182c33cf368bfa45f",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo8rvfCRC1aQ7uu5UhlAAA3scQAFfXwQJXYCHPrD+dT/8BvGgZ\nzDYI5CGAnAw9MwLsGac4jAxbtiYgd4Odvw9yIDCTC2mWFGPDv5H2X+7i2hpVi6re\n8Wd3jI2aqFy1Qv1LMRWtJsnkPpkLtuHdBHsS/YPjagDvFwEe14ZmwzNQn+WHN4gk\nsQvT10FKNRHioSxN0lo0t0mMsOjsFO45IiMPSn1/fWN8gJLgN2VPGec4Enn61aaG\nJVoBTffvaMh2c0D2fjccuLjqdDrsm6mz3GG8r7zllkJhXUOCAuRVC7IMqTliCpcp\nepIC3cHwNZwHck7TdyM2a/uWNaWjV4rnh5Tz70Yndbg0tnASheCyD9X4dDweEsVz\ny0r7WD+IyaAJ9S9tSt22gdRIlqCwms05775Sav+E32Y0sqAVQCZvgOumyOvGXCw3\nF3TesySCwpV+Jo224E+6cCpZEY5vc0C2WbAUqi7WNqQuO5VoPpVEI41qzj9jqk2B\nODs3CfXJT5lYLrOP/nSeiVfEfPB1VFtXJCxbxQd/de7WMm9T5GfzjBtX8obHZoeX\nffxNiGd20bWmOlhHvwVtCTzQOzBM++G0mfgGhzYu9bN3a7hr2vGjP6MU9CYdsdJC\nHAb3Cln4wctorGBrRwDO7F6jUVUcdBCjSbjw0LzbQAafvltQnJslDKP1HdNCO7fC\ntnUWP/7bdk9kRhITelwg\n=1XOP\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree 4728c099f4248b669f5aa6d94e3482ffe2a0968e\nparent 92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc\nauthor Barney Gale <barney.gale@gmail.com> 1760738271 +0100\ncommitter GitHub <noreply@github.com> 1760738271 +0000\n\nGH-133789: Fix unpickling of pathlib objects pickled in Python 3.13 (#133831)\n\nIn Python 3.13 (but not 3.12 or 3.14), pathlib classes are defined in\n`pathlib._local` rather than `pathlib`. In hindsight this was a mistake,\nbut it was difficult to predict how the abstract/local split would pan out.\n\nIn this patch we re-introduce `pathlib._local` as a stub module that\nre-exports the classes from `pathlib`. This allows path objects pickled in\n3.13 to be unpicked in 3.14+",
+          "verified_at": "2025-10-17T21:57:51Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/f4e51f253ad6c27583438f6182c33cf368bfa45f",
+      "html_url": "https://github.com/python/cpython/commit/f4e51f253ad6c27583438f6182c33cf368bfa45f",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/f4e51f253ad6c27583438f6182c33cf368bfa45f/comments",
+      "author": {
+        "login": "barneygale",
+        "id": 960340,
+        "node_id": "MDQ6VXNlcjk2MDM0MA==",
+        "avatar_url": "https://avatars.githubusercontent.com/u/960340?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/barneygale",
+        "html_url": "https://github.com/barneygale",
+        "followers_url": "https://api.github.com/users/barneygale/followers",
+        "following_url": "https://api.github.com/users/barneygale/following{/other_user}",
+        "gists_url": "https://api.github.com/users/barneygale/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/barneygale/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/barneygale/subscriptions",
+        "organizations_url": "https://api.github.com/users/barneygale/orgs",
+        "repos_url": "https://api.github.com/users/barneygale/repos",
+        "events_url": "https://api.github.com/users/barneygale/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/barneygale/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc",
+          "url": "https://api.github.com/repos/python/cpython/commits/92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc",
+          "html_url": "https://github.com/python/cpython/commit/92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc"
+        }
+      ]
+    }
+  },
+  {
+    "title": "{'sha': '92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc', 'node_id': 'C_kwDOBN0Z8doAKD",
+    "body": "{\"sha\": \"92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc\", \"node_id\": \"C_kwDOBN0Z8doAKDkyMDI1ZWEyYzhhMTBhYTBlM2RkNWEyYTE1NDhmOWJiMTdmZTdkYmM\", \"commit\": {\"author\": {\"name\": \"Ayappan Perumal\", \"email\": \"ayappap2@in.ibm.com\", \"date\": \"2025-10-17T17:40:16Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-17T17:40:16Z\"}, \"message\": \"gh-140239: Check statx availability only on Linux (#140249)\", \"tree\": {\"sha\": \"3b609fa93019c7ced4790f961f3469f3f10724d9\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/3b609fa93019c7ced4790f961f3469f3f10724d9\"}, \"url\": \"https://api.github.com/repos/python/cpython/git/commits/92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc\", \"comment_count\": 0, \"verification\": {\"verified\": true, \"reason\": \"valid\", \"signature\": \"-----BEGIN PGP SIGNATURE-----\\n\\nwsFcBAABCAAQBQJo8n+ACRC1aQ7uu5UhlAAA3uYQADivjYL/TeXm5HlyxOpS/306\\nOZfD8dZLA2n9tpC8t2WB8U79SGlc0tXTrv/2Drmj17OASdU7v0xCKt5ebW8ockqQ\\nIW3XD7IsmeetpITdjuWw8Si3s4Mg9wyBhQGsBidS7Swh+r+fyl7WR4",
+    "timestamp": null,
+    "raw": {
+      "sha": "92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc",
+      "node_id": "C_kwDOBN0Z8doAKDkyMDI1ZWEyYzhhMTBhYTBlM2RkNWEyYTE1NDhmOWJiMTdmZTdkYmM",
+      "commit": {
+        "author": {
+          "name": "Ayappan Perumal",
+          "email": "ayappap2@in.ibm.com",
+          "date": "2025-10-17T17:40:16Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-17T17:40:16Z"
+        },
+        "message": "gh-140239: Check statx availability only on Linux (#140249)",
+        "tree": {
+          "sha": "3b609fa93019c7ced4790f961f3469f3f10724d9",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/3b609fa93019c7ced4790f961f3469f3f10724d9"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo8n+ACRC1aQ7uu5UhlAAA3uYQADivjYL/TeXm5HlyxOpS/306\nOZfD8dZLA2n9tpC8t2WB8U79SGlc0tXTrv/2Drmj17OASdU7v0xCKt5ebW8ockqQ\nIW3XD7IsmeetpITdjuWw8Si3s4Mg9wyBhQGsBidS7Swh+r+fyl7WR45lWVb5avGJ\nXmbiAyeis04Gb5BrmzKmEmkJzS/u0bmTISRvKsm/SW2pqyzcnlAh+8nFP6sAcN4O\nzMT9L5iv/tjXv/WZiJOglv9q3r/2G63ntKzR0ktavVDE9h+dqwctHv+uR/tspWGE\nZdYU5utUXtpbdlgdLyQGUBh7ijzL7UokDWnjzojnHgUcZsWwSw4u+2rBzFxJ0pmf\ngpWxpY2o5wkhzVZyErmm1t3NpJwX2eo6aJhFFAKgC+njQ1nkRZt6ON6mmxJCMCT+\npk2mZKE3xKLgxhQ2miRZZ1MXcwH74PQ+hf1bp2qMqWGTRV461V5onJ/E0HCnx75N\nWkSy4Zj5Wbrl0GayA/rJgtCFDFMBMdW1GAo+Opy6bzgS8XanvgalAF1l62GFmiuu\nGfji3bXxIAa+o6lOOeu1cpqHpNOYlWl+HOzQ86k7JjeB4aOWUKUIf/sBIGnVKDJ3\nFqcE3WxQLLEBYzA6fv/KSBS+GWBjEAKh+vYBs8V82F3GX2AJItvugFWuFan0tU3Q\nJP/sPA3cCb7y22myKAHS\n=bhtZ\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree 3b609fa93019c7ced4790f961f3469f3f10724d9\nparent fbf0843e39e01ec8a8295f6475065b08053f13dd\nauthor Ayappan Perumal <ayappap2@in.ibm.com> 1760722816 +0530\ncommitter GitHub <noreply@github.com> 1760722816 +0200\n\ngh-140239: Check statx availability only on Linux (#140249)\n\n",
+          "verified_at": "2025-10-17T17:40:17Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc",
+      "html_url": "https://github.com/python/cpython/commit/92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/92025ea2c8a10aa0e3dd5a2a1548f9bb17fe7dbc/comments",
+      "author": {
+        "login": "ayappanec",
+        "id": 6734658,
+        "node_id": "MDQ6VXNlcjY3MzQ2NTg=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/6734658?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/ayappanec",
+        "html_url": "https://github.com/ayappanec",
+        "followers_url": "https://api.github.com/users/ayappanec/followers",
+        "following_url": "https://api.github.com/users/ayappanec/following{/other_user}",
+        "gists_url": "https://api.github.com/users/ayappanec/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/ayappanec/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/ayappanec/subscriptions",
+        "organizations_url": "https://api.github.com/users/ayappanec/orgs",
+        "repos_url": "https://api.github.com/users/ayappanec/repos",
+        "events_url": "https://api.github.com/users/ayappanec/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/ayappanec/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "fbf0843e39e01ec8a8295f6475065b08053f13dd",
+          "url": "https://api.github.com/repos/python/cpython/commits/fbf0843e39e01ec8a8295f6475065b08053f13dd",
+          "html_url": "https://github.com/python/cpython/commit/fbf0843e39e01ec8a8295f6475065b08053f13dd"
+        }
+      ]
+    }
+  },
+  {
+    "title": "{'sha': 'fbf0843e39e01ec8a8295f6475065b08053f13dd', 'node_id': 'C_kwDOBN0Z8doAKG",
+    "body": "{\"sha\": \"fbf0843e39e01ec8a8295f6475065b08053f13dd\", \"node_id\": \"C_kwDOBN0Z8doAKGZiZjA4NDNlMzllMDFlYzhhODI5NWY2NDc1MDY1YjA4MDUzZjEzZGQ\", \"commit\": {\"author\": {\"name\": \"Serhiy Storchaka\", \"email\": \"storchaka@gmail.com\", \"date\": \"2025-10-17T11:21:39Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-17T11:21:39Z\"}, \"message\": \"gh-135801: Add tests for filtering warnings by module (GH-140240)\", \"tree\": {\"sha\": \"39b2a408533f9d901c2fbd13c562421262035d9b\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/39b2a408533f9d901c2fbd13c562421262035d9b\"}, \"url\": \"https://api.github.com/repos/python/cpython/git/commits/fbf0843e39e01ec8a8295f6475065b08053f13dd\", \"comment_count\": 0, \"verification\": {\"verified\": true, \"reason\": \"valid\", \"signature\": \"-----BEGIN PGP SIGNATURE-----\\n\\nwsFcBAABCAAQBQJo8ibDCRC1aQ7uu5UhlAAA4CkQAINWM0sNE003r6jAYTJ9rW2e\\nmFNxpCd+856kpqEFJoGJN4o3xwu1ewVYOCc8MbPKlcynaQQmzpWIhAIYctTVnotw\\nA21SOKtL+7I303hw8OmE6iblAxV7UOuKfu4IX6hNFlsAk7d",
+    "timestamp": null,
+    "raw": {
+      "sha": "fbf0843e39e01ec8a8295f6475065b08053f13dd",
+      "node_id": "C_kwDOBN0Z8doAKGZiZjA4NDNlMzllMDFlYzhhODI5NWY2NDc1MDY1YjA4MDUzZjEzZGQ",
+      "commit": {
+        "author": {
+          "name": "Serhiy Storchaka",
+          "email": "storchaka@gmail.com",
+          "date": "2025-10-17T11:21:39Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-17T11:21:39Z"
+        },
+        "message": "gh-135801: Add tests for filtering warnings by module (GH-140240)",
+        "tree": {
+          "sha": "39b2a408533f9d901c2fbd13c562421262035d9b",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/39b2a408533f9d901c2fbd13c562421262035d9b"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/fbf0843e39e01ec8a8295f6475065b08053f13dd",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo8ibDCRC1aQ7uu5UhlAAA4CkQAINWM0sNE003r6jAYTJ9rW2e\nmFNxpCd+856kpqEFJoGJN4o3xwu1ewVYOCc8MbPKlcynaQQmzpWIhAIYctTVnotw\nA21SOKtL+7I303hw8OmE6iblAxV7UOuKfu4IX6hNFlsAk7dM0GM+FabMOIBCm/xB\nSwYF6Tz1RuCMlH5Eg+vKkNwjvbVRqsj/f7VXD/DhM7DcCSreV2Vkr4E0dLceMQIE\n9/z/iLQKGIrwO0RFMXZ6oVPhjtGLCZa8h7e3749et/Bx/CiWcYSAxa3Z36qjI0qD\nY0mubYfhrTsRXCykW4K9PWx2ol/fufQ+7E6uhgLqfRPDTuBPCvmqy6Sjrdr4ftqD\ndxR/KQ8LwU8usI6Ykl8ftcQKxWrqJSTul+wveTgi6fq1MRvVVvG754LM7aYlY2wh\n5FL4THMT7bLVwvCkuiwNR9SqgOhVPAFeUFz70L5o7IaM/NWWrMK7NTtOfB5+OTSn\nh3OF+ikYoDMR+Fr2d6SioVxxj/RaSmAaHnlyqTJSh7EP37n89y/De3slzvgIE+IE\n6PWGfL1eYR6yOP+5KhmsSCHbBv4ITtnyuwjnTsz6yJ2DIr2mI67j2ZD9bZ/u6VXr\nY7xpdXsJ7ojiS8WULgnNFQi6K/F+xjDdEnWEwdUKX6iKeBU9LMG0yJjH29jKAaCm\nRzGIaFx8Z41yQa8r307V\n=CwTf\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree 39b2a408533f9d901c2fbd13c562421262035d9b\nparent 67c98ad8ef5530ddfd332a7e9d4257791dc35b1c\nauthor Serhiy Storchaka <storchaka@gmail.com> 1760700099 +0300\ncommitter GitHub <noreply@github.com> 1760700099 +0300\n\ngh-135801: Add tests for filtering warnings by module (GH-140240)\n\n",
+          "verified_at": "2025-10-17T11:21:40Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/fbf0843e39e01ec8a8295f6475065b08053f13dd",
+      "html_url": "https://github.com/python/cpython/commit/fbf0843e39e01ec8a8295f6475065b08053f13dd",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/fbf0843e39e01ec8a8295f6475065b08053f13dd/comments",
+      "author": {
+        "login": "serhiy-storchaka",
+        "id": 3659035,
+        "node_id": "MDQ6VXNlcjM2NTkwMzU=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/3659035?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/serhiy-storchaka",
+        "html_url": "https://github.com/serhiy-storchaka",
+        "followers_url": "https://api.github.com/users/serhiy-storchaka/followers",
+        "following_url": "https://api.github.com/users/serhiy-storchaka/following{/other_user}",
+        "gists_url": "https://api.github.com/users/serhiy-storchaka/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/serhiy-storchaka/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/serhiy-storchaka/subscriptions",
+        "organizations_url": "https://api.github.com/users/serhiy-storchaka/orgs",
+        "repos_url": "https://api.github.com/users/serhiy-storchaka/repos",
+        "events_url": "https://api.github.com/users/serhiy-storchaka/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/serhiy-storchaka/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "67c98ad8ef5530ddfd332a7e9d4257791dc35b1c",
+          "url": "https://api.github.com/repos/python/cpython/commits/67c98ad8ef5530ddfd332a7e9d4257791dc35b1c",
+          "html_url": "https://github.com/python/cpython/commit/67c98ad8ef5530ddfd332a7e9d4257791dc35b1c"
+        }
+      ]
+    }
+  },
+  {
+    "title": "{'sha': '67c98ad8ef5530ddfd332a7e9d4257791dc35b1c', 'node_id': 'C_kwDOBN0Z8doAKD",
+    "body": "{\"sha\": \"67c98ad8ef5530ddfd332a7e9d4257791dc35b1c\", \"node_id\": \"C_kwDOBN0Z8doAKDY3Yzk4YWQ4ZWY1NTMwZGRmZDMzMmE3ZTlkNDI1Nzc5MWRjMzViMWM\", \"commit\": {\"author\": {\"name\": \"Tomasz D\\u0105dela\", \"email\": \"39437649+tdadela@users.noreply.github.com\", \"date\": \"2025-10-17T10:32:02Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-17T10:32:02Z\"}, \"message\": \"gh-133059: Update documentation of preallocated integer range in `long.rst` (GH-140231)\", \"tree\": {\"sha\": \"117a996bb1dd0a97b34f798503e52082fc17c607\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/117a996bb1dd0a97b34f798503e52082fc17c607\"}, \"url\": \"https://api.github.com/repos/python/cpython/git/commits/67c98ad8ef5530ddfd332a7e9d4257791dc35b1c\", \"comment_count\": 0, \"verification\": {\"verified\": true, \"reason\": \"valid\", \"signature\": \"-----BEGIN PGP SIGNATURE-----\\n\\nwsFcBAABCAAQBQJo8hsiCRC1aQ7uu5UhlAAAajQQAAV0eVE/guMa8UbXEMiITeJG\\nlQCg0bS2Y2hZ0QI1yY3gANz069/gU1cmtcg4Zpq+QRgJy1g0HO5JwuQWMTr1XLuR\\n3",
+    "timestamp": null,
+    "raw": {
+      "sha": "67c98ad8ef5530ddfd332a7e9d4257791dc35b1c",
+      "node_id": "C_kwDOBN0Z8doAKDY3Yzk4YWQ4ZWY1NTMwZGRmZDMzMmE3ZTlkNDI1Nzc5MWRjMzViMWM",
+      "commit": {
+        "author": {
+          "name": "Tomasz Dądela",
+          "email": "39437649+tdadela@users.noreply.github.com",
+          "date": "2025-10-17T10:32:02Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-17T10:32:02Z"
+        },
+        "message": "gh-133059: Update documentation of preallocated integer range in `long.rst` (GH-140231)",
+        "tree": {
+          "sha": "117a996bb1dd0a97b34f798503e52082fc17c607",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/117a996bb1dd0a97b34f798503e52082fc17c607"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/67c98ad8ef5530ddfd332a7e9d4257791dc35b1c",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo8hsiCRC1aQ7uu5UhlAAAajQQAAV0eVE/guMa8UbXEMiITeJG\nlQCg0bS2Y2hZ0QI1yY3gANz069/gU1cmtcg4Zpq+QRgJy1g0HO5JwuQWMTr1XLuR\n3XXFJao2RTOzNp+HI3UDpu2CwM/1jGydtKHrGuYMs+0zHX1ka02+WzlgV25LQQP5\nw8r2DJHruHx9ltYAAXKyHRV+qFKzHnVqg+GcLFs1bhuPQq5LokktNOeNm/3AmIEJ\nGQc3iS7dHFFRFm/1cXHlemDEajpZIJV3y9lk7+9cnaQIcnRFLkQ7OeWLapYAhhrX\n0zpOxXqY3y3UQpqH2on13bg3WJqxBMOOUlsnxLNqaOlsa4GZqaht2BjxRuDKvDde\n1ypTiZiG+Q9LvIMKWsi2pH+6BWeLn8xwZP5Ya82IFuGYPCTSZjsweu1vBbiF74kC\n0Rp4Reb51Z+O2baj74sPiKY8EWT5HFgQXzlbtZOTlzNW9ZjEmM+xFwTb/txN7vjw\ncsRP3ZJkY/hMSMssEsoRQaNbFUQI3H1rUOXLVfB7j1GOT9/EFfJH9/HV7+u80nrw\nRSf0auNPrxVrRx6JluVQckU5EZmw6EYZ5mgluaCKxUpCp4KiEQyPptm/H8SgSgFt\nE8TbGWHLDdvF2OvRESL51WompNeYLPwUwW1xyvtGV1AyXku3Y7gqlxQBRiWsUnf1\naIPuzjaz/yUXUFgM6rxz\n=PBfL\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree 117a996bb1dd0a97b34f798503e52082fc17c607\nparent f1883852ed4cd1923e619e71437641d06873503d\nauthor Tomasz Dądela <39437649+tdadela@users.noreply.github.com> 1760697122 +0200\ncommitter GitHub <noreply@github.com> 1760697122 -0400\n\ngh-133059: Update documentation of preallocated integer range in `long.rst` (GH-140231)\n\n",
+          "verified_at": "2025-10-17T10:32:03Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/67c98ad8ef5530ddfd332a7e9d4257791dc35b1c",
+      "html_url": "https://github.com/python/cpython/commit/67c98ad8ef5530ddfd332a7e9d4257791dc35b1c",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/67c98ad8ef5530ddfd332a7e9d4257791dc35b1c/comments",
+      "author": {
+        "login": "tdadela",
+        "id": 39437649,
+        "node_id": "MDQ6VXNlcjM5NDM3NjQ5",
+        "avatar_url": "https://avatars.githubusercontent.com/u/39437649?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/tdadela",
+        "html_url": "https://github.com/tdadela",
+        "followers_url": "https://api.github.com/users/tdadela/followers",
+        "following_url": "https://api.github.com/users/tdadela/following{/other_user}",
+        "gists_url": "https://api.github.com/users/tdadela/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/tdadela/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/tdadela/subscriptions",
+        "organizations_url": "https://api.github.com/users/tdadela/orgs",
+        "repos_url": "https://api.github.com/users/tdadela/repos",
+        "events_url": "https://api.github.com/users/tdadela/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/tdadela/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "f1883852ed4cd1923e619e71437641d06873503d",
+          "url": "https://api.github.com/repos/python/cpython/commits/f1883852ed4cd1923e619e71437641d06873503d",
+          "html_url": "https://github.com/python/cpython/commit/f1883852ed4cd1923e619e71437641d06873503d"
+        }
+      ]
+    }
+  },
+  {
+    "title": "{'sha': 'f1883852ed4cd1923e619e71437641d06873503d', 'node_id': 'C_kwDOBN0Z8doAKG",
+    "body": "{\"sha\": \"f1883852ed4cd1923e619e71437641d06873503d\", \"node_id\": \"C_kwDOBN0Z8doAKGYxODgzODUyZWQ0Y2QxOTIzZTYxOWU3MTQzNzY0MWQwNjg3MzUwM2Q\", \"commit\": {\"author\": {\"name\": \"Mark Shannon\", \"email\": \"mark@hotpy.org\", \"date\": \"2025-10-17T10:26:17Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-17T10:26:17Z\"}, \"message\": \"GH-135904: Implement assembler optimization for AArch64. (GH-139855)\", \"tree\": {\"sha\": \"a4c9bb8b74aeaeedfbedd9382602b8467cec1745\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/a4c9bb8b74aeaeedfbedd9382602b8467cec1745\"}, \"url\": \"https://api.github.com/repos/python/cpython/git/commits/f1883852ed4cd1923e619e71437641d06873503d\", \"comment_count\": 0, \"verification\": {\"verified\": true, \"reason\": \"valid\", \"signature\": \"-----BEGIN PGP SIGNATURE-----\\n\\nwsFcBAABCAAQBQJo8hnJCRC1aQ7uu5UhlAAA//oQAI3A6b42X76z9gB9QjPtcG/N\\nxajzNOkCkfjkT81837YVTQ3GqomNYsluD2xHvgTUbjuASlsn/CufqYQBQRZE0EGu\\nxTLUljVZah8dRN/hRQBNQmK/JIjdboL9uQEtWCsRiOEjG8pGkRJuk",
+    "timestamp": null,
+    "raw": {
+      "sha": "f1883852ed4cd1923e619e71437641d06873503d",
+      "node_id": "C_kwDOBN0Z8doAKGYxODgzODUyZWQ0Y2QxOTIzZTYxOWU3MTQzNzY0MWQwNjg3MzUwM2Q",
+      "commit": {
+        "author": {
+          "name": "Mark Shannon",
+          "email": "mark@hotpy.org",
+          "date": "2025-10-17T10:26:17Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-17T10:26:17Z"
+        },
+        "message": "GH-135904: Implement assembler optimization for AArch64. (GH-139855)",
+        "tree": {
+          "sha": "a4c9bb8b74aeaeedfbedd9382602b8467cec1745",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/a4c9bb8b74aeaeedfbedd9382602b8467cec1745"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/f1883852ed4cd1923e619e71437641d06873503d",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo8hnJCRC1aQ7uu5UhlAAA//oQAI3A6b42X76z9gB9QjPtcG/N\nxajzNOkCkfjkT81837YVTQ3GqomNYsluD2xHvgTUbjuASlsn/CufqYQBQRZE0EGu\nxTLUljVZah8dRN/hRQBNQmK/JIjdboL9uQEtWCsRiOEjG8pGkRJukz7VSBG14qqu\nTyxT0g5ZZh3SrY+hgT0oFcc2Uqr1Wy+nAqTkYM/M9X4HddCnQu0BiwhA2kWjD9lW\n9KqzHMS2gX+VjYLRBETDClXtQ/S9yVU7yuGxUIfN/QIMirmmh45EJyBHUUimQvAU\nEUIo6HoGDKNHoWllS+SuzRllY5bY783Ie5mbVlphob5GckkSRdDT5nxraDRZQ0Yg\n031r7l7MAm5UhinmzWOjOpnK3Zdt6x0wns2oK1M6AWyxMFBjFTDXz7HBcWdj2mzn\n53VX+yAVxeA9P2vFJM2jd+fIm7kzYaHB6UzbX3ub8TpF+913hUgCokGmxi5Lki1I\n7EIJ4B6z53DEANoC/WQDmY5jtQYS0pqCP/r2SeEGoIWN/XiW/xJreFGmQh3ftKbQ\nrzJaPkDXJhj6TAW854WFJ2+JQYKyAXzuxvB/3iGBDfmhJmN/+qqSEYWlxiTzK0BS\nPbfYzyxq3zoFEgWkNi0fh1aDb6tywL5QPUJQKVUwOC/jDYYidrlN+POcXLa9yZGg\nEWz4uTAFRdmklFPLHs/W\n=S2Bt\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree a4c9bb8b74aeaeedfbedd9382602b8467cec1745\nparent 999ab8926bd344a3c7f73b130ac773e2462f8320\nauthor Mark Shannon <mark@hotpy.org> 1760696777 +0100\ncommitter GitHub <noreply@github.com> 1760696777 +0100\n\nGH-135904: Implement assembler optimization for AArch64. (GH-139855)\n\n",
+          "verified_at": "2025-10-17T10:26:18Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/f1883852ed4cd1923e619e71437641d06873503d",
+      "html_url": "https://github.com/python/cpython/commit/f1883852ed4cd1923e619e71437641d06873503d",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/f1883852ed4cd1923e619e71437641d06873503d/comments",
+      "author": {
+        "login": "markshannon",
+        "id": 9448417,
+        "node_id": "MDQ6VXNlcjk0NDg0MTc=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/9448417?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/markshannon",
+        "html_url": "https://github.com/markshannon",
+        "followers_url": "https://api.github.com/users/markshannon/followers",
+        "following_url": "https://api.github.com/users/markshannon/following{/other_user}",
+        "gists_url": "https://api.github.com/users/markshannon/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/markshannon/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/markshannon/subscriptions",
+        "organizations_url": "https://api.github.com/users/markshannon/orgs",
+        "repos_url": "https://api.github.com/users/markshannon/repos",
+        "events_url": "https://api.github.com/users/markshannon/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/markshannon/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "999ab8926bd344a3c7f73b130ac773e2462f8320",
+          "url": "https://api.github.com/repos/python/cpython/commits/999ab8926bd344a3c7f73b130ac773e2462f8320",
+          "html_url": "https://github.com/python/cpython/commit/999ab8926bd344a3c7f73b130ac773e2462f8320"
+        }
+      ]
+    }
+  },
+  {
+    "title": "{'sha': '999ab8926bd344a3c7f73b130ac773e2462f8320', 'node_id': 'C_kwDOBN0Z8doAKD",
+    "body": "{\"sha\": \"999ab8926bd344a3c7f73b130ac773e2462f8320\", \"node_id\": \"C_kwDOBN0Z8doAKDk5OWFiODkyNmJkMzQ0YTNjN2Y3M2IxMzBhYzc3M2UyNDYyZjgzMjA\", \"commit\": {\"author\": {\"name\": \"Albert N\", \"email\": \"anamaev263@gmail.com\", \"date\": \"2025-10-17T08:48:53Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-17T08:48:53Z\"}, \"message\": \"gh-133059: Fix `Tools/build/deepfreeze.py` for new nsmallposints (#139906)\", \"tree\": {\"sha\": \"cf38de98d1c48c0700b62a7519fb6a2806462cf9\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/cf38de98d1c48c0700b62a7519fb6a2806462cf9\"}, \"url\": \"https://api.github.com/repos/python/cpython/git/commits/999ab8926bd344a3c7f73b130ac773e2462f8320\", \"comment_count\": 0, \"verification\": {\"verified\": true, \"reason\": \"valid\", \"signature\": \"-----BEGIN PGP SIGNATURE-----\\n\\nwsFcBAABCAAQBQJo8gL1CRC1aQ7uu5UhlAAAsUMQAFKBXYBPC+KM9hhCvGClDMb1\\nXEgcVVznohOqEmZippRo1diSVvGduskP3YmGpFmHH/F7Aq1VKEdGOTV74Gokyvld\\nC2ErQCWy+P2TMFwoCQpvTlgDXCQ1jhq9TqVyzq49fUNRa",
+    "timestamp": null,
+    "raw": {
+      "sha": "999ab8926bd344a3c7f73b130ac773e2462f8320",
+      "node_id": "C_kwDOBN0Z8doAKDk5OWFiODkyNmJkMzQ0YTNjN2Y3M2IxMzBhYzc3M2UyNDYyZjgzMjA",
+      "commit": {
+        "author": {
+          "name": "Albert N",
+          "email": "anamaev263@gmail.com",
+          "date": "2025-10-17T08:48:53Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-17T08:48:53Z"
+        },
+        "message": "gh-133059: Fix `Tools/build/deepfreeze.py` for new nsmallposints (#139906)",
+        "tree": {
+          "sha": "cf38de98d1c48c0700b62a7519fb6a2806462cf9",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/cf38de98d1c48c0700b62a7519fb6a2806462cf9"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/999ab8926bd344a3c7f73b130ac773e2462f8320",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo8gL1CRC1aQ7uu5UhlAAAsUMQAFKBXYBPC+KM9hhCvGClDMb1\nXEgcVVznohOqEmZippRo1diSVvGduskP3YmGpFmHH/F7Aq1VKEdGOTV74Gokyvld\nC2ErQCWy+P2TMFwoCQpvTlgDXCQ1jhq9TqVyzq49fUNRaZhh1vK/q3bMM08AZmMj\nS9/qTT/T1V9PFCxXsWFOuucaHNqTqHJIJWXjCvprlHKLVuBLLWewZGO/qa5vBgtP\nVdMFwiAje44bhh8/XuHJPTFfDZFZEylZKsxv+oQte19DI1ZnoM/5gOYE4ShHQgYp\nBJyazz31G943/HOZHbHxddMKfSISgDCyngl3UbKPDPOqL3hiUkJhYrJJPkh6jnn7\n82p89NNl8KjJGVCMqp0revme70CA34VvfoC8EsDEviGzWRtZwccLU6uoBRrapM38\nRffKjorrAE+jcqdhCVx73z4YeSKs7WkXOa9U4hJLUY09bpQAeH5vvoZ2Vfh0B4di\nw2QbduzFn9CwjnQf9cB/ccoDZOPEK3If3XnokScy8jEY4HWl8wAOC77jazlZks8m\nSIvSvFms3iRz+PXFxs8CKYDZIErP6s9OR6MJU9UFXtosdvdY/R8PtvPNlcuQBIHx\n/tvoTxtmMQlwK3EccVJ2Ruif9nxLv5Z10S7LUyY9KKsE/5CZRjog7sBATNFR7fNT\nrUCIbOgwxoPyGT7r+kNT\n=TaPC\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree cf38de98d1c48c0700b62a7519fb6a2806462cf9\nparent 869bb6948eb501b19db53cb27c523c3203a5ab11\nauthor Albert N <anamaev263@gmail.com> 1760690933 +0300\ncommitter GitHub <noreply@github.com> 1760690933 +0300\n\ngh-133059: Fix `Tools/build/deepfreeze.py` for new nsmallposints (#139906)\n\n",
+          "verified_at": "2025-10-17T08:48:53Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/999ab8926bd344a3c7f73b130ac773e2462f8320",
+      "html_url": "https://github.com/python/cpython/commit/999ab8926bd344a3c7f73b130ac773e2462f8320",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/999ab8926bd344a3c7f73b130ac773e2462f8320/comments",
+      "author": {
+        "login": "abebus",
+        "id": 90478897,
+        "node_id": "MDQ6VXNlcjkwNDc4ODk3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/90478897?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/abebus",
+        "html_url": "https://github.com/abebus",
+        "followers_url": "https://api.github.com/users/abebus/followers",
+        "following_url": "https://api.github.com/users/abebus/following{/other_user}",
+        "gists_url": "https://api.github.com/users/abebus/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/abebus/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/abebus/subscriptions",
+        "organizations_url": "https://api.github.com/users/abebus/orgs",
+        "repos_url": "https://api.github.com/users/abebus/repos",
+        "events_url": "https://api.github.com/users/abebus/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/abebus/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "869bb6948eb501b19db53cb27c523c3203a5ab11",
+          "url": "https://api.github.com/repos/python/cpython/commits/869bb6948eb501b19db53cb27c523c3203a5ab11",
+          "html_url": "https://github.com/python/cpython/commit/869bb6948eb501b19db53cb27c523c3203a5ab11"
+        }
+      ]
+    }
+  },
+  {
+    "title": "{'sha': '869bb6948eb501b19db53cb27c523c3203a5ab11', 'node_id': 'C_kwDOBN0Z8doAKD",
+    "body": "{\"sha\": \"869bb6948eb501b19db53cb27c523c3203a5ab11\", \"node_id\": \"C_kwDOBN0Z8doAKDg2OWJiNjk0OGViNTAxYjE5ZGI1M2NiMjdjNTIzYzMyMDNhNWFiMTE\", \"commit\": {\"author\": {\"name\": \"Stan Ulbrych\", \"email\": \"89152624+StanFromIreland@users.noreply.github.com\", \"date\": \"2025-10-17T06:55:12Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-17T06:55:12Z\"}, \"message\": \"Standardize translation of `Doc/bugs.rst` (GH-137449)\", \"tree\": {\"sha\": \"f0697bdf28094bd99f4878562bcceb2faaa0a95e\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/f0697bdf28094bd99f4878562bcceb2faaa0a95e\"}, \"url\": \"https://api.github.com/repos/python/cpython/git/commits/869bb6948eb501b19db53cb27c523c3203a5ab11\", \"comment_count\": 0, \"verification\": {\"verified\": true, \"reason\": \"valid\", \"signature\": \"-----BEGIN PGP SIGNATURE-----\\n\\nwsFcBAABCAAQBQJo8ehQCRC1aQ7uu5UhlAAA6hYQAF2t3m3d43QBfi2EjNgpRvNg\\ngB2jneZ9myRjcJcnb7OlhFSqKH9o+FKpGuqwi4dZTjkzWfuDgAKmsBzWauW3ULRY\\nLoHf7pVNM4ZtpyNtXVq5hv18q7pbdVLcI",
+    "timestamp": null,
+    "raw": {
+      "sha": "869bb6948eb501b19db53cb27c523c3203a5ab11",
+      "node_id": "C_kwDOBN0Z8doAKDg2OWJiNjk0OGViNTAxYjE5ZGI1M2NiMjdjNTIzYzMyMDNhNWFiMTE",
+      "commit": {
+        "author": {
+          "name": "Stan Ulbrych",
+          "email": "89152624+StanFromIreland@users.noreply.github.com",
+          "date": "2025-10-17T06:55:12Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-17T06:55:12Z"
+        },
+        "message": "Standardize translation of `Doc/bugs.rst` (GH-137449)",
+        "tree": {
+          "sha": "f0697bdf28094bd99f4878562bcceb2faaa0a95e",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/f0697bdf28094bd99f4878562bcceb2faaa0a95e"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/869bb6948eb501b19db53cb27c523c3203a5ab11",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo8ehQCRC1aQ7uu5UhlAAA6hYQAF2t3m3d43QBfi2EjNgpRvNg\ngB2jneZ9myRjcJcnb7OlhFSqKH9o+FKpGuqwi4dZTjkzWfuDgAKmsBzWauW3ULRY\nLoHf7pVNM4ZtpyNtXVq5hv18q7pbdVLcI3yBY3w/H60Aq/ylWQEFNz1Nv3WL10d7\nm6UpQFlu4hmsCa9NMe95Tn0KNtX7vgR56leyU6eXuY9mpNujkWowrKhEpyifUgUt\nYPRhiKSgUqgCojioz7arv+6sUHO4W0/KRwE15fA+KM5BjB2dLbiGOMLpbcZHs9t4\nU8j8eoupwo7usoetsDmAF1+1ZytR1GW5sI/b29MIf0dOlwZWQFluig+l0+AYWxAB\nS9vC1pvAwwXftV9KeUmrQqms8Ku3n8JBm7ZfAGU+mRGQG6pjTkAgVQ7mYOOE+yMZ\nErXOThyUFQmwRxXRMK4Y3TCbaJFysHJG5iIGUBSBJbBzf7CMV40L/wxjxdokM9LH\nBB83B9KRPfZ0Vkp1VDvkV8LgG+3PdMjDufEXohxlLDi6ogXn484mcmUGEtMtr3Hf\nmsE19XAE8hmW8JDT5uFAJoeUJN3l4orRZFg4QJDxs7a+AQI4KtlRFf9jc/WNQoyT\n5JJ+qPYLi7H+V652HMNc6M4v/ubhvH3LRyojeQqKZT0yx5zS4/uxCFpSxUFD5Kdn\nflLUaGa4FQ5lFH0G3H2K\n=2Dcn\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree f0697bdf28094bd99f4878562bcceb2faaa0a95e\nparent 9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89\nauthor Stan Ulbrych <89152624+StanFromIreland@users.noreply.github.com> 1760684112 +0100\ncommitter GitHub <noreply@github.com> 1760684112 +0200\n\nStandardize translation of `Doc/bugs.rst` (GH-137449)\n\n",
+          "verified_at": "2025-10-17T06:55:12Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/869bb6948eb501b19db53cb27c523c3203a5ab11",
+      "html_url": "https://github.com/python/cpython/commit/869bb6948eb501b19db53cb27c523c3203a5ab11",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/869bb6948eb501b19db53cb27c523c3203a5ab11/comments",
+      "author": {
+        "login": "StanFromIreland",
+        "id": 89152624,
+        "node_id": "MDQ6VXNlcjg5MTUyNjI0",
+        "avatar_url": "https://avatars.githubusercontent.com/u/89152624?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/StanFromIreland",
+        "html_url": "https://github.com/StanFromIreland",
+        "followers_url": "https://api.github.com/users/StanFromIreland/followers",
+        "following_url": "https://api.github.com/users/StanFromIreland/following{/other_user}",
+        "gists_url": "https://api.github.com/users/StanFromIreland/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/StanFromIreland/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/StanFromIreland/subscriptions",
+        "organizations_url": "https://api.github.com/users/StanFromIreland/orgs",
+        "repos_url": "https://api.github.com/users/StanFromIreland/repos",
+        "events_url": "https://api.github.com/users/StanFromIreland/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/StanFromIreland/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89",
+          "url": "https://api.github.com/repos/python/cpython/commits/9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89",
+          "html_url": "https://github.com/python/cpython/commit/9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89"
+        }
+      ]
+    }
+  },
+  {
+    "title": "{'sha': '9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89', 'node_id': 'C_kwDOBN0Z8doAKD",
+    "body": "{\"sha\": \"9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89\", \"node_id\": \"C_kwDOBN0Z8doAKDlhODdjZThiNTdmNWQ2OTg5MDBkODRiNGY2ZjVhYTQ3YjVmMzdhODk\", \"commit\": {\"author\": {\"name\": \"Alper\", \"email\": \"alperyoney@fb.com\", \"date\": \"2025-10-16T18:27:51Z\"}, \"committer\": {\"name\": \"GitHub\", \"email\": \"noreply@github.com\", \"date\": \"2025-10-16T18:27:51Z\"}, \"message\": \"gh-116738: test `uuid` module thread safety in free-threading (#140068)\", \"tree\": {\"sha\": \"76a046c66de4db969e8796285108e7d9596ec14e\", \"url\": \"https://api.github.com/repos/python/cpython/git/trees/76a046c66de4db969e8796285108e7d9596ec14e\"}, \"url\": \"https://api.github.com/repos/python/cpython/git/commits/9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89\", \"comment_count\": 0, \"verification\": {\"verified\": true, \"reason\": \"valid\", \"signature\": \"-----BEGIN PGP SIGNATURE-----\\n\\nwsFcBAABCAAQBQJo8TknCRC1aQ7uu5UhlAAAmm0QAKTbrqPOLdAJ+4qapmWtaL8y\\nn/XTmaXXSTrj2sU0dx35OtTJWE29vuekfGxWiQSB4IKYXXKVwD+aFMDl/oYd0f1K\\nAx97SsZpdFi8VwKkaY46fQ+8N8fkLu/Snjd9mXarPMm2YdJur5+/7l",
+    "timestamp": null,
+    "raw": {
+      "sha": "9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89",
+      "node_id": "C_kwDOBN0Z8doAKDlhODdjZThiNTdmNWQ2OTg5MDBkODRiNGY2ZjVhYTQ3YjVmMzdhODk",
+      "commit": {
+        "author": {
+          "name": "Alper",
+          "email": "alperyoney@fb.com",
+          "date": "2025-10-16T18:27:51Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2025-10-16T18:27:51Z"
+        },
+        "message": "gh-116738: test `uuid` module thread safety in free-threading (#140068)",
+        "tree": {
+          "sha": "76a046c66de4db969e8796285108e7d9596ec14e",
+          "url": "https://api.github.com/repos/python/cpython/git/trees/76a046c66de4db969e8796285108e7d9596ec14e"
+        },
+        "url": "https://api.github.com/repos/python/cpython/git/commits/9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJo8TknCRC1aQ7uu5UhlAAAmm0QAKTbrqPOLdAJ+4qapmWtaL8y\nn/XTmaXXSTrj2sU0dx35OtTJWE29vuekfGxWiQSB4IKYXXKVwD+aFMDl/oYd0f1K\nAx97SsZpdFi8VwKkaY46fQ+8N8fkLu/Snjd9mXarPMm2YdJur5+/7lVWK38bLnwb\nqVsF8MoyiHtsDnkWoGL/9QRWibFrJ9AwZRTq1cXOtDs2GAJ1FZ9c5D+1mTYWudPE\nPG7Frd/FuNiPrFmNwhna0vavs3BzkGiF2OXN5XHo7olRdMHenUEQkDQQekextoJD\nAY5QbGo/xtTHTcV44I8CNJYjrkUYC1yuQjD13+bq1n3sAkXjKvLWdF6+y4iwtQi3\n5HwHTkkVaoyOVncbnHDlO27VOU4p8xJKEmoXn5QN9061HFySg4C/3x/yVD3GVDPh\nlNSYCcFmkOq4sDpZHWeLXUPq6aJSFTZWh7R5oagKlPgoQyoUJ7QiyZlKncjkjXWJ\nAXbpXzuPb4ZlWVmAGbs3P6hVBunTHtTzt6YEyjV1xMcRMQlWcqobNHhlqPS4F43I\nYo/CE+YmxE/sWaM2LvqjIOcMy7XcZ8Y0sojTNC0Vkls2Nst3DLm6st4LnfZ1TRdR\nfHw18ISHxTrGcJZ1ChAF2McAATEb2tF86FTToW+ORdyDmdE3j766EGSBA7kDpy92\nlwSbSZ/kLQ9YT1ctoinH\n=wths\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree 76a046c66de4db969e8796285108e7d9596ec14e\nparent 2ebd0cdb16a8824957ea588e1aab0a35d45e6b7b\nauthor Alper <alperyoney@fb.com> 1760639271 -0700\ncommitter GitHub <noreply@github.com> 1760639271 +0530\n\ngh-116738: test `uuid` module thread safety in free-threading (#140068)\n\n",
+          "verified_at": "2025-10-16T18:27:52Z"
+        }
+      },
+      "url": "https://api.github.com/repos/python/cpython/commits/9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89",
+      "html_url": "https://github.com/python/cpython/commit/9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89",
+      "comments_url": "https://api.github.com/repos/python/cpython/commits/9a87ce8b57f5d698900d84b4f6f5aa47b5f37a89/comments",
+      "author": {
+        "login": "yoney",
+        "id": 2095011,
+        "node_id": "MDQ6VXNlcjIwOTUwMTE=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/2095011?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/yoney",
+        "html_url": "https://github.com/yoney",
+        "followers_url": "https://api.github.com/users/yoney/followers",
+        "following_url": "https://api.github.com/users/yoney/following{/other_user}",
+        "gists_url": "https://api.github.com/users/yoney/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/yoney/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/yoney/subscriptions",
+        "organizations_url": "https://api.github.com/users/yoney/orgs",
+        "repos_url": "https://api.github.com/users/yoney/repos",
+        "events_url": "https://api.github.com/users/yoney/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/yoney/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "2ebd0cdb16a8824957ea588e1aab0a35d45e6b7b",
+          "url": "https://api.github.com/repos/python/cpython/commits/2ebd0cdb16a8824957ea588e1aab0a35d45e6b7b",
+          "html_url": "https://github.com/python/cpython/commit/2ebd0cdb16a8824957ea588e1aab0a35d45e6b7b"
+        }
+      ]
+    }
+  }
+]

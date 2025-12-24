@@ -1,0 +1,15 @@
+{
+  "title": "Scheduler seed: tech update",
+  "lang": "en",
+  "tone": "news",
+  "style_preset": "anchor_english_1",
+  "audio_url": "/data/tts/article_06dfe9f325d1_en_neutral.wav",
+  "output": {
+    "format": "mp4",
+    "resolution": "1280x720",
+    "max_duration_seconds": 180,
+    "status": "stub"
+  },
+  "generated_at": "2025-11-22T11:40:00.761571+00:00",
+  "category": "general"
+}

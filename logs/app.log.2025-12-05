@@ -1,0 +1,15 @@
+{"ts": "2025-12-05T04:44:54.172423+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-05T04:51:56.734224+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-05T04:59:13.092851+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-05T05:03:02.938668+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_9aeb56489cfd_en_news.wav"}
+{"ts": "2025-12-05T05:03:02.940393+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-05T05:19:00.210682+00:00", "level": "INFO", "component": "cli_voice", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_8bb99128c80e_en_formal.wav"}
+{"ts": "2025-12-05T05:19:00.212498+00:00", "level": "INFO", "component": "cli_voice", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-05T05:35:36.952254+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_9dc9dbee8528_en_news.wav"}
+{"ts": "2025-12-05T05:35:36.953957+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-05T10:21:08.851130+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_3ba3eab6ffe5_en_news.wav"}
+{"ts": "2025-12-05T10:21:08.853394+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-05T10:21:08.866754+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-05T10:29:15.548211+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_67434a77dc06_en_news.wav"}
+{"ts": "2025-12-05T10:29:15.550765+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-05T10:29:15.563336+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}

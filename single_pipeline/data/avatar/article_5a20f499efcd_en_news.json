@@ -1,0 +1,16 @@
+{
+  "title": "Intro Demo",
+  "lang": "en",
+  "tone": "news",
+  "style_preset": "anchor_english_1",
+  "audio_url": "/data/tts/article_67434a77dc06_en_news.wav",
+  "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_67434a77dc06_en_news.wav",
+  "output": {
+    "format": "json",
+    "resolution": "1280x720",
+    "duration_seconds": 6.808253968253968,
+    "status": "stub"
+  },
+  "generated_at": "2025-12-05T10:29:15.561813+00:00",
+  "category": "general"
+}

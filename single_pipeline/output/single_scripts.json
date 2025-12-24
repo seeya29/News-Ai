@@ -1,0 +1,104 @@
+[
+  {
+    "title": "AI breakthrough in chips",
+    "lang": "en",
+    "audience": "news",
+    "tone": "formal",
+    "variants": {
+      "bullets": [
+        "New AI hardware announced by startups"
+      ],
+      "headline": "AI breakthrough in chips",
+      "narration": "In today’s update, AI breakthrough in chips — New AI hardware announced by startups."
+    },
+    "metadata": {
+      "generated_at": "2025-11-29T09:49:06.611955+00:00",
+      "category": "general"
+    }
+  },
+  {
+    "title": "भारत में मौसम",
+    "lang": "hi",
+    "audience": "news",
+    "tone": "neutral",
+    "variants": {
+      "bullets": [
+        "आज दिल्ली में बारिश हो सकती है।"
+      ],
+      "headline": "भारत में मौसम",
+      "narration": "Here’s what happened: भारत में मौसम — आज दिल्ली में बारिश हो सकती है।"
+    },
+    "metadata": {
+      "generated_at": "2025-11-29T09:49:06.611966+00:00",
+      "category": "general"
+    }
+  },
+  {
+    "title": "தமிழ் செய்திகள்",
+    "lang": "ta",
+    "audience": "news",
+    "tone": "neutral",
+    "variants": {
+      "bullets": [
+        "சென்னையில் புதிய தொழில்நுட்ப மாநாடு"
+      ],
+      "headline": "தமிழ் செய்திகள்",
+      "narration": "Here’s what happened: தமிழ் செய்திகள் — சென்னையில் புதிய தொழில்நுட்ப மாநாடு."
+    },
+    "metadata": {
+      "generated_at": "2025-11-29T09:49:06.611972+00:00",
+      "category": "general"
+    }
+  },
+  {
+    "title": "বাংলা খবর",
+    "lang": "bn",
+    "audience": "news",
+    "tone": "neutral",
+    "variants": {
+      "bullets": [
+        "কলকাতায় নতুন স্টার্টআপ ফান্ডিং"
+      ],
+      "headline": "বাংলা খবর",
+      "narration": "Here’s what happened: বাংলা খবর — কলকাতায় নতুন স্টার্টআপ ফান্ডিং"
+    },
+    "metadata": {
+      "generated_at": "2025-11-29T09:49:06.611975+00:00",
+      "category": "general"
+    }
+  },
+  {
+    "title": "اردو خبریں",
+    "lang": "ur",
+    "audience": "news",
+    "tone": "neutral",
+    "variants": {
+      "bullets": [
+        "کراچی میں کھیلوں کا بڑا ایونٹ"
+      ],
+      "headline": "اردو خبریں",
+      "narration": "Here’s what happened: اردو خبریں — کراچی میں کھیلوں کا بڑا ایونٹ"
+    },
+    "metadata": {
+      "generated_at": "2025-11-29T09:49:06.611979+00:00",
+      "category": "general"
+    }
+  },
+  {
+    "title": "Kids science fair",
+    "lang": "en",
+    "audience": "kids",
+    "tone": "neutral",
+    "variants": {
+      "bullets": [
+        "Students present projects on robotics"
+      ],
+      "headline": "Kids science fair",
+      "narration": "Here’s what happened: Kids science fair — Students present projects on robotics."
+    },
+    "metadata": {
+      "generated_at": "2025-11-29T09:49:06.611983+00:00",
+      "category": "general"
+    }
+  }
+]

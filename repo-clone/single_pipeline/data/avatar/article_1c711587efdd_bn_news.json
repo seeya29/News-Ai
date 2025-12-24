@@ -1,0 +1,15 @@
+{
+  "title": "বাংলা খবর",
+  "lang": "bn",
+  "tone": "news",
+  "style_preset": "news-anchor",
+  "audio_url": "file://C:\\Users\\SEEYA\\OneDrive\\Desktop\\News ai\\single_pipeline\\data\\tts\\article_5e3b68dd69fe_bn_neutral.wav",
+  "output": {
+    "format": "mp4",
+    "resolution": "1280x720",
+    "max_duration_seconds": 180,
+    "status": "stub"
+  },
+  "generated_at": "2025-11-21T09:11:39.875335+00:00",
+  "category": "general"
+}

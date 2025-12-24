@@ -1,0 +1,37 @@
+{"ts": "2025-12-08T05:53:58.809147+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_a96e3e4e51ee_en_news.wav"}
+{"ts": "2025-12-08T05:53:58.811711+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-08T05:53:59.943726+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-08T06:50:04.474484+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 4}
+{"ts": "2025-12-08T06:54:32.749607+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 4}
+{"ts": "2025-12-08T06:56:15.546872+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 4}
+{"ts": "2025-12-08T07:13:02.531303+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 4}
+{"ts": "2025-12-08T07:15:21.224695+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 4}
+{"ts": "2025-12-08T08:36:12.944406+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 4}
+{"ts": "2025-12-08T08:36:39.432668+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 4}
+{"ts": "2025-12-08T11:07:53.919618+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "c:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_6830811cf728_en_news.wav"}
+{"ts": "2025-12-08T11:07:53.921068+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-08T11:07:55.067062+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-08T11:08:55.673375+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "c:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_6830811cf728_en_news.wav"}
+{"ts": "2025-12-08T11:08:55.732254+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-08T11:08:56.055093+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-09T05:12:48.520631+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_6830811cf728_en_news.wav"}
+{"ts": "2025-12-09T05:12:48.524936+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-09T05:12:48.924911+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-09T05:13:12.068867+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_6830811cf728_en_news.wav"}
+{"ts": "2025-12-09T05:13:12.070665+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-09T05:13:13.390106+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-09T05:14:10.716553+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_6830811cf728_en_news.wav"}
+{"ts": "2025-12-09T05:14:10.720252+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-09T05:14:15.032242+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-09T06:21:57.820986+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_6830811cf728_en_news.wav"}
+{"ts": "2025-12-09T06:21:57.823006+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-09T06:21:59.008071+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-09T06:24:42.610590+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_6830811cf728_en_news.wav"}
+{"ts": "2025-12-09T06:24:42.696926+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-09T06:25:03.293640+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-09T07:08:13.093526+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_6830811cf728_en_news.wav"}
+{"ts": "2025-12-09T07:08:13.175262+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-09T07:08:17.457918+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}
+{"ts": "2025-12-09T07:09:29.904483+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_provider_used", "provider": "pyttsx3", "file": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_6830811cf728_en_news.wav"}
+{"ts": "2025-12-09T07:09:29.906035+00:00", "level": "INFO", "component": "tts_stub", "event": "tts_generated", "count": 1}
+{"ts": "2025-12-09T07:09:34.135442+00:00", "level": "INFO", "component": "avatar_stub", "event": "avatar_rendered", "count": 1}

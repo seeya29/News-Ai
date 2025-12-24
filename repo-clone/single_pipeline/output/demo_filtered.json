@@ -1,0 +1,16 @@
+[
+  {
+    "title": "TelegramStub missing file",
+    "body": "data\\telegram_sample.json",
+    "timestamp": null,
+    "lang": "en",
+    "category": "general",
+    "tone": "neutral",
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "TelegramStub missing file::None",
+    "raw": {
+      "error": "file_not_found"
+    }
+  }
+]

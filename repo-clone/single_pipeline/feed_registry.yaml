@@ -1,0 +1,5 @@
+feeds:
+- id: telegram_tech
+  type: telegram
+  cadence_seconds: 60
+  channel: '@technews'
