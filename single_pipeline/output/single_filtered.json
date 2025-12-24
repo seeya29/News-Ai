@@ -1,5 +1,6 @@
 [
   {
+<<<<<<< HEAD
     "title": "AI breakthrough in chips",
     "body": "New AI hardware announced by startups.",
     "timestamp": 1700000000,
@@ -69,6 +70,17 @@
     "audience": "kids",
     "dedup_flag": true,
     "dedup_key": "Kids science fair::1700000050",
+=======
+    "title": "Scheduler seed: tech update",
+    "body": "Generated seed item to keep pipeline active until live feeds populate.",
+    "timestamp": 1763811599,
+    "lang": "en",
+    "category": null,
+    "tone": null,
+    "audience": "general",
+    "dedup_flag": true,
+    "dedup_key": "Scheduler seed: tech update::1763811599",
+>>>>>>> 1549c7087998806815660e1233366cc28d432a54
     "raw": {}
   }
 ]

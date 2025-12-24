@@ -1,5 +1,6 @@
 [
   {
+<<<<<<< HEAD
     "title": "AI breakthrough in chips",
     "lang": "en",
     "audience": "news",
@@ -98,6 +99,21 @@
     },
     "metadata": {
       "generated_at": "2025-11-29T09:49:06.611983+00:00",
+=======
+    "title": "Scheduler seed: tech update",
+    "lang": "en",
+    "audience": "general",
+    "tone": "neutral",
+    "variants": {
+      "bullets": [
+        "Generated seed item to keep pipeline active until live feeds populate"
+      ],
+      "headline": "Scheduler seed: tech update",
+      "narration": "Here’s what happened: Scheduler seed: tech update — Generated seed item to keep pipeline active until live feeds populate."
+    },
+    "metadata": {
+      "generated_at": "2025-11-22T11:39:59.696165+00:00",
+>>>>>>> 1549c7087998806815660e1233366cc28d432a54
       "category": "general"
     }
   }

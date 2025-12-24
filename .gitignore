@@ -29,3 +29,4 @@ single_pipeline/output/*.tmp
 
 # Local environment (do not commit real secrets)
 .env
+*.db

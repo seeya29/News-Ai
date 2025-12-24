@@ -1,1 +1,12 @@
+<<<<<<< HEAD
 []
+=======
+[
+  {
+    "title": "Scheduler seed: tech update",
+    "body": "Generated seed item to keep pipeline active until live feeds populate.",
+    "timestamp": 1763811599,
+    "category": "tech"
+  }
+]
+>>>>>>> 1549c7087998806815660e1233366cc28d432a54
