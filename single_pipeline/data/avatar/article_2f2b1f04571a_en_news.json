@@ -1,0 +1,16 @@
+{
+  "title": "Many new UK drone users must take theory test before flying outside",
+  "lang": "en",
+  "tone": "news",
+  "style_preset": "anchor_english_1",
+  "audio_url": "/data/tts/article_484221da2f32_en_neutral.wav",
+  "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_484221da2f32_en_neutral.wav",
+  "output": {
+    "format": "mp4",
+    "resolution": "1280x720",
+    "duration_seconds": 15.909160997732426,
+    "status": "rendered"
+  },
+  "generated_at": "2026-01-02T08:21:22.307081+00:00",
+  "category": "general"
+}

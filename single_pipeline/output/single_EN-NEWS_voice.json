@@ -1,0 +1,87 @@
+[
+  {
+    "title": "A wave paralysed me but AI could help me walk again",
+    "lang": "en",
+    "voice": "en-US-Neural-1",
+    "audio_url": "/data/tts/article_dd44310c698c_en_neutral.wav",
+    "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_dd44310c698c_en_neutral.wav",
+    "status": "success",
+    "metadata": {
+      "generated_at": "2026-01-02T08:20:37.623335+00:00",
+      "category": "general",
+      "format": "wav",
+      "sample_rate": 16000,
+      "channels": 1,
+      "provider": "stub",
+      "narration_text": "Here’s what happened: A wave paralysed me but AI could help me walk again — Dan Richards, 37, from Swansea was injured in a freak accident on New Year's Eve in 2023."
+    }
+  },
+  {
+    "title": "China to crack down on AI firms to protect kids",
+    "lang": "en",
+    "voice": "en-US-Neural-1",
+    "audio_url": "/data/tts/article_821c54ff257d_en_neutral.wav",
+    "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_821c54ff257d_en_neutral.wav",
+    "status": "success",
+    "metadata": {
+      "generated_at": "2026-01-02T08:20:47.993038+00:00",
+      "category": "general",
+      "format": "wav",
+      "sample_rate": 16000,
+      "channels": 1,
+      "provider": "stub",
+      "narration_text": "Here’s what happened: China to crack down on AI firms to protect kids — The draft regulations are aimed to address concerns around chatbots, which have surged in popularity in recent months."
+    }
+  },
+  {
+    "title": "James Bond game 007 First Light delayed to May 2026",
+    "lang": "en",
+    "voice": "en-US-Neural-1",
+    "audio_url": "/data/tts/article_ad0d900ac7ed_en_neutral.wav",
+    "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_ad0d900ac7ed_en_neutral.wav",
+    "status": "success",
+    "metadata": {
+      "generated_at": "2026-01-02T08:20:58.626435+00:00",
+      "category": "general",
+      "format": "wav",
+      "sample_rate": 16000,
+      "channels": 1,
+      "provider": "stub",
+      "narration_text": "Here’s what happened: James Bond game 007 First Light delayed to May 2026 — Dexter Original Sin actor Patrick Gibson will star as the British spy when the game releases on 27 May."
+    }
+  },
+  {
+    "title": "Many new UK drone users must take theory test before flying outside",
+    "lang": "en",
+    "voice": "en-US-Neural-1",
+    "audio_url": "/data/tts/article_484221da2f32_en_neutral.wav",
+    "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_484221da2f32_en_neutral.wav",
+    "status": "success",
+    "metadata": {
+      "generated_at": "2026-01-02T08:21:10.567649+00:00",
+      "category": "general",
+      "format": "wav",
+      "sample_rate": 16000,
+      "channels": 1,
+      "provider": "stub",
+      "narration_text": "Here’s what happened: Many new UK drone users must take theory test before flying outside — The Civil Aviation Authority reckons up to half a million people in the UK may be impacted by its new requirements."
+    }
+  },
+  {
+    "title": "UK social media campaigners among five denied US visas",
+    "lang": "en",
+    "voice": "en-US-Neural-1",
+    "audio_url": "/data/tts/article_5c60df6fa2b1_en_neutral.wav",
+    "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_5c60df6fa2b1_en_neutral.wav",
+    "status": "success",
+    "metadata": {
+      "generated_at": "2026-01-02T08:21:18.998330+00:00",
+      "category": "general",
+      "format": "wav",
+      "sample_rate": 16000,
+      "channels": 1,
+      "provider": "stub",
+      "narration_text": "Here’s what happened: UK social media campaigners among five denied US visas — The Trump administration bans five people who have called for tech regulation from entering the country."
+    }
+  }
+]

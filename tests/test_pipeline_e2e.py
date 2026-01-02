@@ -1,4 +1,9 @@
 import os
+import sys
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+
 import json
 
 from single_pipeline.agents.filter_agent import FilterAgent
@@ -29,8 +34,13 @@ def test_multi_language_pipeline_chain(tmp_path):
     scripts = sg.generate(filtered)
     assert len(scripts) == 4
     for s in scripts:
+        print(f"DEBUG VARIANTS: {s['variants']}")
         assert "variants" in s
         assert "narration" in s["variants"]
+        # Check that styles are present in the 'styles' sub-dictionary
+        assert "styles" in s["variants"]
+        assert "formal" in s["variants"]["styles"]
+        assert "youth" in s["variants"]["styles"]
 
     # Voice stage
     tts = TTSAgentStub()

@@ -20,6 +20,13 @@ ROUTING_TABLE: Dict[Tuple[str, str], str] = {
     ("en", "kids"): "EN-KIDS",
     ("ta", "news"): "TA-NEWS",
     ("bn", "news"): "BN-NEWS",
+    # Mappings for new styles (fallback to news/standard buckets)
+    ("en", "formal"): "EN-NEWS",
+    ("en", "devotional"): "EN-NEWS",  # or a specific bucket if created later
+    ("hi", "formal"): "HI-NEWS",
+    ("hi", "devotional"): "HI-NEWS",
+    ("ta", "formal"): "TA-NEWS",
+    ("bn", "formal"): "BN-NEWS",
 }
 DEFAULT_BUCKET = "EN-NEWS"
 
@@ -101,7 +108,7 @@ class BucketOrchestrator:
             "BN-NEWS": 1,
         }
         self.log = PipelineLogger(component="bucket_orchestrator")
-        self.run = StageLogger(source="pipeline", category=category, meta={"registry": registry})
+        self.stage_logger = StageLogger(source="pipeline", category=category, meta={"registry": registry})
         self.traces = TraceLogger(retention_days=7)
 
     def _write_stage_outputs(self, bucket: str, suffix: str, payload: Any) -> str:
@@ -125,7 +132,7 @@ class BucketOrchestrator:
 
     def _process_bucket(self, bucket: str, items: List[Dict[str, Any]]) -> Dict[str, Any]:
         # Generate scripts
-        self.run.start("summarize")
+        self.stage_logger.start("summarize")
         agent_scripts = ScriptGenAgent(logger=self.log)
         self.traces.log("ScriptGenAgent", input_payload={"bucket": bucket, "items_count": len(items)}, status="running")
         scripts = self._retry(
@@ -134,11 +141,11 @@ class BucketOrchestrator:
             {"bucket": bucket, "count": len(items)},
         )
         scripts_path = self._write_stage_outputs(bucket, "scripts", scripts)
-        self.run.complete("summarize", meta={"bucket": bucket, "count": len(scripts), "file": scripts_path})
+        self.stage_logger.complete("summarize", meta={"bucket": bucket, "count": len(scripts), "file": scripts_path})
         self.traces.log("ScriptGenAgent", input_payload={"bucket": bucket}, output_payload={"scripts_count": len(scripts), "file": scripts_path}, status="success")
 
         # Synthesize voice
-        self.run.start("voice")
+        self.stage_logger.start("voice")
         # Simple voice routing by bucket family
         if bucket.startswith("HI-"):
             voice = "hi-IN-AaravNeural"
@@ -158,25 +165,28 @@ class BucketOrchestrator:
             {"bucket": bucket, "count": len(scripts)},
         )
         voice_path = self._write_stage_outputs(bucket, "voice", voice_items)
-        self.run.complete("voice", meta={"bucket": bucket, "count": len(voice_items), "file": voice_path})
+        self.stage_logger.complete("voice", meta={"bucket": bucket, "count": len(voice_items), "file": voice_path})
         self.traces.log("TTSAgent", input_payload={"bucket": bucket}, output_payload={"voice_count": len(voice_items), "file": voice_path}, status="success")
 
+        # Filter valid voice items for avatar rendering
+        valid_voice_items = [v for v in voice_items if v.get("status") == "success" and v.get("audio_path")]
+
         # Render avatar
-        self.run.start("avatar")
+        self.stage_logger.start("avatar")
         style = (
             "news-anchor"
             if bucket.endswith("NEWS")
             else ("youth-vlogger" if bucket.endswith("YOUTH") else "kids-host")
         )
         agent_avatar = AvatarAgentStub(style=style, logger=self.log)
-        self.traces.log("AvatarAgent", input_payload={"bucket": bucket, "style": style, "voice_count": len(voice_items)}, status="running")
+        self.traces.log("AvatarAgent", input_payload={"bucket": bucket, "style": style, "voice_count": len(valid_voice_items)}, status="running")
         videos = self._retry(
-            lambda: agent_avatar.render(voice_items, category=self.category),
+            lambda: agent_avatar.render(valid_voice_items, category=self.category),
             "avatar",
-            {"bucket": bucket, "count": len(voice_items)},
+            {"bucket": bucket, "count": len(valid_voice_items)},
         )
         avatar_path = self._write_stage_outputs(bucket, "avatar", videos)
-        self.run.complete("avatar", meta={"bucket": bucket, "count": len(videos), "file": avatar_path})
+        self.stage_logger.complete("avatar", meta={"bucket": bucket, "count": len(videos), "file": avatar_path})
         self.traces.log("AvatarAgent", input_payload={"bucket": bucket}, output_payload={"videos_count": len(videos), "file": avatar_path}, status="success")
 
         return {
@@ -210,17 +220,34 @@ class BucketOrchestrator:
                 tasks.append((b, shard_items))
 
         results = []
-        self.run.start("bucket_orchestration")
+        self.stage_logger.start("bucket_orchestration")
         with ThreadPoolExecutor(max_workers=self.max_global_workers) as ex:
-            futs = [ex.submit(self._process_bucket, b, shard_items) for (b, shard_items) in tasks]
-            for fut in as_completed(futs):
+            future_to_bucket = {ex.submit(self._process_bucket, b, shard_items): b for (b, shard_items) in tasks}
+            for fut in as_completed(future_to_bucket):
+                bucket = future_to_bucket[fut]
                 try:
                     res = fut.result()
+                    res["status"] = "success"
                     results.append(res)
                 except Exception as e:
-                    # Already recorded DLQ; continue
-                    self.log.error("bucket_task_failed", error=str(e))
+                    # Capture failure in results
+                    self.log.error("bucket_task_failed", bucket=bucket, error=str(e))
+                    results.append({
+                        "bucket": bucket,
+                        "status": "failed",
+                        "error": str(e)
+                    })
                     continue
-        self.run.complete("bucket_orchestration", meta={"buckets": len(results)})
-        self.run.end_run("completed")
-        return {"success": True, "buckets_processed": len(results), "results": results}
+        
+        # Determine overall success
+        success_count = sum(1 for r in results if r.get("status") != "failed")
+        overall_success = (success_count > 0)
+        
+        self.stage_logger.complete("bucket_orchestration", meta={"buckets_total": len(tasks), "buckets_success": success_count})
+        self.stage_logger.end_run("completed")
+        return {
+            "success": overall_success, 
+            "buckets_total": len(tasks),
+            "buckets_success": success_count,
+            "results": results
+        }

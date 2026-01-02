@@ -7,6 +7,7 @@ from .logging_utils import PipelineLogger, StageLogger
 from .fetchers.rss_fetchers import RSSFetcher
 from .fetchers.api_fetchers import DomainAPIFetcher
 from .fetchers.live_fetchers import fetch_telegram_channels, fetch_x_handles, fetch_youtube_channels
+from .fetchers.stub_fetchers import StubFetcher
 
 
 def _output_root() -> str:
@@ -198,6 +199,27 @@ class FetcherHub:
         elif yt_channels and not yt_key:
             self.log.warning("youtube_api_key_missing")
 
+        # Stubs
+        stubs_cfg = sources.get("stubs") or []
+        stub_fetcher = StubFetcher()
+        for entry in stubs_cfg:
+            agent_name = entry.get("agent_name")
+            name = entry.get("name") or "stub"
+            if not agent_name:
+                continue
+            try:
+                stub_items = stub_fetcher.fetch(agent_name)
+                for it in stub_items:
+                    items.append({
+                        "title": it.get("title") or "Untitled",
+                        "body": it.get("body") or "",
+                        "timestamp": it.get("published_at"),
+                        "source": {"name": name, "type": "stub", "agent": agent_name, "url": it.get("link")},
+                        "category": it.get("category") or category,
+                    })
+            except Exception as e:
+                self.log.warning("stub_fetch_failed", agent=agent_name, error=str(e))
+
         out_path = self._write_items(registry_name, items)
         run.update("fetch", progress=100, meta={"items": len(items), "ingested": ingested_total, "file": out_path})
         run.complete("fetch", meta={"items": len(items)})
@@ -304,6 +326,27 @@ class FetcherHub:
                 self.log.warning("youtube_fetch_failed", error=str(e))
         elif yt_channels and not yt_key:
             self.log.warning("youtube_api_key_missing")
+
+        # Stubs
+        stubs_cfg = sources.get("stubs") or []
+        stub_fetcher = StubFetcher()
+        for entry in stubs_cfg:
+            agent_name = entry.get("agent_name")
+            name = entry.get("name") or "stub"
+            if not agent_name:
+                continue
+            try:
+                stub_items = stub_fetcher.fetch(agent_name)
+                for it in stub_items:
+                    items.append({
+                        "title": it.get("title") or "Untitled",
+                        "body": it.get("body") or "",
+                        "timestamp": it.get("published_at"),
+                        "source": {"name": name, "type": "stub", "agent": agent_name, "url": it.get("link")},
+                        "category": it.get("category") or category,
+                    })
+            except Exception as e:
+                self.log.warning("stub_fetch_failed", agent=agent_name, error=str(e))
 
         out_path = self._write_items(registry_name, items)
         run.update("fetch", progress=100, meta={"items": len(items), "ingested": ingested_total, "file": out_path})

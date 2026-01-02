@@ -16,24 +16,18 @@ app_module = importlib.util.module_from_spec(spec)
 assert spec and spec.loader
 spec.loader.exec_module(app_module)  # type: ignore
 APP = app_module.APP
+AuthContext = app_module.AuthContext
+require_auth = app_module.require_auth
 
+# Mock authentication
+def mock_auth():
+    return AuthContext(user_id="validator", role="admin", exp=9999999999)
 
-# Use async httpx client per test
-
-
-def make_token(user_id: str, role: str = "user", ttl: int = 3600) -> str:
-    header = {"alg": "none", "typ": "JWT"}
-    payload = {"user_id": user_id, "role": role, "exp": int(time.time()) + ttl}
-    def b64url(data: bytes) -> str:
-        import base64 as b64
-        return b64.urlsafe_b64encode(data).decode("utf-8").rstrip("=")
-    h = b64url(json.dumps(header).encode("utf-8"))
-    p = b64url(json.dumps(payload).encode("utf-8"))
-    return f"{h}.{p}.signature"
+APP.dependency_overrides[require_auth] = mock_auth
 
 
 def auth_headers(role: str):
-    return {"Authorization": f"Bearer {make_token('validator', role)}"}
+    return {}
 
 
 def test_unknown_field_is_ignored_with_warning():
@@ -57,3 +51,50 @@ def test_unknown_field_is_ignored_with_warning():
     assert data["feeds"] == 1
     assert isinstance(data.get("warnings"), list)
     assert any("Unknown field" in (w.get("warning") or "") for w in data["warnings"])
+
+
+def test_rss_and_api_feeds_supported():
+    feeds = {
+        "feeds": [
+            {
+                "id": "bbc_tech_rss",
+                "type": "rss",
+                "name": "BBC Technology",
+                "feed_url": "http://feeds.bbci.co.uk/news/technology/rss.xml",
+                "cadence_seconds": 3600
+            },
+            {
+                "id": "hn_top_api",
+                "type": "api",
+                "name": "HackerNews Top",
+                "url": "https://hacker-news.firebaseio.com/v0/topstories.json",
+                "params": {"print": "pretty"},
+                "cadence_seconds": 300
+            }
+        ]
+    }
+    async def _run():
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=APP), base_url="http://test") as client:
+            r = await client.post("/api/admin/feeds/registry", headers=auth_headers("admin"), json=feeds)
+            assert r.status_code == 200, r.text
+            return r.json()
+    data = asyncio.run(_run())
+    assert data["feeds"] == 2
+    # Expect no warnings for valid fields
+    if "warnings" in data:
+        # Filter out warnings related to 'params' if my implementation considered it unknown, 
+        # but I explicitly added support for 'params' in registry.py so it should be fine.
+        # Wait, did I add 'params' to the allowed fields in registry.py?
+        # Let's check registry.py before asserting zero warnings.
+        pass
+    
+    # Actually, I should check if 'params' is passed through.
+    # But this test only checks the API response which returns count and warnings.
+    # To verifying the sources.json is updated, I would need to mock save_registry or check the file.
+    # But the API call calls 'validate_feeds' and 'save_registry_yaml' and 'hot_reload'.
+    # 'hot_reload' writes to sources.json.
+    
+    if "warnings" in data and len(data["warnings"]) > 0:
+        print(f"Warnings: {data['warnings']}")
+        # Fail if warnings are unexpected
+        assert len(data["warnings"]) == 0, f"Unexpected warnings: {data['warnings']}"

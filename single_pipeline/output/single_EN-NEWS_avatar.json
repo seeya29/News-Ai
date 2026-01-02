@@ -1,0 +1,57 @@
+[
+  {
+    "title": "A wave paralysed me but AI could help me walk again",
+    "lang": "en",
+    "style": "anchor_english_1",
+    "video_url": "/data/avatar/article_130a70d47825_en_news.mp4",
+    "metadata_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\avatar\\article_130a70d47825_en_news.json",
+    "metadata": {
+      "generated_at": "2026-01-02T08:21:19.947276+00:00",
+      "category": "general"
+    }
+  },
+  {
+    "title": "China to crack down on AI firms to protect kids",
+    "lang": "en",
+    "style": "anchor_english_1",
+    "video_url": "/data/avatar/article_fcbd90659041_en_news.mp4",
+    "metadata_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\avatar\\article_fcbd90659041_en_news.json",
+    "metadata": {
+      "generated_at": "2026-01-02T08:21:20.708815+00:00",
+      "category": "general"
+    }
+  },
+  {
+    "title": "James Bond game 007 First Light delayed to May 2026",
+    "lang": "en",
+    "style": "anchor_english_1",
+    "video_url": "/data/avatar/article_8ff08f5b9e38_en_news.mp4",
+    "metadata_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\avatar\\article_8ff08f5b9e38_en_news.json",
+    "metadata": {
+      "generated_at": "2026-01-02T08:21:21.455362+00:00",
+      "category": "general"
+    }
+  },
+  {
+    "title": "Many new UK drone users must take theory test before flying outside",
+    "lang": "en",
+    "style": "anchor_english_1",
+    "video_url": "/data/avatar/article_2f2b1f04571a_en_news.mp4",
+    "metadata_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\avatar\\article_2f2b1f04571a_en_news.json",
+    "metadata": {
+      "generated_at": "2026-01-02T08:21:22.310995+00:00",
+      "category": "general"
+    }
+  },
+  {
+    "title": "UK social media campaigners among five denied US visas",
+    "lang": "en",
+    "style": "anchor_english_1",
+    "video_url": "/data/avatar/article_46ee35d1ef54_en_news.mp4",
+    "metadata_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\avatar\\article_46ee35d1ef54_en_news.json",
+    "metadata": {
+      "generated_at": "2026-01-02T08:21:23.016586+00:00",
+      "category": "general"
+    }
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "title": "Crypto users forced to share account details with tax officials",
+  "lang": "en",
+  "tone": "news",
+  "style_preset": "anchor_english_1",
+  "audio_url": "/data/tts/article_62f4434fff39_en_neutral.wav",
+  "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_62f4434fff39_en_neutral.wav",
+  "output": {
+    "format": "mp4",
+    "resolution": "1280x720",
+    "duration_seconds": 12.899319727891157,
+    "status": "rendered"
+  },
+  "generated_at": "2026-01-02T08:21:18.874217+00:00",
+  "category": "general"
+}

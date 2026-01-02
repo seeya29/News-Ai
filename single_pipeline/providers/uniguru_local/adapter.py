@@ -42,13 +42,13 @@ class UniguruLocalAdapter:
                 return "kids"
             if any(k in tl for k in ["youth", "college", "campus", "festival"]):
                 return "youth"
-            return "news"
+            return "general"
         else:
             if any(k in tl for k in ["kids", "children", "toy", "cartoon"]):
                 return "kids"
             if any(k in tl for k in ["youth", "college", "sports", "gaming"]):
                 return "youth"
-            return "news"
+            return "general"
 
     def tag_text(self, title: str, body: str, language: Optional[str] = None) -> Dict[str, Any]:
         """Return classification tags for given text.
@@ -56,7 +56,7 @@ class UniguruLocalAdapter:
         Response keys:
         - category: one of general|finance|tech|science
         - tone: one of neutral|formal|casual
-        - audience: one of news|kids|youth
+        - audience: one of general|kids|youth
         """
         category = self._classify_category(title, body)
         tone = self._classify_tone(title, body)

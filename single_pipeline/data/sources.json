@@ -1,78 +1,92 @@
 {
   "registries": {
     "single": {
-      "rss": [
-        { "name": "BBC News", "url": "https://feeds.bbci.co.uk/news/rss.xml" },
-        { "name": "TechCrunch", "url": "https://feeds.feedburner.com/TechCrunch/" },
-        { "name": "Wired", "url": "https://www.wired.com/feed/rss" },
-        { "name": "The Next Web", "url": "https://thenextweb.com/feed" },
-        { "name": "Mashable", "url": "https://mashable.com/feeds/rss" },
-        { "name": "CNET", "url": "https://www.cnet.com/rss/news/" }
-      ],
-      "api": [],
       "live": {
         "telegram": {
           "channels": [
-            "@TechOfficeUpdate",
-            "@androidMalware",
-            "@computer_science_and_programming",
-            "@yegor256news"
+            "@technews",
+            "@CoinDesk",
+            "@Python"
           ],
           "limit": 20
         },
         "x": {
           "handles": [
-            "TechCrunch",
-            "WIRED",
-            "thenextweb",
-            "mashable",
-            "CNET"
+            "@elonmusk",
+            "@OpenAI",
+            "@NASA"
           ],
           "limit": 20
         },
         "youtube": {
           "channel_ids": [
-            "UC_x5XG1OV2P6uZZ5FSM9Ttw"
+            "UC_x5XG1OV2P6uZZ5FSM9Ttw",
+            "UCsBjURrPoezykLs9EqgamOA"
           ],
           "limit": 20
         }
-      }
-    }
-  }
-}
-{
-  "registries": {
-    "single": {
+      },
       "rss": [
+        {
+          "name": "BBC Technology",
+          "url": "http://feeds.bbci.co.uk/news/technology/rss.xml"
+        },
         {
           "name": "NYT Technology",
           "url": "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"
         },
         {
-          "name": "BBC Technology",
-          "url": "http://feeds.bbci.co.uk/news/technology/rss.xml"
+          "name": "The Verge",
+          "url": "https://www.theverge.com/rss/index.xml"
+        },
+        {
+          "name": "TechCrunch",
+          "url": "https://techcrunch.com/feed/"
+        },
+        {
+          "name": "Wired",
+          "url": "https://www.wired.com/feed/rss"
+        },
+        {
+          "name": "Ars Technica",
+          "url": "https://feeds.arstechnica.com/arstechnica/index"
+        },
+        {
+          "name": "Engadget",
+          "url": "https://www.engadget.com/rss.xml"
+        },
+        {
+          "name": "CNET",
+          "url": "https://www.cnet.com/rss/news/"
         }
       ],
-      "live": {
-        "telegram": {
-          "channels": [
-            "@technews"
-          ],
-          "limit": 20
-        },
-        "x": {
-          "handles": [
-            "@EconomicTimes"
-          ],
-          "limit": 20
-        },
-        "youtube": {
-          "channel_ids": [
-            "UC16niRr50-MSBwiO3YDb3RA"
-          ],
-          "limit": 20
+      "api": [
+        {
+          "name": "HackerNews Top",
+          "url": "https://hacker-news.firebaseio.com/v0/topstories.json",
+          "params": {
+            "print": "pretty"
+          }
         }
-      }
+      ],
+      "stubs": [
+        {
+          "name": "gurukul_agent",
+          "agent_name": "Gurukul"
+        },
+        {
+          "name": "stock_agent",
+          "agent_name": "StockAgent"
+        },
+        {
+          "name": "wellness_bot",
+          "agent_name": "WellnessBot"
+        },
+        {
+          "name": "usedcar_agent",
+          "agent_name": "UsedCar"
+        }
+      ]
     }
   }
 }

@@ -52,6 +52,8 @@ def validate_feeds(feeds: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], L
       - telegram: channel (str)
       - x: handle (str)
       - youtube_rss: channel_id (str)
+      - rss: url (str) or feed_url (str)
+      - domain_api: url (str)
     Returns (validated_feeds, warnings)
     """
     out: List[Dict[str, Any]] = []
@@ -74,7 +76,7 @@ def validate_feeds(feeds: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], L
             warnings.append({"feed": fid, "warning": "missing cadence_seconds"})
             _log.warning("registry_missing_cadence", feed=fid)
             continue
-        known = {"id", "type", "cadence_seconds", "channel", "handle", "channel_id"}
+        known = {"id", "type", "cadence_seconds", "channel", "handle", "channel_id", "url", "feed_url", "name", "params", "agent_name"}
         for k in list(f.keys()):
             if k not in known:
                 warnings.append({"feed": fid, "warning": f"Unknown field '{k}' in feed '{fid}' – ignoring"})
@@ -95,6 +97,21 @@ def validate_feeds(feeds: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], L
                 warnings.append({"feed": fid, "warning": "youtube_rss requires 'channel_id'"})
                 _log.warning("registry_missing_channel_id", feed=fid, type=ftype)
                 continue
+        elif ftype == "rss":
+            if not (f.get("url") or f.get("feed_url")):
+                warnings.append({"feed": fid, "warning": "rss requires 'url' or 'feed_url'"})
+                _log.warning("registry_missing_rss_url", feed=fid, type=ftype)
+                continue
+        elif ftype in ("domain_api", "api"):
+            if not f.get("url"):
+                warnings.append({"feed": fid, "warning": "domain_api requires 'url'"})
+                _log.warning("registry_missing_api_url", feed=fid, type=ftype)
+                continue
+        elif ftype == "stub":
+            if not f.get("agent_name"):
+                warnings.append({"feed": fid, "warning": "stub requires 'agent_name'"})
+                _log.warning("registry_missing_agent_name", feed=fid, type=ftype)
+                continue
         # Keep only allowed keys
         cleaned: Dict[str, Any] = {
             "id": fid,
@@ -107,6 +124,16 @@ def validate_feeds(feeds: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], L
             cleaned["handle"] = f.get("handle")
         if ftype == "youtube_rss":
             cleaned["channel_id"] = f.get("channel_id")
+        if ftype == "rss":
+            cleaned["name"] = f.get("name") or fid
+            cleaned["url"] = f.get("url") or f.get("feed_url")
+        if ftype in ("domain_api", "api"):
+            cleaned["name"] = f.get("name") or fid
+            cleaned["url"] = f.get("url")
+            if f.get("params"):
+                cleaned["params"] = f.get("params")
+        if ftype == "stub":
+            cleaned["agent_name"] = f.get("agent_name")
         out.append(cleaned)
     return out, warnings
 
@@ -114,7 +141,7 @@ def validate_feeds(feeds: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], L
 def convert_to_sources(feeds: List[Dict[str, Any]], registry_name: str = "single") -> Dict[str, Any]:
     """Convert validated feeds to FetcherHub sources.json schema.
 
-    Maps into { registries: { <registry_name>: { live: { telegram/x/youtube } } } }
+    Maps into { registries: { <registry_name>: { live: { telegram/x/youtube }, rss: [...], api: [...] } } }
     Cadence is preserved per-feed in a meta field for future schedulers.
     """
     live: Dict[str, Any] = {
@@ -122,6 +149,9 @@ def convert_to_sources(feeds: List[Dict[str, Any]], registry_name: str = "single
         "x": {"handles": [], "limit": 20},
         "youtube": {"channel_ids": [], "limit": 20},
     }
+    rss_list: List[Dict[str, Any]] = []
+    api_list: List[Dict[str, Any]] = []
+    stub_list: List[Dict[str, Any]] = []
     for f in feeds:
         t = f.get("type")
         if t == "telegram":
@@ -130,12 +160,28 @@ def convert_to_sources(feeds: List[Dict[str, Any]], registry_name: str = "single
             live["x"]["handles"].append(f.get("handle"))
         elif t == "youtube_rss":
             live["youtube"]["channel_ids"].append(f.get("channel_id"))
+        elif t == "rss":
+            entry: Dict[str, Any] = {"name": f.get("name") or f.get("id") or "rss", "url": f.get("url")}
+            if entry.get("url"):
+                rss_list.append(entry)
+        elif t in ("domain_api", "api"):
+            entry: Dict[str, Any] = {"name": f.get("name") or f.get("id") or "api", "url": f.get("url")}
+            if f.get("params"):
+                entry["params"] = f.get("params")
+            if entry.get("url"):
+                api_list.append(entry)
+        elif t == "stub":
+            entry: Dict[str, Any] = {"name": f.get("id") or "stub", "agent_name": f.get("agent_name")}
+            stub_list.append(entry)
         # stash cadence for later schedulers (unused today)
         # could be stored in side-car or meta; for now include in a map
     sources = {
         "registries": {
             registry_name: {
                 "live": live,
+                "rss": rss_list,
+                "api": api_list,
+                "stubs": stub_list,
             }
         }
     }

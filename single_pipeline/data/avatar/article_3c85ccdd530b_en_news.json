@@ -1,0 +1,16 @@
+{
+  "title": "Meta buys Chinese-founded AI start-up Manus",
+  "lang": "en",
+  "tone": "news",
+  "style_preset": "anchor_english_1",
+  "audio_url": "/data/tts/article_dbc07871971f_en_neutral.wav",
+  "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_dbc07871971f_en_neutral.wav",
+  "output": {
+    "format": "mp4",
+    "resolution": "1280x720",
+    "duration_seconds": 12.03936507936508,
+    "status": "rendered"
+  },
+  "generated_at": "2026-01-02T08:21:19.628377+00:00",
+  "category": "general"
+}

@@ -1,87 +1,27 @@
-# News AI – Handover Documentation
+# Orchestration Handover
 
-## UI Flow Diagram
-```mermaid
-flowchart TD
-    U[User] -->|Paste JWT| UI[Dashboard /ui]
-    UI -->|Run Fetch| F[/POST /fetch/]
-    F -->|writes preview & files| FEED[Feed Preview]
-    UI -->|Run Process| P[/POST /process/]
-    P -->|scripts + filtered| FEED
-    UI -->|Run Voice| V[/POST /voice/]
-    V -->|voice outputs| FEED
-    FEED -->|Like/Dislike/Approve/Flag| FB[/POST /feedback/]
-    FB --> DB[(server/db.py)]
-```
+## Overview
+The **BucketOrchestrator** is the central nervous system of the News-Ai pipeline. It manages the lifecycle of news items from raw ingestion to final multimedia artifacts (scripts, audio, avatar videos). It enforces a strict, deterministic flow where items are grouped into "buckets" (e.g., `EN-NEWS`, `HI-YOUTH`) based on language and tone.
 
-## API Mapping Table
-| UI Element | Endpoint | Method | Request (key fields) | Response (key fields) |
-|---|---|---|---|---|
-| Run Fetch | `/fetch` | POST | `registry`, `category`, `limit_preview` | `status`, `count`, `preview[]`, `files.items` |
-| Run Process | `/process` | POST | `registry`, `category`, `limit_preview` | `status`, `counts.filtered`, `counts.scripts`, `preview[]`, `files.filtered`, `files.scripts` |
-| Run Voice | `/voice` | POST | `registry`, `category`, `voice` | `status`, `count`, `preview[]`, `files.voice` |
-| Send Feedback | `/feedback` | POST | `user_id`, `article_id`, `action`, `timestamp`, `context` | `success`, `feedback_id`, `updated_relevance_score` |
+## Core Responsibilities
+1.  **Ingestion & Routing**: Accepts raw items from `FetcherHub`, filters duplicates via `FilterAgent`, and routes them to specific buckets defined in `orchestration_contract_v1.json`.
+2.  **Stage Management**: execute stages sequentially: `Summarize` -> `Voice` -> `Avatar`.
+3.  **Error Handling**: Catches exceptions at each stage, logs them to `StageLogger` and `TraceLogger`, and ensures failures in one item do not crash the entire bucket (unless critical).
+4.  **Artifact Management**: Ensures all generated files (scripts, WAVs, MP4s) are saved to deterministic paths and correctly referenced in output JSONs.
 
-Notes:
-- All endpoints require `Authorization: Bearer <jwt>`.
-- Feedback `action` accepted: `like`, `save`, `share`, `dislike`, `skip`. "Flag" maps to `skip` plus `context.reason = "flag"`.
+## Guarantees
+*   **Deterministic Output**: For a given input item (Title + Body), the pipeline generates the same unique ID and file paths. Re-running the pipeline on the same data yields consistent results.
+*   **Strict Schema Adherence**: All output JSONs (`*_scripts.json`, `*_voice.json`, `*_avatar.json`) strictly follow `orchestration_contract_v1.json`.
+*   **Explicit Status**: Every item has a `status` field (`success` or `failed`). There are no "partial successes" or ambiguous states.
+*   **Atomic file references**: `audio_path` and `video_url` are either valid strings pointing to existing files (on success) or explicitly `null` (on failure).
 
-## Integration Guide (Front + Back)
-### Backend Setup
-- Requirements: Python 3.10+, Windows/PowerShell recommended.
-- Install deps and start server:
-```
-python -m venv .venv
-.\.venv\Scripts\activate
-pip install -r requirements.txt
-python -m uvicorn server.app:APP --port 8000 --reload
-```
-- Generate a dev JWT:
-```
-$env:JWT_SECRET = "your_dev_secret"
-python scripts/dev_jwt.py demo_user user --ttl 3600
-```
-- Copy the token and paste it into the UI header.
+## What It Will NEVER Do
+*   **Never Block Indefinitely**: All external calls (TTS, rendering) are wrapped in retries and timeouts (where applicable) or fail fast.
+*   **Never Return "Maybe"**: An item is either fully processed or marked as failed.
+*   **Never Modify Source Data**: Raw input data is preserved; enhancements are additive.
+*   **Never Guess File Types**: Mime types and formats are explicitly defined in metadata.
 
-### Frontend Usage
-- Open UI at `http://127.0.0.1:8000/ui/`.
-- Paste JWT, set language/theme as needed.
-- Click Run Fetch → Run Process → Run Voice.
-- Use feedback buttons on cards to send rewards.
-
-### Data Freshness & Error Handling
-- Fetch returns a preview slice and total count; items are read from `single_pipeline/output/*_items.json`.
-- Process runs filter + scripts and returns counts plus preview fields aligned to Noopur’s schema (`title`, `variants`, `tone`, `audience`, `lang`).
-- Voice returns item count and preview from `*_voice.json`.
-- Errors return `HTTP 500` with `{error, message}`; the UI shows a status bar message and retains last good preview.
-
-### Voice Output Triggers
-- Clicking Run Voice calls `/voice`, which invokes `run_voice(...)` and writes outputs under `single_pipeline/output/<registry>_voice.json`.
-- The UI status shows the item count; you can inspect the file path from the response.
-
-## End-to-End Test Procedure
-1. Set `JWT_SECRET` and generate a dev token.
-2. Start the server: `python -m uvicorn server.app:APP --port 8000 --reload`.
-3. Open `/ui`, paste token, Run Fetch → Process → Voice.
-4. Click Like/Dislike/Approve/Flag on a card; confirm events in the Live Feedback panel and server logs.
-5. Optional: run `python scripts/e2e_loop_test.py` to validate the loop headlessly.
-
-## Demo – 1 Minute Script
-- Show UI header: paste JWT, toggle theme, select language.
-- Click Run Fetch: explain Filter+Verify; show preview.
-- Click Run Process: highlight Script stage; show tone/audience badges.
-- Click Run Voice: confirm status count.
-- Click feedback buttons: explain reward propagation; mention DB write.
-- Close with next steps: cloud LLM integration and richer dedup.
-
-## Repo Structure & Handoff
-- UI: `server/static/` (`index.html`, `styles.css`, `app.js`).
-- API: `server/app.py` (wrappers `/fetch`, `/process`, `/voice`, `/feedback`).
-- Pipeline: `single_pipeline/*` (agents, CLI, outputs, RAG dedup, traces).
-- Scripts: `scripts/dev_jwt.py`, `scripts/e2e_loop_test.py`.
-- Tests: `tests/*` including `test_pipeline_chain.py`.
-
-## Next Dev Tips
-- Map language selector to category-specific processing if needed.
-- Implement a dedicated verification stage endpoint when ready.
-- If using Uniguru cloud, set `UNIGURU_BASE_URL`, `UNIGURU_TAG_PATH`, `UNIGURU_API_KEY` and remove `UNIGURU_PROVIDER=local`.
+## Integration Points
+*   **Input**: `single_filtered.json` (List of validated news items).
+*   **Output**: Bucket-specific JSONs in `single_pipeline/output/` (e.g., `single_EN-NEWS_avatar.json`).
+*   **Frontend (Chandragupta)**: Should consume the `avatar` output JSONs. The `video_url` field is the primary artifact for display.

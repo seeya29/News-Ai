@@ -1,0 +1,148 @@
+{
+  "contract_version": "1.0",
+  "status": "frozen",
+  "last_updated": "2026-01-02",
+  "schemas": {
+    "filter_output": {
+      "description": "Output object from FilterAgent, consumed by ScriptGenAgent.",
+      "type": "object",
+      "required": [
+        "title",
+        "body",
+        "lang",
+        "category",
+        "tone",
+        "audience",
+        "dedup_flag",
+        "dedup_key"
+      ],
+      "properties": {
+        "title": {"type": "string"},
+        "body": {"type": "string"},
+        "lang": {
+          "type": "string",
+          "enum": ["en", "hi", "ta", "bn", "pa", "gu", "te", "kn", "ml", "ur", "mixed", "unknown"]
+        },
+        "category": {"type": ["string", "null"]},
+        "tone": {"type": ["string", "null"]},
+        "audience": {"type": ["string", "null"], "default": "general"},
+        "dedup_flag": {"type": "boolean"},
+        "dedup_key": {"type": "string"},
+        "timestamp": {"type": ["string", "null"], "format": "iso8601"},
+        "raw": {"type": "object"}
+      }
+    },
+    "script_output": {
+      "description": "Output object from ScriptGenAgent, consumed by TTSAgent and AvatarAgent.",
+      "type": "object",
+      "required": [
+        "title",
+        "lang",
+        "audience",
+        "tone",
+        "variants",
+        "metadata"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Cleaned title of the news item."
+        },
+        "lang": {
+          "type": "string",
+          "enum": ["en", "hi", "ta", "bn", "mixed", "unknown"],
+          "description": "Detected language code."
+        },
+        "audience": {
+          "type": "string",
+          "default": "general",
+          "description": "Target audience segment (e.g., general, youth, kids)."
+        },
+        "tone": {
+          "type": "string",
+          "default": "neutral",
+          "description": "Content tone (e.g., formal, casual, devotional)."
+        },
+        "variants": {
+          "type": "object",
+          "required": ["bullets", "headline", "narration", "styles"],
+          "properties": {
+            "bullets": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "List of key points extracted from the body."
+            },
+            "headline": {
+              "type": "string",
+              "description": "Shortened headline suitable for tickers."
+            },
+            "narration": {
+              "type": "string",
+              "description": "Conversational script for general audio."
+            },
+            "styles": {
+              "type": "object",
+              "required": ["formal", "kids", "youth", "devotional"],
+              "properties": {
+                "formal": {"type": "string", "description": "Professional/serious version."},
+                "kids": {"type": "string", "description": "Simplified version for children."},
+                "youth": {"type": "string", "description": "High-energy/slang-aware version."},
+                "devotional": {"type": "string", "description": "Calm/reflective version."}
+              }
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["generated_at", "category"],
+          "properties": {
+            "generated_at": {"type": "string", "format": "iso8601"},
+            "category": {"type": "string"}
+          }
+        }
+      }
+    },
+    "voice_output": {
+      "description": "Output object from TTSAgentStub, consumed by AvatarAgentStub.",
+      "type": "object",
+      "required": [
+        "title",
+        "lang",
+        "voice",
+        "audio_url",
+        "audio_path",
+        "status",
+        "metadata"
+      ],
+      "properties": {
+        "title": { "type": "string" },
+        "lang": { "type": "string" },
+        "voice": { "type": "string" },
+        "audio_url": { "type": ["string", "null"] },
+        "audio_path": { "type": ["string", "null"] },
+        "status": { "type": "string", "enum": ["success", "failed"] },
+        "error": { "type": "string" },
+        "metadata": { "type": "object" }
+      }
+    },
+    "avatar_output": {
+      "description": "Output object from AvatarAgentStub, final pipeline artifact.",
+      "type": "object",
+      "required": [
+        "title",
+        "lang",
+        "style",
+        "video_url",
+        "metadata"
+      ],
+      "properties": {
+        "title": { "type": "string" },
+        "lang": { "type": "string" },
+        "style": { "type": "string" },
+        "video_url": { "type": "string" },
+        "metadata_path": { "type": "string" },
+        "metadata": { "type": "object" }
+      }
+    }
+  }
+}

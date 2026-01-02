@@ -71,13 +71,24 @@ class RAGClient:
         try:
             if self.cache_path and os.path.exists(self.cache_path):
                 with open(self.cache_path, "r", encoding="utf-8") as f:
-                    self.cache = json.load(f)
+                    content = f.read().strip()
+                    if not content:
+                        self.cache = []
+                    else:
+                        self.cache = json.loads(content)
                 # Prune on load
                 self._prune_cache(time.time())
                 self._rebuild_indices()
         except Exception as e:
             # Fall back to empty cache but make noise for debugging
             self.logger.error("cache_load_failed", detail=str(e), path=str(self.cache_path))
+            # Backup corrupted file
+            try:
+                if self.cache_path and os.path.exists(self.cache_path):
+                    import shutil
+                    shutil.copy(self.cache_path, self.cache_path + ".corrupt")
+            except Exception:
+                pass
             self.cache = []
             self.cache_by_hash = {}
 

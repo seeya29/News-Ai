@@ -1,5 +1,104 @@
 feeds:
-- id: telegram_tech
+- id: bbc_tech_rss
+  type: rss
+  cadence_seconds: 3600
+  name: BBC Technology
+  url: http://feeds.bbci.co.uk/news/technology/rss.xml
+- id: hn_top_api
+  type: api
+  cadence_seconds: 300
+  name: HackerNews Top
+  url: https://hacker-news.firebaseio.com/v0/topstories.json
+  params:
+    print: pretty
+- id: gurukul_agent
+  type: stub
+  cadence_seconds: 3600
+  agent_name: Gurukul
+- id: stock_agent
+  type: stub
+  cadence_seconds: 1800
+  agent_name: StockAgent
+- id: wellness_bot
+  type: stub
+  cadence_seconds: 3600
+  agent_name: WellnessBot
+- id: usedcar_agent
+  type: stub
+  cadence_seconds: 7200
+  agent_name: UsedCar
+- id: nyt_tech_rss
+  type: rss
+  cadence_seconds: 3600
+  name: NYT Technology
+  url: https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml
+- id: verge_rss
+  type: rss
+  cadence_seconds: 3600
+  name: The Verge
+  url: https://www.theverge.com/rss/index.xml
+- id: techcrunch_rss
+  type: rss
+  cadence_seconds: 3600
+  name: TechCrunch
+  url: https://techcrunch.com/feed/
+- id: wired_rss
+  type: rss
+  cadence_seconds: 3600
+  name: Wired
+  url: https://www.wired.com/feed/rss
+- id: ars_technica_rss
+  type: rss
+  cadence_seconds: 3600
+  name: Ars Technica
+  url: https://feeds.arstechnica.com/arstechnica/index
+- id: engadget_rss
+  type: rss
+  cadence_seconds: 3600
+  name: Engadget
+  url: https://www.engadget.com/rss.xml
+- id: cnet_rss
+  type: rss
+  cadence_seconds: 3600
+  name: CNET
+  url: https://www.cnet.com/rss/news/
+- id: telegram_technews
   type: telegram
-  cadence_seconds: 60
-  channel: '@technews'
+  cadence_seconds: 600
+  channel: "@technews"
+  name: Telegram Tech
+- id: telegram_coindesk
+  type: telegram
+  cadence_seconds: 600
+  channel: "@CoinDesk"
+  name: CoinDesk
+- id: telegram_python
+  type: telegram
+  cadence_seconds: 600
+  channel: "@Python"
+  name: Python Updates
+- id: x_elonmusk
+  type: x
+  cadence_seconds: 900
+  handle: "@elonmusk"
+  name: Elon Musk
+- id: x_openai
+  type: x
+  cadence_seconds: 900
+  handle: "@OpenAI"
+  name: OpenAI
+- id: x_nasa
+  type: x
+  cadence_seconds: 900
+  handle: "@NASA"
+  name: NASA
+- id: youtube_google_devs
+  type: youtube_rss
+  cadence_seconds: 3600
+  channel_id: UC_x5XG1OV2P6uZZ5FSM9Ttw
+  name: Google Developers
+- id: youtube_bloomberg
+  type: youtube_rss
+  cadence_seconds: 3600
+  channel_id: UCsBjURrPoezykLs9EqgamOA
+  name: Bloomberg Technology

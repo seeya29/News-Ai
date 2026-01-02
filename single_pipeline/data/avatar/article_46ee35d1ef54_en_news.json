@@ -1,0 +1,16 @@
+{
+  "title": "UK social media campaigners among five denied US visas",
+  "lang": "en",
+  "tone": "news",
+  "style_preset": "anchor_english_1",
+  "audio_url": "/data/tts/article_5c60df6fa2b1_en_neutral.wav",
+  "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\article_5c60df6fa2b1_en_neutral.wav",
+  "output": {
+    "format": "mp4",
+    "resolution": "1280x720",
+    "duration_seconds": 12.469342403628119,
+    "status": "rendered"
+  },
+  "generated_at": "2026-01-02T08:21:23.015645+00:00",
+  "category": "general"
+}

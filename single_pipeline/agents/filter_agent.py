@@ -85,6 +85,17 @@ class FilterAgent:
             body = it.get("body", "")
             lang = self._basic_language_detect(body)
             dedup_key = it.get("title", "") + "::" + str(it.get("timestamp"))
+            try:
+                # Use RAG to assign a semantic group key if possible
+                dedup_key = self.rag.assign_group_key(
+                    title=it.get("title", "Untitled"),
+                    body=body,
+                    published_at_iso=it.get("timestamp"),
+                    category=None
+                )
+            except Exception:
+                # Fallback to simple key
+                pass
 
             # Optional: tag category/tone/audience via Uniguru if available
             tags: Dict[str, Any] = {"category": None, "tone": None, "audience": "general"}
