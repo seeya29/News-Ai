@@ -1,5 +1,7 @@
 from typing import Any, Dict, List, Optional
 import os
+import hashlib
+from datetime import datetime, timezone
 
 from ..logging_utils import PipelineLogger
 from ..rag_client import RAGClient
@@ -65,65 +67,113 @@ class FilterAgent:
             return "unknown"
         return lang if score >= threshold else "mixed"
 
-    def _validate_item(self, it: Dict[str, Any], logger: Optional[PipelineLogger]) -> Dict[str, Any]:
-        # Ensure required fields exist and are strings; coerce when possible
-        title = it.get("title", "Untitled")
-        body = it.get("body", "")
-        if not isinstance(title, str):
-            title = str(title)
-        if not isinstance(body, str):
-            body = str(body) if body is not None else ""
+    def _validate_item(self, it: Dict[str, Any], logger: Optional[PipelineLogger]) -> Optional[Dict[str, Any]]:
+        # Ensure required fields exist and are strings
+        title = it.get("title")
+        body = it.get("body")
+        
+        if not title or not isinstance(title, str) or not title.strip():
+            if logger:
+                logger.warning("invalid_item_rejected", reason="missing_title")
+            return None
+            
+        if not body or not isinstance(body, str) or not body.strip():
+             if logger:
+                logger.warning("invalid_item_rejected", reason="missing_body")
+             return None
+
         timestamp = it.get("timestamp")
-        if logger and (not title or not isinstance(title, str) or body is None):
-            logger.warning("invalid_item", title_type=str(type(it.get("title"))), body_type=str(type(it.get("body"))))
         return {**it, "title": title, "body": body, "timestamp": timestamp}
 
     def filter_items(self, items: List[Dict[str, Any]], logger: Optional[PipelineLogger] = None) -> List[Dict[str, Any]]:
         filtered: List[Dict[str, Any]] = []
         for it in items:
-            it = self._validate_item(it, logger)
+            valid_it = self._validate_item(it, logger)
+            if not valid_it:
+                # If we were processing raw inputs that needed a status return, we would return rejected item.
+                # However, FilterAgent usually takes raw feed items and outputs clean items.
+                # The contract says we should have an id and status.
+                # Since we can't even generate an ID without title/body, we skip/reject completely 
+                # OR we generate a placeholder ID if possible to track the rejection.
+                # But without title/body, we can't guarantee uniqueness.
+                # For now, we'll log rejection and skip adding to filtered list (filtering IS the rejection).
+                continue
+            
+            it = valid_it
+            title = it.get("title", "Untitled")
             body = it.get("body", "")
+            timestamp = it.get("timestamp")
+
+            # Language detection
             lang = self._basic_language_detect(body)
-            dedup_key = it.get("title", "") + "::" + str(it.get("timestamp"))
+
+            # ID generation (hash of title+body)
+            raw_id_str = f"{title}{body}"
+            id_val = hashlib.md5(raw_id_str.encode("utf-8")).hexdigest()
+
+            dedup_key = id_val
             try:
                 # Use RAG to assign a semantic group key if possible
                 dedup_key = self.rag.assign_group_key(
-                    title=it.get("title", "Untitled"),
+                    title=title,
                     body=body,
-                    published_at_iso=it.get("timestamp"),
+                    published_at_iso=timestamp,
                     category=None
                 )
             except Exception:
-                # Fallback to simple key
                 pass
 
             # Optional: tag category/tone/audience via Uniguru if available
-            tags: Dict[str, Any] = {"category": None, "tone": None, "audience": "general"}
+            tags: Dict[str, Any] = {"category": None, "tone": "neutral", "audience": "general"}
             if self.uniguru:
                 try:
-                    tags = self.uniguru.tag_text(title=it.get("title", "Untitled"), body=body, language=lang)
+                    tags = self.uniguru.tag_text(title=title, body=body, language=lang)
                 except Exception:
-                    tags = {"category": None, "tone": None, "audience": "general"}
+                    tags = {"category": None, "tone": "neutral", "audience": "general"}
+            
+            tone = tags.get("tone") or "neutral"
 
             # Initial RAG-based dedup/context check
             dedup_flag = False
             try:
-                dedup_flag = self.rag.is_duplicate(it.get("title", "Untitled"), body)
+                dedup_flag = self.rag.is_duplicate(title, body)
             except Exception:
                 dedup_flag = False
 
-            filtered.append({
-                "title": it.get("title", "Untitled"),
+            # Schema-compliant object
+            # Note: 'body' is preserved for ScriptGen but is not part of the final contract schema
+            item = {
+                "id": id_val,
+                "script": {
+                    "text": "",
+                    "headline": title,
+                    "bullets": []
+                },
+                "tone": tone,
+                "language": lang,
+                "priority_score": 0.5,
+                "trend_score": 0.5,
+                "audio_path": None,
+                "stage_status": {
+                    "fetch": "success",
+                    "filter": "success",
+                    "script": "pending",
+                    "voice": "pending",
+                    "avatar": "pending"
+                },
+                "timestamps": {
+                    "fetched_at": timestamp,
+                    "processed_at": datetime.now(timezone.utc).isoformat(),
+                    "completed_at": None
+                },
+                # Internal fields
                 "body": body,
-                "timestamp": it.get("timestamp"),
-                "lang": lang,
-                "category": tags.get("category"),
-                "tone": tags.get("tone"),
-                "audience": tags.get("audience"),
                 "dedup_flag": dedup_flag,
                 "dedup_key": dedup_key,
                 "raw": it.get("raw", {})
-            })
+            }
+            filtered.append(item)
+
         if logger:
             logger.info("filter_items_count", count=len(filtered))
         return filtered

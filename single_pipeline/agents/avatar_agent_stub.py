@@ -292,18 +292,37 @@ class AvatarAgentStub:
         self._cleanup_old()
         outputs: List[Dict[str, Any]] = []
         for v in voice_items:
-            title = v.get("title") or "Untitled"
-            lang = (v.get("lang") or "en").lower()
-            tone = "news"
+            # v is the new schema item
+            title = v.get("script", {}).get("headline") or v.get("title", "Untitled")
+            lang = (v.get("language") or "en").lower()
+            tone = (v.get("tone") or "news").lower()
             preset = self.preset_map.get(f"{lang}|{tone}", self.style)
-            audio_url = v.get("audio_url")
-            article_id = self._hash_id(title, audio_url or title)
-            base = f"{article_id}_{lang}_{tone}"
+            
+            audio_path = v.get("audio_path")
+            # Construct a relative URL for providers that need it (assuming standard data layout)
+            audio_url = None
+            if audio_path:
+                 fname = os.path.basename(audio_path)
+                 audio_url = f"/data/tts/{fname}"
+
+            item_id = v.get("id") or self._hash_id(title, audio_path or "u")
+            base = f"{item_id}_{lang}_{tone}"
+            
+            # Check for skip condition BEFORE rendering
+            if not audio_path and v.get("stage_status", {}).get("voice") in ["skipped", "missing_but_allowed"]:
+                 new_item = v.copy()
+                 new_item["stage_status"]["avatar"] = "skipped"
+                 new_item["video_path"] = None
+                 new_item["timestamps"]["completed_at"] = datetime.now(timezone.utc).isoformat()
+                 outputs.append(new_item)
+                 continue
+
             os.makedirs(self.output_base, exist_ok=True)
             meta_path = os.path.join(self.output_base, f"{base}.json")
-            audio_path = v.get("audio_path")
+            
             duration = self._audio_duration_seconds(audio_path)
             mp4_path = os.path.join(self.output_base, f"{base}.mp4")
+            
             rendered = False
             if self.provider == "did":
                 rendered = self._render_via_did(audio_path, mp4_path)
@@ -314,6 +333,7 @@ class AvatarAgentStub:
                 rendered = self._render_via_local(src_img, audio_path, mp4_path)
             elif self.provider == "ffmpeg":
                 rendered = self._render_static_video(audio_path, mp4_path, duration)
+            
             meta = {
                 "title": title,
                 "lang": lang,
@@ -335,18 +355,20 @@ class AvatarAgentStub:
                     json.dump(meta, f, ensure_ascii=False, indent=2)
             except Exception as e:
                 self.log.warning("avatar_write_meta_failed", file=meta_path, error=str(e))
-            video_url = f"/data/avatar/{os.path.basename(mp4_path) if rendered else os.path.basename(meta_path)}"
-            outputs.append({
-                "title": title,
-                "lang": lang,
-                "style": preset,
-                "video_url": video_url,
-                "metadata_path": meta_path,
-                "metadata": {
-                    "generated_at": datetime.now(timezone.utc).isoformat(),
-                    "category": category,
-                },
-            })
+            
+            # Update item
+            new_item = v.copy()
+            if rendered:
+                new_item["video_path"] = mp4_path
+                new_item["stage_status"]["avatar"] = "success"
+            else:
+                # If render failed
+                new_item["stage_status"]["avatar"] = "failed"
+                new_item["video_path"] = None
+
+            new_item["timestamps"]["completed_at"] = datetime.now(timezone.utc).isoformat()
+            outputs.append(new_item)
+            
         run.complete("avatar", meta={"count": len(outputs)})
         run.end_run("completed")
         self.log.info("avatar_rendered", count=len(outputs))

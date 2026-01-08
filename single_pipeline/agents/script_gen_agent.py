@@ -49,36 +49,44 @@ class ScriptGenAgent:
         run.start("summarize")
         scripts: List[Dict[str, Any]] = []
         for it in filtered_items:
-            title = it.get("title") or "Untitled"
+            # Extract fields from new schema + body
+            title = it.get("script", {}).get("headline") or "Untitled"
             body = it.get("body") or ""
             tone = it.get("tone")
-            audience = it.get("audience") or "general"
-            lang = it.get("lang") or "en"
-            bullets = self._bullets(body)
-            headline = self._headline(title)
-            narration = self._conversational(title, body, tone, audience)
-            styles = {
-                "formal": self._style_variant(title, body, "formal"),
-                "kids": self._style_variant(title, body, "kids"),
-                "youth": self._style_variant(title, body, "youth"),
-                "devotional": self._style_variant(title, body, "devotional"),
+            lang = it.get("language") or "en"
+            
+            # Generate script components
+            try:
+                bullets = self._bullets(body)
+                headline = self._headline(title)
+                text = self._conversational(title, body, tone, "general")
+                status = "success"
+                
+                # Check for empty script (failure mode)
+                if not text.strip():
+                    status = "failed"
+                    # We might still want to pass it through as failed?
+                    # Or maybe "rejected" if content was empty.
+            except Exception as e:
+                self.log.error("script_gen_failed", error=str(e))
+                status = "failed"
+                text = ""
+                headline = ""
+                bullets = []
+            
+            # Update item
+            new_item = it.copy()
+            new_item["script"] = {
+                "text": text,
+                "headline": headline,
+                "bullets": bullets
             }
-            scripts.append({
-                "title": title,
-                "lang": lang,
-                "audience": audience,
-                "tone": tone or "neutral",
-                "variants": {
-                    "bullets": bullets,
-                    "headline": headline,
-                    "narration": narration,
-                    "styles": styles,
-                },
-                "metadata": {
-                    "generated_at": datetime.now(timezone.utc).isoformat(),
-                    "category": category,
-                },
-            })
+            # Update status and timestamps
+            new_item["stage_status"]["script"] = status
+            new_item["timestamps"]["processed_at"] = datetime.now(timezone.utc).isoformat()
+            
+            scripts.append(new_item)
+            
         run.complete("summarize", meta={"count": len(scripts)})
         run.end_run("completed")
         self.log.info("scripts_generated", count=len(scripts))

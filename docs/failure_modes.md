@@ -1,57 +1,50 @@
-# Failure Modes & UI Behavior
+# Failure Modes & Determinism Policy
 
-This document outlines how the pipeline handles failures and what the frontend (Chandragupta) should display in each scenario.
+## Core Philosophy
+1. **No Silent Fallbacks**: Errors must be explicit. If a component fails to deliver the "ideal" result, it must mark the item status accordingly.
+2. **Determinism**: The pipeline should produce predictable results. Random fallbacks without audit trails are forbidden.
+3. **Explicit Statuses**: Every stage must report a clear status.
 
-## 1. Fetcher Failures
-*   **Scenario**: RSS feed is down, API rate limit reached, or credentials missing.
-*   **Pipeline Behavior**: `FetcherHub` logs a warning and skips the source. If all sources fail, the pipeline exits early.
-*   **Output**: `single_filtered.json` may be empty or missing items from specific sources.
-*   **UI Behavior**:
-    *   **Global**: Show "No new updates" if list is empty.
-    *   **Specific Source**: Not visible to end-user (items just don't appear). Admin dashboard sees warning logs.
+## Status Definitions
 
-## 2. Filter/Deduplication Failures
-*   **Scenario**: RAG service unavailable or semantic deduplication fails.
-*   **Pipeline Behavior**: `FilterAgent` falls back to simple title-based deduplication.
-*   **Output**: Duplicate items might appear if titles differ slightly but content is same.
-*   **UI Behavior**: User sees multiple similar stories. UI handles them as distinct items.
+The `stage_status` object in the contract tracks the health of each item through the pipeline.
 
-## 3. Script Generation Failures
-*   **Scenario**: LLM refusal, template error, or empty body text.
-*   **Pipeline Behavior**: Item is marked as `failed` in the script stage. It is **excluded** from downstream Voice/Avatar stages.
-*   **Output**: Item missing from `*_scripts.json` or marked failed.
-*   **UI Behavior**: Item does not appear in the video feed.
+| Status | Meaning | Action |
+| :--- | :--- | :--- |
+| `pending` | Processing not yet started. | Wait. |
+| `success` | Operation completed successfully with optimal quality. | Proceed. |
+| `degraded` | Operation completed, but with reduced quality (e.g., fallback provider, stub assets). | Proceed with caution. |
+| `missing_but_allowed` | Asset (e.g., audio) was not generated, but this is acceptable by policy. | Skip dependent stages if needed. |
+| `rejected` | Item failed validation (e.g., corrupted data, missing required fields). | Stop processing. |
+| `failed` | System error or unrecoverable failure. | Retry or Dead Letter Queue. |
 
-## 4. TTS (Voice) Failures
-*   **Scenario**: TTS provider error (e.g., Azure quota, pyttsx3 deadlock), generation timeout.
-*   **Pipeline Behavior**:
-    *   `TTSAgentStub` catches exception.
-    *   Sets `status: "failed"`.
-    *   Sets `audio_path: null`.
-    *   **Crucial**: `BucketOrchestrator` filters these items out before the Avatar stage.
-*   **Output**: Item present in `*_voice.json` with `status: "failed"`, but **absent** in `*_avatar.json`.
-*   **UI Behavior**: Item does not appear in the video feed. (Prevents silent videos).
+## Scenario Mappings
 
-## 5. Avatar Rendering Failures
-*   **Scenario**: Renderer crash, missing audio file, filesystem write error.
-*   **Pipeline Behavior**:
-    *   `AvatarAgentStub` catches exception.
-    *   Sets `status: "failed"`.
-    *   Sets `video_url: null`.
-*   **Output**: Item present in `*_avatar.json` with `status: "failed"`.
-*   **UI Behavior**:
-    *   Frontend filters list for `status == "success"`.
-    *   Failed items are hidden.
-    *   **Fallback**: If UI receives a failed item, it should display a "Content Unavailable" placeholder or skip to the next item.
+### 1. Fetch / Ingestion
+- **Scenario**: RSS feed returns 5xx error or timeout.
+- **Policy**: 
+  - If partial items fetched: Mark batch as `degraded`.
+  - If total failure: Mark run as `failed`.
 
-## Summary Table
+### 2. Filter / Validation
+- **Scenario**: Item missing title or body (corrupted).
+- **Policy**: Mark as `rejected`. Do not attempt to "fix" empty bodies with placeholder text unless explicitly configured for testing.
 
-| Stage | Failure Outcome | Downstream Effect | UI Action |
-| :--- | :--- | :--- | :--- |
-| **Fetch** | Missing items | Fewer items to process | Show what's available |
-| **Filter** | Duplicates / Bad tags | Low quality metadata | Display as-is |
-| **Script** | Generation Error | Dropped from pipeline | Item Hidden |
-| **Voice** | Audio Gen Error | Dropped from pipeline | Item Hidden |
-| **Avatar** | Render Error | `status: "failed"` | **Hide Item** / Skip |
+### 3. Text-to-Speech (TTS)
+- **Scenario**: Primary provider (e.g., Azure/D-ID) fails (API error, quota exceeded).
+- **Policy**: 
+  - **Do NOT** silently swap to a local stub without changing status.
+  - If fallback is enabled: Generate stub audio and set `stage_status.voice = "degraded"`.
+  - If fallback is disabled: Set `stage_status.voice = "failed"`.
+- **Scenario**: Audio generation skipped (e.g., text-only item).
+- **Policy**: Set `stage_status.voice = "missing_but_allowed"`.
 
-**Frontend Rule**: ALWAYS check `status === "success"` and `video_url !== null` before attempting playback.
+### 4. Avatar / Video
+- **Scenario**: Rendering service fails.
+- **Policy**: Set `stage_status.avatar = "failed"`.
+- **Scenario**: No audio available (but allowed).
+- **Policy**: Set `stage_status.avatar = "skipped"` (or `missing_but_allowed` if consistent).
+
+## Implementation Guidelines
+- **Contract**: `orchestration_contract_v1.json` enums must include `degraded`, `rejected`, `missing_but_allowed`.
+- **Logs**: Structured logs must accompany any non-success status (e.g., `event="tts_fallback"`, `status="degraded"`).

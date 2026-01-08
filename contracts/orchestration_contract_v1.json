@@ -1,0 +1,80 @@
+{
+  "contract_version": "1.0",
+  "status": "frozen",
+  "last_updated": "2026-01-03",
+  "item_schema": {
+    "type": "object",
+    "required": [
+      "id",
+      "script",
+      "tone",
+      "language",
+      "priority_score",
+      "trend_score",
+      "audio_path",
+      "stage_status",
+      "timestamps"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "Unique identifier for the item (e.g., hash of title+body)"
+      },
+      "script": {
+        "type": "object",
+        "required": ["text", "headline", "bullets"],
+        "properties": {
+          "text": { "type": "string", "description": "Main narration script" },
+          "headline": { "type": "string" },
+          "bullets": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "tone": {
+        "type": "string",
+        "enum": ["neutral", "formal", "casual", "youth", "kids", "devotional"],
+        "default": "neutral"
+      },
+      "language": {
+        "type": "string",
+        "enum": ["en", "hi", "ta", "bn", "mixed", "unknown"],
+        "default": "en"
+      },
+      "priority_score": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1,
+        "default": 0.5,
+        "description": "Editorial priority"
+      },
+      "trend_score": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1,
+        "default": 0.5,
+        "description": "Trending signal strength"
+      },
+      "audio_path": {
+        "type": ["string", "null"],
+        "description": "Absolute path to generated audio file. Null if failed/pending."
+      },
+      "stage_status": {
+        "type": "object",
+        "properties": {
+          "fetch": { "type": "string", "enum": ["pending", "success", "failed", "degraded", "skipped", "rejected", "missing_but_allowed"] },
+          "filter": { "type": "string", "enum": ["pending", "success", "failed", "degraded", "skipped", "rejected", "missing_but_allowed"] },
+          "script": { "type": "string", "enum": ["pending", "success", "failed", "degraded", "skipped", "rejected", "missing_but_allowed"] },
+          "voice": { "type": "string", "enum": ["pending", "success", "failed", "degraded", "skipped", "rejected", "missing_but_allowed"] },
+          "avatar": { "type": "string", "enum": ["pending", "success", "failed", "degraded", "skipped", "rejected", "missing_but_allowed"] }
+        }
+      },
+      "timestamps": {
+        "type": "object",
+        "properties": {
+          "fetched_at": { "type": ["string", "null"], "format": "iso8601" },
+          "processed_at": { "type": ["string", "null"], "format": "iso8601" },
+          "completed_at": { "type": ["string", "null"], "format": "iso8601" }
+        }
+      }
+    }
+  }
+}

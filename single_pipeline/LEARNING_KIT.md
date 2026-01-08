@@ -55,5 +55,5 @@
 
 ## Mapping JSON Outputs
 - Items: `*_items.json`; Filtered: `*_filtered.json`; Scripts: `*_scripts.json`.
-- Voice: `*_voice.json` with `audio_url`; Avatar: `*_avatar.json` with `video_url`.
+- Voice: `*_voice.json` with `audio_path`; Avatar: `*_avatar.json` with `video_path` (and `stage_status`).
 - Keep schemas stable to simplify downstream integration.

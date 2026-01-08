@@ -169,7 +169,7 @@ class BucketOrchestrator:
         self.traces.log("TTSAgent", input_payload={"bucket": bucket}, output_payload={"voice_count": len(voice_items), "file": voice_path}, status="success")
 
         # Filter valid voice items for avatar rendering
-        valid_voice_items = [v for v in voice_items if v.get("status") == "success" and v.get("audio_path")]
+        valid_voice_items = [v for v in voice_items if v.get("stage_status", {}).get("voice") == "success" and v.get("audio_path")]
 
         # Render avatar
         self.stage_logger.start("avatar")
@@ -204,7 +204,7 @@ class BucketOrchestrator:
         # Route items to buckets
         buckets: Dict[str, List[Dict[str, Any]]] = {}
         for it in items:
-            lang = (it.get("lang") or "en").lower()
+            lang = (it.get("language") or "en").lower()
             tone = (it.get("tone") or "news").lower()
             b = _route_bucket(lang, tone)
             buckets.setdefault(b, []).append(it)
