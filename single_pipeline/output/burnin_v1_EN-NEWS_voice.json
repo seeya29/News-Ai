@@ -1,0 +1,95 @@
+[
+  {
+    "id": "burnin_en_news_1_22d2cf",
+    "title": "Test Article 1 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\burnin_en_news_1_22d2cf_en_news.wav",
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success",
+      "voice": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-03T04:24:34.793920+00:00",
+      "processed_at": "2026-01-03T04:24:35.138276+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is en",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_en_news_2_c63608",
+    "title": "Test Article 2 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\burnin_en_news_2_c63608_en_news.wav",
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success",
+      "voice": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-03T04:24:34.793949+00:00",
+      "processed_at": "2026-01-03T04:24:51.525934+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is en",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_en_news_3_3aa1f7",
+    "title": "Test Article 3 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": "C:\\Users\\pc\\Desktop\\Seeya\\News-Ai-main\\single_pipeline\\data\\tts\\burnin_en_news_3_3aa1f7_en_news.wav",
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success",
+      "voice": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-03T04:24:34.793960+00:00",
+      "processed_at": "2026-01-03T04:25:07.896983+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is en",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  }
+]

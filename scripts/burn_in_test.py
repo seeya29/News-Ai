@@ -20,6 +20,7 @@ def create_test_item(lang, tone, index):
         "priority_score": 0.5,
         "trend_score": 0.5,
         "audio_path": None,
+        "video_path": None,
         "stage_status": {
             "fetch": "success",
             "filter": "success",

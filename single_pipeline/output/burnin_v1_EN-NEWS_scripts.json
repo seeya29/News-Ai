@@ -1,0 +1,64 @@
+[
+  {
+    "id": "burnin_en_news_4_e42c7c",
+    "title": "Test Article 4 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620189+00:00",
+      "processed_at": "2026-01-14T02:48:02.681960+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is en",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_en_news_5_c04cb4",
+    "title": "Test Article 5 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620196+00:00",
+      "processed_at": "2026-01-14T02:48:02.682423+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is en",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  }
+]

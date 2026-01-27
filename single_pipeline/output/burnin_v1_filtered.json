@@ -1,0 +1,602 @@
+[
+  {
+    "id": "burnin_en_news_1_ce9cc0",
+    "title": "Test Article 1 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620144+00:00",
+      "processed_at": "2026-01-14T02:48:02.620158+00:00"
+    }
+  },
+  {
+    "id": "burnin_en_news_2_cce955",
+    "title": "Test Article 2 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620170+00:00",
+      "processed_at": "2026-01-14T02:48:02.620172+00:00"
+    }
+  },
+  {
+    "id": "burnin_en_news_3_fe6d02",
+    "title": "Test Article 3 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620179+00:00",
+      "processed_at": "2026-01-14T02:48:02.620180+00:00"
+    }
+  },
+  {
+    "id": "burnin_en_news_4_e42c7c",
+    "title": "Test Article 4 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620189+00:00",
+      "processed_at": "2026-01-14T02:48:02.620190+00:00"
+    }
+  },
+  {
+    "id": "burnin_en_news_5_c04cb4",
+    "title": "Test Article 5 for en news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620196+00:00",
+      "processed_at": "2026-01-14T02:48:02.620197+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_news_6_98c09f",
+    "title": "Test Article 6 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620203+00:00",
+      "processed_at": "2026-01-14T02:48:02.620205+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_news_7_ac5d19",
+    "title": "Test Article 7 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620209+00:00",
+      "processed_at": "2026-01-14T02:48:02.620211+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_news_8_5fa639",
+    "title": "Test Article 8 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620215+00:00",
+      "processed_at": "2026-01-14T02:48:02.620216+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_news_9_882fb5",
+    "title": "Test Article 9 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620221+00:00",
+      "processed_at": "2026-01-14T02:48:02.620222+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_news_10_869d84",
+    "title": "Test Article 10 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620228+00:00",
+      "processed_at": "2026-01-14T02:48:02.620230+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_youth_11_a21ecd",
+    "title": "Test Article 11 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620236+00:00",
+      "processed_at": "2026-01-14T02:48:02.620237+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_youth_12_87e515",
+    "title": "Test Article 12 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620242+00:00",
+      "processed_at": "2026-01-14T02:48:02.620243+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_youth_13_2eea99",
+    "title": "Test Article 13 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620249+00:00",
+      "processed_at": "2026-01-14T02:48:02.620250+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_youth_14_7d7879",
+    "title": "Test Article 14 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620255+00:00",
+      "processed_at": "2026-01-14T02:48:02.620257+00:00"
+    }
+  },
+  {
+    "id": "burnin_hi_youth_15_c0e2cd",
+    "title": "Test Article 15 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620261+00:00",
+      "processed_at": "2026-01-14T02:48:02.620262+00:00"
+    }
+  },
+  {
+    "id": "burnin_ta_news_16_b1fa5c",
+    "title": "Test Article 16 for ta news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is ta. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "ta",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620267+00:00",
+      "processed_at": "2026-01-14T02:48:02.620268+00:00"
+    }
+  },
+  {
+    "id": "burnin_ta_news_17_7d8515",
+    "title": "Test Article 17 for ta news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is ta. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "ta",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620273+00:00",
+      "processed_at": "2026-01-14T02:48:02.620275+00:00"
+    }
+  },
+  {
+    "id": "burnin_ta_news_18_1c1c3d",
+    "title": "Test Article 18 for ta news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is ta. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "ta",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620279+00:00",
+      "processed_at": "2026-01-14T02:48:02.620281+00:00"
+    }
+  },
+  {
+    "id": "burnin_ta_news_19_4820fe",
+    "title": "Test Article 19 for ta news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is ta. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "ta",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620285+00:00",
+      "processed_at": "2026-01-14T02:48:02.620286+00:00"
+    }
+  },
+  {
+    "id": "burnin_ta_news_20_a81acc",
+    "title": "Test Article 20 for ta news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is ta. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "ta",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620290+00:00",
+      "processed_at": "2026-01-14T02:48:02.620291+00:00"
+    }
+  },
+  {
+    "id": "burnin_bn_news_21_66d2b5",
+    "title": "Test Article 21 for bn news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is bn. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "bn",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620296+00:00",
+      "processed_at": "2026-01-14T02:48:02.620297+00:00"
+    }
+  },
+  {
+    "id": "burnin_bn_news_22_37967a",
+    "title": "Test Article 22 for bn news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is bn. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "bn",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620301+00:00",
+      "processed_at": "2026-01-14T02:48:02.620303+00:00"
+    }
+  },
+  {
+    "id": "burnin_bn_news_23_8371e7",
+    "title": "Test Article 23 for bn news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is bn. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "bn",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620307+00:00",
+      "processed_at": "2026-01-14T02:48:02.620309+00:00"
+    }
+  },
+  {
+    "id": "burnin_bn_news_24_e660c0",
+    "title": "Test Article 24 for bn news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is bn. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "bn",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620314+00:00",
+      "processed_at": "2026-01-14T02:48:02.620316+00:00"
+    }
+  },
+  {
+    "id": "burnin_bn_news_25_d96e65",
+    "title": "Test Article 25 for bn news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is bn. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "bn",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620321+00:00",
+      "processed_at": "2026-01-14T02:48:02.620323+00:00"
+    }
+  },
+  {
+    "id": "burnin_en_kids_26_b536df",
+    "title": "Test Article 26 for en kids",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is kids. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "kids",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620327+00:00",
+      "processed_at": "2026-01-14T02:48:02.620329+00:00"
+    }
+  },
+  {
+    "id": "burnin_en_kids_27_dd3cd5",
+    "title": "Test Article 27 for en kids",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is kids. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "kids",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620333+00:00",
+      "processed_at": "2026-01-14T02:48:02.620334+00:00"
+    }
+  },
+  {
+    "id": "burnin_en_kids_28_2db901",
+    "title": "Test Article 28 for en kids",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is kids. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "kids",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620338+00:00",
+      "processed_at": "2026-01-14T02:48:02.620340+00:00"
+    }
+  },
+  {
+    "id": "burnin_en_kids_29_c81262",
+    "title": "Test Article 29 for en kids",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is kids. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "kids",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620344+00:00",
+      "processed_at": "2026-01-14T02:48:02.620345+00:00"
+    }
+  },
+  {
+    "id": "burnin_en_kids_30_8ab1cf",
+    "title": "Test Article 30 for en kids",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is en. Tone is kids. We want to ensure the pipeline processes this correctly.",
+    "language": "en",
+    "tone": "kids",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "pending"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620352+00:00",
+      "processed_at": "2026-01-14T02:48:02.620353+00:00"
+    }
+  }
+]

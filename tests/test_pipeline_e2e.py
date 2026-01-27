@@ -52,4 +52,5 @@ def test_multi_language_pipeline_chain(tmp_path):
     assert len(videos) == 4
     for vid in videos:
         # Check for success status or video path presence
+        assert "video_path" in vid
         assert vid.get("stage_status", {}).get("avatar") in ["success", "failed"]

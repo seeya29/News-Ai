@@ -1,0 +1,157 @@
+[
+  {
+    "id": "burnin_hi_news_6_98c09f",
+    "title": "Test Article 6 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620203+00:00",
+      "processed_at": "2026-01-14T02:48:02.680588+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_hi_news_7_ac5d19",
+    "title": "Test Article 7 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620209+00:00",
+      "processed_at": "2026-01-14T02:48:02.680914+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_hi_news_8_5fa639",
+    "title": "Test Article 8 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620215+00:00",
+      "processed_at": "2026-01-14T02:48:02.681573+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_hi_news_9_882fb5",
+    "title": "Test Article 9 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620221+00:00",
+      "processed_at": "2026-01-14T02:48:02.682206+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_hi_news_10_869d84",
+    "title": "Test Article 10 for hi news",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "news",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620228+00:00",
+      "processed_at": "2026-01-14T02:48:02.682578+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is news. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is news",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  }
+]

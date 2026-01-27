@@ -30,14 +30,17 @@ Auth: `Authorization: Bearer <token>`
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/process` | POST | Runs Filter & Script generation. Returns preview. |
-| `/voice` | POST | Runs TTS on generated scripts. |
-| `/fetch` | POST | Triggers feed ingestion. |
+| `/api/articles/feed/{user_id}` | GET | Returns personalized feed for the user. |
+| `/api/health` | GET | Health check. |
+| `/api/feedback/article` | POST | Submits explicit feedback (like, save, etc.). |
+| `/api/metrics/engagement` | POST | Tracks implicit engagement (time, scroll). |
+| `/api/agents/voice/generate` | POST | On-demand voice generation (if enabled). |
 
 ### CLI Usage
-For debugging or headless operation:
+For debugging or headless operation (fetching/processing):
 ```bash
-python single_pipeline/cli.py process --registry single --category general
+python -m single_pipeline.cli fetch
+python -m single_pipeline.cli process --registry single --category general
 ```
 
 ## 3. Debugging & Observability

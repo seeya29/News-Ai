@@ -12,6 +12,7 @@
       "priority_score",
       "trend_score",
       "audio_path",
+      "video_path",
       "stage_status",
       "timestamps"
     ],
@@ -56,6 +57,10 @@
       "audio_path": {
         "type": ["string", "null"],
         "description": "Absolute path to generated audio file. Null if failed/pending."
+      },
+      "video_path": {
+        "type": ["string", "null"],
+        "description": "Absolute path to generated video file. Null if failed/pending."
       },
       "stage_status": {
         "type": "object",

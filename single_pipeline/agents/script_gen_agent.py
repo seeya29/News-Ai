@@ -29,7 +29,12 @@ class ScriptGenAgent:
             "casual": "Quick take:",
             "neutral": "Here’s what happened:",
         }
-        prefix = tone_map.get((tone or "neutral").lower(), tone_map["neutral"])
+        t_key = (tone or "neutral").lower()
+        if t_key not in tone_map:
+             self.log.warning("unknown_tone_fallback", tone=tone, fallback="neutral")
+             t_key = "neutral"
+             
+        prefix = tone_map[t_key]
         return f"{prefix} {title.strip()} — {body.strip()[:400]}"
 
     def _style_variant(self, title: str, body: str, style: str) -> str:

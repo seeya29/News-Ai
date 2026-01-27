@@ -128,7 +128,9 @@ class FilterAgent:
             if self.uniguru:
                 try:
                     tags = self.uniguru.tag_text(title=title, body=body, language=lang)
-                except Exception:
+                except Exception as e:
+                    if logger:
+                        logger.warning("uniguru_tagging_failed", error=str(e))
                     tags = {"category": None, "tone": "neutral", "audience": "general"}
             
             tone = tags.get("tone") or "neutral"
@@ -137,7 +139,9 @@ class FilterAgent:
             dedup_flag = False
             try:
                 dedup_flag = self.rag.is_duplicate(title, body)
-            except Exception:
+            except Exception as e:
+                if logger:
+                    logger.warning("rag_dedup_failed", error=str(e))
                 dedup_flag = False
 
             # Schema-compliant object
@@ -154,6 +158,7 @@ class FilterAgent:
                 "priority_score": 0.5,
                 "trend_score": 0.5,
                 "audio_path": None,
+                "video_path": None,
                 "stage_status": {
                     "fetch": "success",
                     "filter": "success",

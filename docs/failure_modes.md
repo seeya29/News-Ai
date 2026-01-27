@@ -47,4 +47,5 @@ The `stage_status` object in the contract tracks the health of each item through
 
 ## Implementation Guidelines
 - **Contract**: `orchestration_contract_v1.json` enums must include `degraded`, `rejected`, `missing_but_allowed`.
-- **Logs**: Structured logs must accompany any non-success status (e.g., `event="tts_fallback"`, `status="degraded"`).
+- **Logs**: Structured logs must accompany any non-success status OR fallback logic (e.g., `event="tts_fallback"`, `status="degraded"`, `event="unknown_tone_fallback"`).
+- **No Silent Failures**: Even if a safe default is used (e.g. "neutral" tone), it must be logged as a warning.

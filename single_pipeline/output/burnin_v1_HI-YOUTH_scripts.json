@@ -1,0 +1,157 @@
+[
+  {
+    "id": "burnin_hi_youth_11_a21ecd",
+    "title": "Test Article 11 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620236+00:00",
+      "processed_at": "2026-01-14T02:48:02.684704+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is youth",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_hi_youth_12_87e515",
+    "title": "Test Article 12 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620242+00:00",
+      "processed_at": "2026-01-14T02:48:02.685110+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is youth",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_hi_youth_13_2eea99",
+    "title": "Test Article 13 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620249+00:00",
+      "processed_at": "2026-01-14T02:48:02.685295+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is youth",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_hi_youth_14_7d7879",
+    "title": "Test Article 14 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620255+00:00",
+      "processed_at": "2026-01-14T02:48:02.685938+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is youth",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  },
+  {
+    "id": "burnin_hi_youth_15_c0e2cd",
+    "title": "Test Article 15 for hi youth",
+    "body": "This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+    "language": "hi",
+    "tone": "youth",
+    "priority_score": 0.5,
+    "trend_score": 0.5,
+    "audio_path": null,
+    "video_path": null,
+    "stage_status": {
+      "fetch": "success",
+      "filter": "success",
+      "script": "success"
+    },
+    "timestamps": {
+      "fetched_at": "2026-01-14T02:48:02.620261+00:00",
+      "processed_at": "2026-01-14T02:48:02.686397+00:00"
+    },
+    "script": {
+      "text": "Here’s what happened: Untitled — This is a simulated news body for burn-in testing. It contains enough text to generate a script. Language is hi. Tone is youth. We want to ensure the pipeline processes this correctly.",
+      "headline": "Untitled",
+      "bullets": [
+        "This is a simulated news body for burn-in testing",
+        "It contains enough text to generate a script",
+        "Language is hi",
+        "Tone is youth",
+        "We want to ensure the pipeline processes this correctly"
+      ]
+    }
+  }
+]
