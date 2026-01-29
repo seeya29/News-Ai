@@ -39,11 +39,25 @@ Auth: `Authorization: Bearer <token>`
 ### CLI Usage
 For debugging or headless operation (fetching/processing):
 ```bash
+# Fetch data
 python -m single_pipeline.cli fetch
-python -m single_pipeline.cli process --registry single --category general
+
+# Run specific stage (manual step-by-step)
+python -m single_pipeline.cli filter --registry single --category general
+python -m single_pipeline.cli scripts --registry single --category general
+# Note: 'voice' and 'avatar' stages may require manual file renaming if running isolated from 'buckets'
+# e.g., copy single_EN-NEWS_scripts.json -> single_scripts.json for the next stage
+
+# Run full bucketed orchestration (Recommended)
+python -m single_pipeline.cli buckets --registry single --category general
 ```
 
 ## 3. Debugging & Observability
+
+### Known Issues & Workarounds
+1. **File Naming Mismatch**: The `buckets` orchestrator produces segmented output files (e.g., `single_EN-NEWS_voice.json`), while individual CLI commands (like `avatar`) expect generic names (`single_voice.json`). Use `buckets` for end-to-end flows.
+2. **TTS Performance**: The local `pyttsx3` provider can be slow or hang on initialization in Windows environments. If `voice` stage stalls, restart the process or try a smaller batch size.
+3. **Terminal Output**: Some commands may show minimal output if `ffmpeg` or other tools are missing/silent. Check `single_pipeline/output/` for artifacts.
 
 ### Output Artifacts
 Check `single_pipeline/output/` for stage results:
