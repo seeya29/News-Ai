@@ -1610,11 +1610,11 @@ def ui_process(payload: BasicPipelineRequest, response: Response, auth: AuthCont
         preview = [
             {
                 "title": s.get("title"),
-                "lang": s.get("language"),
-                "audience": s.get("tone"),
+                "lang": s.get("lang"),
+                "audience": s.get("audience"),
                 "tone": s.get("tone"),
-                "variants": [s.get("script")] if s.get("script") else [],
-                "metadata": s.get("timestamps"),
+                "variants": s.get("variants"),
+                "metadata": s.get("metadata"),
             }
             for s in scripts[: int(payload.limit_preview or 10)]
         ]

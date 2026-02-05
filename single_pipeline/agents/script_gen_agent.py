@@ -55,7 +55,7 @@ class ScriptGenAgent:
         scripts: List[Dict[str, Any]] = []
         for it in filtered_items:
             # Extract fields from new schema + body
-            title = it.get("script", {}).get("headline") or "Untitled"
+            title = it.get("title") or it.get("script", {}).get("headline") or "Untitled"
             body = it.get("body") or ""
             tone = it.get("tone")
             lang = it.get("language") or "en"
@@ -87,7 +87,12 @@ class ScriptGenAgent:
                 "bullets": bullets
             }
             # Update status and timestamps
+            if "stage_status" not in new_item:
+                new_item["stage_status"] = {}
             new_item["stage_status"]["script"] = status
+            
+            if "timestamps" not in new_item:
+                new_item["timestamps"] = {}
             new_item["timestamps"]["processed_at"] = datetime.now(timezone.utc).isoformat()
             
             scripts.append(new_item)

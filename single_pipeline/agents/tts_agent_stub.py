@@ -150,18 +150,14 @@ class TTSAgentStub:
         self._cleanup_old()
         outputs: List[Dict[str, Any]] = []
         for s in scripts:
-            # New schema fields
-            item_id = s.get("id") or self._hash_id(s.get("script", {}).get("headline", "u"), "b")
-            lang = (s.get("language") or "en").lower()
+            title = s.get("title") or "Untitled"
+            lang = (s.get("lang") or "en").lower()
+            narration = (s.get("variants", {}).get("narration") or title)
             tone = (s.get("tone") or "news").lower()
-            
-            # Script text
-            text = s.get("script", {}).get("text") or s.get("title", "")
-            
             voice = self.voice_map.get(f"{lang}|{tone}", self.voice)
-            
             # Create deterministic file name
-            fname = f"{item_id}_{lang}_{tone}.wav"
+            article_id = self._hash_id(title, narration)
+            fname = f"{article_id}_{lang}_{tone}.wav"
             os.makedirs(self.output_base, exist_ok=True)
             audio_path = os.path.join(self.output_base, fname)
             try:
@@ -192,38 +188,62 @@ class TTSAgentStub:
                         except Exception:
                             pass
                         eng.setProperty("rate", self.rate)
-                        eng.save_to_file(text, audio_path)
+                        eng.save_to_file(narration, audio_path)
                         eng.runAndWait()
                         self.log.info("tts_provider_used", provider="pyttsx3", file=audio_path)
-                        status = "success"
                     except Exception as e:
                         self.log.warning("tts_pyttsx3_failed", error=str(e))
-                        self._write_wav(audio_path, duration_seconds=self._duration_for_text(text), sample_rate=self.sample_rate, text=text)
-                        status = "degraded"
+                        self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=self.sample_rate, text=narration)
                     finally:
                         if pythoncom:
                             pythoncom.CoUninitialize()
                 else:
-                    self._write_wav(audio_path, duration_seconds=self._duration_for_text(text), sample_rate=self.sample_rate, text=text)
-                    self.log.info("tts_stub_used", file=audio_path)
-                    status = "success" if self.provider == "stub" else "degraded"
-                
-                # Update item
-                new_item = s.copy()
-                new_item["audio_path"] = audio_path
-                new_item["stage_status"]["voice"] = status
-                new_item["timestamps"]["processed_at"] = datetime.now(timezone.utc).isoformat()
-                outputs.append(new_item)
-                
+                    if self.provider == "pyttsx3" and not pyttsx3:
+                        self.log.warning("tts_provider_unavailable", provider="pyttsx3")
+                    self._write_wav(audio_path, duration_seconds=self._duration_for_text(narration), sample_rate=self.sample_rate, text=narration)
             except Exception as e:
-                self.log.error("tts_failed", error=str(e))
-                # Mark as failed in schema
-                new_item = s.copy()
-                new_item["stage_status"]["voice"] = "failed"
-                new_item["audio_path"] = None
-                outputs.append(new_item)
+                self.log.warning("tts_write_wav_failed", file=audio_path, error=str(e))
+            
+            # Serve via FastAPI static mount at /data/tts
+            audio_url = f"/data/tts/{fname}"
 
+            # Verify file generation
+            if os.path.exists(audio_path) and os.path.getsize(audio_path) > 0:
+                outputs.append({
+                    "id": article_id,
+                    "title": title,
+                    "lang": lang,
+                    "voice": voice,
+                    "audio_url": audio_url,
+                    "audio_path": audio_path,
+                    "status": "success",
+                    "metadata": {
+                        "generated_at": datetime.now(timezone.utc).isoformat(),
+                        "category": category,
+                        "format": "wav",
+                        "sample_rate": 16000,
+                        "channels": 1,
+                        "provider": ("pyttsx3" if (self.provider == "pyttsx3" and pyttsx3) else "stub"),
+                        "narration_text": narration,
+                    },
+                })
+            else:
+                self.log.error("tts_generation_failed_no_file", file=audio_path)
+                outputs.append({
+                    "title": title,
+                    "lang": lang,
+                    "voice": voice,
+                    "audio_url": None,
+                    "audio_path": None,
+                    "status": "failed",
+                    "error": "generation_failed_no_file",
+                    "metadata": {
+                        "generated_at": datetime.now(timezone.utc).isoformat(),
+                        "category": category,
+                        "narration_text": narration,
+                    },
+                })
         run.complete("voice", meta={"count": len(outputs)})
         run.end_run("completed")
-        self.log.info("tts_synthesized", count=len(outputs))
+        self.log.info("tts_generated", count=len(outputs))
         return outputs

@@ -109,12 +109,19 @@ def run_voice(
     return {"count": len(voice_items), "output_file": out_path}
 
 
-def run_avatar(registry: str = "single", category: str = "general", style: str = "news-anchor") -> Dict[str, Any]:
+def run_avatar(
+    registry: str = "single",
+    category: str = "general",
+    style: str = "news-anchor",
+    limit: Optional[int] = None,
+) -> Dict[str, Any]:
     log = PipelineLogger(component="cli_avatar")
     run = StageLogger(source="pipeline", category=category, meta={"registry": registry})
     run.start("avatar")
     voice_path = _safe_join(_output_root(), f"{_sanitize_identifier(registry)}_voice.json")
     voice_items = _read_items(voice_path)
+    if isinstance(limit, int) and limit > 0:
+        voice_items = voice_items[:limit]
     agent = AvatarAgentStub(style=style, logger=log)
     videos = agent.render(voice_items, category=category)
     out_path = _write_json(registry, "avatar", videos)
@@ -125,6 +132,11 @@ def run_avatar(registry: str = "single", category: str = "general", style: str =
 
 if __name__ == "__main__":
     import argparse
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except ImportError:
+        pass
 
     parser = argparse.ArgumentParser(description="News-Ai single pipeline CLI")
     sub = parser.add_subparsers(dest="cmd")
@@ -145,11 +157,13 @@ if __name__ == "__main__":
     vce.add_argument("--registry", default="single")
     vce.add_argument("--category", default="general")
     vce.add_argument("--voice", default="en-US-Neural-1")
+    vce.add_argument("--limit", type=int, default=None)
 
     av = sub.add_parser("avatar", help="Render avatar videos from voice")
     av.add_argument("--registry", default="single")
     av.add_argument("--category", default="general")
     av.add_argument("--style", default="news-anchor")
+    av.add_argument("--limit", type=int, default=None)
 
     bkt = sub.add_parser("buckets", help="Run bucketed orchestration across stages")
     bkt.add_argument("--registry", default="single")
@@ -166,10 +180,10 @@ if __name__ == "__main__":
         out = run_scripts(registry=args.registry, category=args.category)
         print(json.dumps(out, ensure_ascii=False))
     elif args.cmd == "voice":
-        out = run_voice(registry=args.registry, category=args.category, voice=args.voice)
+        out = run_voice(registry=args.registry, category=args.category, voice=args.voice, limit=args.limit)
         print(json.dumps(out, ensure_ascii=False))
     elif args.cmd == "avatar":
-        out = run_avatar(registry=args.registry, category=args.category, style=args.style)
+        out = run_avatar(registry=args.registry, category=args.category, style=args.style, limit=args.limit)
         print(json.dumps(out, ensure_ascii=False))
     elif args.cmd == "buckets":
         orch = BucketOrchestrator(registry=args.registry, category=args.category)
